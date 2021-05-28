@@ -1,7 +1,6 @@
 import express from 'express';
 const router = express.Router();
 const { authJwt } = require("../middlewares");
-const controller = require("../controllers/auth.controller");
 const upload = require('../libs/storage');
 const cpUpload = upload.fields([{ name: 'perimetro', maxCount: 1 },{ name: 'site', maxCount: 1 },{ name: 'frente', maxCount: 1 },{ name: 'fachada', maxCount: 1 }])
 
