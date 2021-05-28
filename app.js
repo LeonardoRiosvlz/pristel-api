@@ -22,7 +22,6 @@ db.sequelize.sync().then(() => {
 app.use('/public',express.static(`${__dirname}/storage/imgs`));
 app.use('/api', require('./routes/auth.routes'));
 app.use('/api', require('./routes/user.routes'));
-app.use('/api', require('./routes/cargo.routes'));
 
 
 
