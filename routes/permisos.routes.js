@@ -11,8 +11,6 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
 
     router.post("/permisos/get",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], entidadController.findAll_permisos);
 
-
     router.post("/permisos/delete",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], entidadController.delete_permiso);
 
-
-      module.exports = router;
+    module.exports = router;
