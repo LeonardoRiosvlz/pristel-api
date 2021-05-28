@@ -5,9 +5,7 @@ const upload = require('../libs/storage');
 const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
 
 
-    const notificacionController = require("../controllers/Notificacion.controller.js");
-
-
+    const notificacionController = require("../controllers/notificacion.controller.js");
     // Create a new cargo
     router.post("/notificacion",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], notificacionController.create);
 
