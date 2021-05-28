@@ -4,9 +4,7 @@ const { authJwt } = require("../middlewares");
 const upload = require('../libs/storage');
 const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
 
-
     const cargoController = require("../controllers/imputaciones.controller.js");
-
 
     // Create a new cargo
     router.post("/imputaciones",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], cargoController.create);

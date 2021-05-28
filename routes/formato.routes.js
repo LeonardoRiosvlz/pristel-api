@@ -2,9 +2,7 @@ import express from 'express';
 const router = express.Router();
 const { authJwt } = require("../middlewares");
 const upload = require('../libs/storage');
-const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
-
-
+const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }]);
 
     const formatoController = require("../controllers/formato.controller.js");
 
@@ -25,7 +23,6 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
 
     // Delete a cargo with id
     router.post("/formatos/delete",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], formatoController.delete);
-
 
 
     module.exports = router;
