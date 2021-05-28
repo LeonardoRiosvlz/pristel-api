@@ -3,7 +3,7 @@ const CajerosAth = db.cajero_ath;
 const Entidad = db.entidad;
 const Ciudad = db.ciudad;
 const Regional = db.regional;
-const Op = db.Op;
+
 
 // Create and Save a new Book
 exports.create = (req, res) => {

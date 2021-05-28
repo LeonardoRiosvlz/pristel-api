@@ -2,7 +2,7 @@ const db = require("../models");
 const Entidad = db.entidad;
 const Permiso = db.permiso;
 const User = db.user;
-const Op = db.Op;
+
 
 // Create and Save a new Book
 exports.create = async (req, res) => {

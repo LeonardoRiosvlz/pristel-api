@@ -1,7 +1,7 @@
 const db = require("../models");
 const Sac = db.sacAth;
 const Programación = db.programacion_ath;
-const Op = db.Op;
+
 
 // Create and Save a new Book
 exports.create = async (req, res) => { 

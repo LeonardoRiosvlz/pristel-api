@@ -1,6 +1,6 @@
 const db = require("../models");
 const Sac = db.sac;
-const Op = db.Op;
+
 
 const fs = require("fs");
 const csv = require("fast-csv");

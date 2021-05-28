@@ -1,8 +1,6 @@
 const db = require("../models");
-const Abonos = db.abonos;
-const Notificacion = db.notificacion;
 const Ath = db.programacion_ath;
-const Op = db.Op;
+
 
 
 

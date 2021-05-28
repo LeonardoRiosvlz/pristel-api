@@ -2,7 +2,7 @@ const config = require("../config/config");
 const db = require("../models");
 const jwt = require("jsonwebtoken");
 const User = db.user;
-const Op = db.Op;
+
 
 // Retrieve all Books from the database.
 exports.findAll = (req, res) => {

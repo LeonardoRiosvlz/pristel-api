@@ -1,10 +1,9 @@
-const { suscripciones } = require("../models");
 const db = require("../models");
 const Conversacion = db.conversacion;
 const Suscripciones = db.suscripciones;
 const Mensajes = db.mensajes;
 const User = db.user;
-const Op = db.Op;
+
 
 // Create and Save a new Book
 exports.createSala = async (req, res) => {

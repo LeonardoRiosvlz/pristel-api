@@ -1,6 +1,6 @@
 const db = require("../models");
 const Seguridad = db.seguridad
-const Op = db.Op;
+
 
 // Create and Save a new Book
 exports.create = async (req, res) => {

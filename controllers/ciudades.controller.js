@@ -1,7 +1,6 @@
 const db = require("../models");
 const Ciudades = db.ciudad
 const Regional = db.regional
-const Op = db.Op;
 
 // Create and Save a new Book
 exports.create = async (req, res) => {

@@ -3,7 +3,6 @@ const Gestion = db.gestionAth;
 const Notificacion = db.notificacion;
 const ProgramacionAth = db.programacion_ath;
 const User = db.user;
-const Op = db.Op;
 
 // Create and Save a new Book
 exports.create = async (req, res) => {

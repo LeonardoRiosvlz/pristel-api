@@ -2,7 +2,7 @@ const db = require("../models");
 const Notas = db.notas;
 const User = db.user;
 const Notificacion = db.notificacion;
-const Op = db.Op;
+
 
 // Create and Save a new Book
 exports.create = async (req, res) => {

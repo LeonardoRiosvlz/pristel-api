@@ -1,7 +1,7 @@
 const db = require("../models");
 const Imputaciones = db.imputaciones;
 const Entidad = db.entidad;
-const Op = db.Op;
+
 
 // Create and Save a new Book
 exports.create =async (req, res) => {

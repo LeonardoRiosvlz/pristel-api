@@ -3,7 +3,7 @@ const Legalizaciones = db.legalizacionAth;
 const ProgramacionAth = db.programacion_ath;
 const Notificaciones = db.notificacion;
 const User = db.user;
-const Op = db.Op;
+
 
 // Create and Save a new Book
 exports.create = async (req, res) => {

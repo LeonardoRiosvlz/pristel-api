@@ -8,7 +8,6 @@ const Gestion = db.gestionAth;
 const Sac = db.sacAth;
 const Notificacion = db.notificacion;
 const Legalizaciones = db.legalizacionAth;
-const Op = db.Op;
 
 // Create and Save a new Book
 exports.create = (req, res) => {

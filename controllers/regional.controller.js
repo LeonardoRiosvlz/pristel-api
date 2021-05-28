@@ -1,6 +1,6 @@
 const db = require("../models");
-const Regional = db.regional
-const Op = db.Op;
+const Regional = db.regional;
+
 
 // Create and Save a new Book
 exports.create = async (req, res) => {

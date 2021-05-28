@@ -1,13 +1,11 @@
-const { notificacion } = require("../models");
 const db = require("../models");
 const Formato = db.formato;
 const User = db.user;
-const Tecnico = db.user;
 const Tercero = db.tercero;
 const Entidad = db.entidad;
 const Abono = db.abonos;
 const Notificacion = db.notificacion;
-const Op = db.Op;
+
 
 // Create and Save a new Book
 exports.create =async (req, res) => {

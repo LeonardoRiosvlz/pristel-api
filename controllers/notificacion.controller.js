@@ -1,12 +1,6 @@
 const db = require("../models");
 const Notificacion = db.notificacion;
 const User = db.user;
-const Op = db.Op;
-
-
-
-
-
 
 // Create and Save a new Book
 exports.create = (req, res) => {

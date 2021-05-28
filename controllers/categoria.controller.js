@@ -1,6 +1,6 @@
 const db = require("../models");
 const Categoria = db.categoria;
-const Op = db.Op;
+
 
 // Create and Save a new Book
 exports.create = (req, res) => {

@@ -2,7 +2,6 @@ const bcrypt = require("bcrypt");
 const db = require("../models");
 const Clientes = db.cliente;
 const User = db.user;
-const Op = db.Op;
 
 // Create and Save a new Book
 exports.create = async (req, res) => {

@@ -1,6 +1,6 @@
 const db = require("../models");
 const Tercero = db.tercero;
-const Op = db.Op;
+
 
 // Create and Save a new Book
 exports.create = (req, res) => {
