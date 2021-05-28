@@ -1,13 +1,10 @@
 const config = require("../config/config");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const db = require("../models");
-const { user } = require("../models");
-const { text } = require("body-parser");
 const User = db.user;
-const Role = db.role;
-const Op = db.Op;
+;
 
 exports.signup = (req, res) => {
 
