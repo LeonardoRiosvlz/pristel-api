@@ -9,25 +9,25 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 },{ name: 'firma
   // Retrieve all Books
   router.get("/user/all",[authJwt.verifyToken], controller.findAll);
 
-  router.get("/api/user/contactos",[authJwt.verifyToken], controller.findAllContacto);
+  router.get("/user/contactos",[authJwt.verifyToken], controller.findAllContacto);
 
   router.get("/user/coordinadores",[authJwt.verifyToken], controller.findCoordinadores);
 
   router.get("/user/pefil",[authJwt.verifyToken], controller.findOne);
 
-  router.post("/api/user/tecnico",[cpUpload,authJwt.verifyToken], controller.findTecnico);
+  router.post("/user/tecnico",[cpUpload,authJwt.verifyToken], controller.findTecnico);
 
-  router.post("/api/user/regional",[cpUpload,authJwt.verifyToken], controller.findregional);
+  router.post("/user/regional",[cpUpload,authJwt.verifyToken], controller.findregional);
 
-  router.get("/api/user/adminstrador",[cpUpload,authJwt.verifyToken], controller.findAdministrador);
+  router.get("/user/adminstrador",[cpUpload,authJwt.verifyToken], controller.findAdministrador);
 
-  router.put("/user/pefil",[cpUpload ,authJwt.verifyToken], controller.update);
+  router.put("/pefil",[cpUpload ,authJwt.verifyToken], controller.update);
 
-  router.put("/api/user/canal",[cpUpload ,authJwt.verifyToken], controller.updateCanal);
+  router.put("/user/canal",[cpUpload ,authJwt.verifyToken], controller.updateCanal);
 
-  router.get("/api/test/all", controller.allAccess);
+  router.get("/test/all", controller.allAccess);
 
-  router.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
+  router.get("/test/user", [authJwt.verifyToken], controller.userBoard);
 
 
  module.exports = router;
