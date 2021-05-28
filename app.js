@@ -27,6 +27,9 @@ app.use('/api', require('./routes/terceros.routes'));
 app.use('/api', require('./routes/entidades.routes'));
 app.use('/api', require('./routes/permisos.routes'));
 app.use('/api', require('./routes/notificacion.routes'));
+app.use('/api', require('./routes/formato.routes'));
+app.use('/api', require('./routes/chat.routes'));
+app.use('/api', require('./routes/imputaciones.routes'));
 
 
 
