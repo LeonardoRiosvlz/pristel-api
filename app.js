@@ -24,6 +24,7 @@ app.use('/api', require('./routes/auth.routes'));
 app.use('/api', require('./routes/user.routes'));
 app.use('/api', require('./routes/cargo.routes'));
 app.use('/api', require('./routes/terceros.routes'));
+app.use('/api', require('./routes/entidades.routes'));
 
 
 
