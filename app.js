@@ -23,6 +23,15 @@ app.use('/public',express.static(`${__dirname}/storage/imgs`));
 app.use('/api', require('./routes/auth.routes'));
 app.use('/api', require('./routes/user.routes'));
 app.use('/api', require('./routes/cargo.routes'));
+app.use('/api', require('./routes/area.routes'));
+app.use('/api', require('./routes/terceros.routes'));
+app.use('/api', require('./routes/categoria.routes'));
+app.use('/api', require('./routes/subcategoria.routes'));
+app.use('/api', require('./routes/entidades.routes'));
+app.use('/api', require('./routes/permisos.routes'));
+app.use('/api', require('./routes/notificacion.routes'));
+app.use('/api', require('./routes/formato.routes'));
+app.use('/api', require('./routes/chat.routes'));
 
 
 
