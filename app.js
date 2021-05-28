@@ -20,12 +20,8 @@ db.sequelize.sync().then(() => {
 
 
 app.use('/public',express.static(`${__dirname}/storage/imgs`));
-app.use('/api',require("./routes/auth.routes"));
-app.use('/api',require("./routes/user.routes"));
-
-
-
-
+app.use('/api', require('./routes/user.routes'));
+app.use('/api', require('./routes/auth.routes'));
 
 
 // Middleware para Vue.js router modo history
@@ -41,9 +37,9 @@ const servidor = app.listen(app.get('puerto'), () => {
 const io = require('socket.io')(servidor);
 global.io = io; //added
 io.on('connection', function(socket) {
-
+ 
     socket.on('servidor', function(data) {
-
+  
         //io.emit('MESSAGE', data)
         io.to(data.user).emit('cliente', data);
     });
