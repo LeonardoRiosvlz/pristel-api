@@ -1,7 +1,5 @@
 const db = require("../models");
 const Area = db.area;
-
-
 // Create and Save a new Book
 exports.create = (req, res) => {
   // Validate request
