@@ -15,22 +15,22 @@ const cpUpload = upload.fields([
 
 
     // Create a new cargo
-    router.post("/gestion",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], gestionAthController.create);
+    router.post("/gestion/ath",[cpUpload,authJwt.verifyToken], gestionAthController.create);
 
     // Retrieve all cargos
-    router.get("/gestion", gestionAthController.findAll);
+    router.get("/gestion/ath", gestionAthController.findAll);
 
      // Retrieve all cargos
-     router.post("/gestion/find",[cpUpload,authJwt.verifyToken], gestionAthController.find);
+     router.post("/gestion/ath/find",[cpUpload,authJwt.verifyToken], gestionAthController.find);
 
     // Update a cargo with id
-    router.put("/gestion",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], gestionAthController.update);
+    router.put("/gestion/ath",[cpUpload,authJwt.verifyToken], gestionAthController.update);
 
     // Delete a cargo with id
-    router.post("/gestion/respuesta",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], gestionAthController.respuesta);
+    router.post("/gestion/ath/respuesta",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], gestionAthController.respuesta);
 
     // Delete a cargo with id
-    router.post("/gestion/delete",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], gestionAthController.delete);
+    router.post("/gestion/ath/delete",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], gestionAthController.delete);
 
 
     module.exports = router;

@@ -13,7 +13,7 @@ exports.upload = async (req, res) => {
       }
   
       let tutorials = [];
-      let path = "./app/storage/uploads/" + req.file.filename;
+      let path = "./storage/"+req.file.filename;
       deleteAll();
       fs.createReadStream(path)
         .pipe(csv.parse({ headers: true , delimiter: ';' }))

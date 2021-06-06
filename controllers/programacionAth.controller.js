@@ -1,4 +1,10 @@
 const db = require("../models");
+const Excel = require('exceljs');
+const path = require('path');
+const mime = require('mime');
+const fs = require('fs');
+
+const Op = db.Op;
 const ProgramacionAth = db.programacion_ath;
 const Cajero = db.cajero_ath;
 const Entidad = db.entidad;
@@ -7,7 +13,7 @@ const Ciudad = db.ciudad;
 const Gestion = db.gestionAth;
 const Sac = db.sacAth;
 const Notificacion = db.notificacion;
-const Legalizaciones = db.legalizacionAth;
+const Legalizaciones = db.legalizacionAth; 
 
 // Create and Save a new Book
 exports.create = (req, res) => {
@@ -76,7 +82,8 @@ await ProgramacionAth.findAndCountAll({
     {
       model: Cajero,
       attributes:[ 'codigo','regional_id'],
-      include: [{ model: Ciudad,attributes:[ 'ciudad'] },{ model: Entidad,attributes:[ 'imagen','id'] }
+      include: [{ model: Ciudad,attributes:[ 'ciudad'] },
+      { model: Entidad,attributes:[ 'imagen','id'] }
       
       ]
     }],
@@ -168,6 +175,59 @@ exports.find = async (req, res) => {
     };
 
 
+    exports.findTecnico = async (req, res) => {
+      await  ProgramacionAth.findAll({
+          limit: 3000000,
+          offset: 0,
+          where: {
+              tecnico_id:req.userId,
+              [Op.or]: [
+                        { status: "Programada" },
+                        { status: "Reprogramada" },
+                        { status: "Devuelta" },
+                        { status: "Aceptada" },
+                        { status: "Legalizada" },
+                        { status: "Cumplida" },
+                        { status: "En proceso" },
+                      ],  
+              }, // conditions
+          order: [
+            ['id', 'DESC'],
+          ],
+          include: [{
+            model: User, as: 'Tecnico_ath',
+            attributes:['nombre', 'apellido','imagen' ],
+          }, 
+          {
+            model: User, as: 'Coordinador',
+            attributes:['nombre', 'apellido','imagen' ],
+          }, 
+          {
+            model: Legalizaciones,
+          },
+          {
+            model: Gestion,
+          },
+          {
+            model: Cajero,
+            attributes:[ 'codigo','regional_id','terminal','direccion'],
+            include: [{ model: Ciudad,attributes:[ 'ciudad'] },
+            { model: Entidad,attributes:[ 'imagen','id'] }
+            
+            ]
+          }],
+        }) 
+          .then(data => {
+            res.send(data);
+          })
+          .catch(err => {
+            res.send(500).send({
+              message: err.message || "Ocurrio un erro al intentar acceder a este recursos."
+            });
+          });
+      };
+
+
 // Find a single with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -241,7 +301,7 @@ exports.programar = async (req, res) => {
             // Create 
 
             const datos = {
-              titulo: `Programción ATH (${req.body.status})`,
+              titulo: `Programción ATH-${req.body.id} (${req.body.status})`,
               descripcion: `Programción ${req.body.status} para la fecha ${req.body.vencimiento_tecnico}`,
               origen: "",
               modulo: "llamadas",
@@ -355,6 +415,7 @@ exports.rechazar = async (req, res) => {
   const program = {
     motivo_rechazo: req.body.motivo_rechazo,
     status:"Rechazada",
+    tecnico_id:null,
   };
  await ProgramacionAth.update(program,{
     where: { id: id }
@@ -365,7 +426,7 @@ exports.rechazar = async (req, res) => {
               message: "editado satisfactoriamente."
             });
             const datos = {
-              titulo: `Programción ATH-${req.body.id} rechazada por técnico`,
+              titulo: `Programación ATH-${req.body.id} rechazada por el técnico`,
               descripcion: `Motivo ${req.body.motivo_rechazo}`,
               origen: "",
               modulo: "llamadas_ATH",
@@ -448,4 +509,33 @@ exports.delete = (req, res) => {
     });
 };
 
+
+// Delete a Book with the specified id in the request
+exports.excelexport =async(req, res) => {
+  let id_rdi= "pp"
+  let workbook = new Excel.Workbook();
+  workbook = await workbook.xlsx.readFile("./storage/Rf.xlsx");
+  // Guardar Informacion en la template
+
+  // Crear Excel
+  // AQUI USARAS EL METODO writeBuffer() que devuelve un Buffer
+  const buffer =  await workbook.xlsx.writeBuffer();
+  
+  //DECLARAS EL NOMBRE DE TU ARCHIVO
+  const fileName = `F-RFI-V${id_rdi}.xlsx`
+  
+  // ESTABLECES LA CABECERA PARA INDICAR QUE ENVIARAS UN ARCHIVO PARA DESCARGAR
+  // EN LA CABECERA INDICAS EL NOMBRE DEL ARCHIVO
+  console.log('Sending buffer');
+  
+  res.set({
+    'Content-Type': 'application/octet-stream',
+    'Content-Disposition': 'attachment; filename="' + fileName + '"',
+    'x-processed-filename': fileName // <= cabezera personalizada para enviar el nombre del archivo procesado para su descarga
+  });
+  
+  // Usaremos el método send(), en vez del método sendFile().
+  await res.status(200).send(buffer); // <= No le veo el sentido a hacer la llamada con await
+    // res.download('./storage/leo.xlsx', 'leo.xlsx'); 
+};
 

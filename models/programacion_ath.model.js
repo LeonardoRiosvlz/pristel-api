@@ -13,14 +13,8 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
            type: DataTypes.STRING(15),
            unique: true
         },
-        categoria: {
-          type: DataTypes.STRING(25),
-        },
         titulo: {
           type: DataTypes.STRING(45),
-        },
-        subcategoria: {
-          type: DataTypes.STRING(25),
         },
         consecutivo: {
             type: DataTypes.STRING(15),

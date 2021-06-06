@@ -29,8 +29,6 @@ db.sequelize = sequelize;
 db.books = require("./book.model.js")(sequelize, Sequelize, DataTypes);
 db.cargo = require("./cargo.model.js")(sequelize, Sequelize, DataTypes);
 db.tercero = require("./tercero.model.js")(sequelize, Sequelize, DataTypes);
-db.categoria = require("./categoria.model.js")(sequelize, Sequelize, DataTypes);
-db.subcategoria = require("./subcategoria.model.js")(sequelize, Sequelize, DataTypes);
 db.entidad = require("./entidad.model.js")(sequelize, Sequelize, DataTypes);
 db.cajero_ath = require("./cajero_ath.model.js")(sequelize, Sequelize, DataTypes);
 db.album = require("./album.model.js")(sequelize, Sequelize, DataTypes);
@@ -54,7 +52,9 @@ db.seguridad = require("./seguridad.model.js")(sequelize, Sequelize, DataTypes);
 db.trazabilidad_ath = require("./trazabilidad_ath.model.js")(sequelize, Sequelize, DataTypes); 
 db.sac = require("./sac.model.js")(sequelize, Sequelize, DataTypes);  
 db.sacAth = require("./sacAth.model.js")(sequelize, Sequelize, DataTypes);
-
+db.cdcath = require("./cdcath.model.js")(sequelize, Sequelize, DataTypes);
+db.fscAth = require("./fscAth.model.js")(sequelize, Sequelize, DataTypes);
+db.ascAth = require("./ascAth.model.js")(sequelize, Sequelize, DataTypes);
 
 db.user.hasMany(db.permiso, { foreignKey: 'uid' });
 db.entidad.hasMany(db.permiso, { foreignKey: 'eid' });
@@ -74,7 +74,7 @@ db.entidad.hasMany(db.notas, { foreignKey: 'entidad_id' });
 db.notas.belongsTo(db.entidad, { foreignKey: 'entidad_id' });
 db.user.hasMany(db.notas, { foreignKey: 'user_id' });
 db.notas.belongsTo(db.user, { foreignKey: 'user_id' });
-//formato// 
+//formato de tranferencia// 
 db.user.hasMany(db.formato, { as: 'Tecnico', foreignKey: 'tecnico_id' });
 db.user.hasMany(db.formato, { as: 'Autorizador', foreignKey: 'autorizador_id' });
 db.user.hasMany(db.formato, { as: 'Solicitante', foreignKey: 'solicitante_id' });
@@ -85,7 +85,25 @@ db.tercero.hasMany(db.formato, { foreignKey: 'tercero_id' });
 db.formato.belongsTo(db.tercero, { foreignKey: 'tercero_id' });
 db.entidad.hasMany(db.formato, { foreignKey: 'entidad_id' });
 db.formato.belongsTo(db.entidad, { foreignKey: 'entidad_id' }); 
-//formato//
+//formato de tranferencia//
+
+//formato de cobro// 
+db.fscAth.hasMany(db.cdcath,{ foreignKey: 'formato_id' });
+db.cdcath.belongsTo(db.fscAth,{ foreignKey: 'formato_id' });
+db.programacion_ath.hasMany(db.cdcath,{ foreignKey: 'id_programacion' }); 
+db.cdcath.belongsTo(db.programacion_ath,{ foreignKey: 'id_programacion' });
+db.user.hasMany(db.cdcath,{ foreignKey: 'tecnico_id' });  
+db.cdcath.belongsTo(db.user,{ foreignKey: 'tecnico_id' });
+db.user.hasMany(db.fscAth, { as: 'Tecnico_athc', foreignKey: 'tecnico_id' });
+db.user.hasMany(db.fscAth, { as: 'Autorizador_athc', foreignKey: 'autorizador_id' });
+db.user.hasMany(db.fscAth, { as: 'Solicitante_athc', foreignKey: 'solicitante_id' });
+db.fscAth.belongsTo(db.user, { as: 'Tecnico_athc', foreignKey: 'tecnico_id' });
+db.fscAth.belongsTo(db.user, { as: 'Autorizador_athc', foreignKey: 'autorizador_id' });
+db.fscAth.belongsTo(db.user, { as: 'Solicitante_athc', foreignKey: 'solicitante_id' }); 
+db.fscAth.hasMany(db.ascAth, { foreignKey: 'formato_id' });
+db.ascAth.belongsTo(db.fscAth, { foreignKey: 'formato_id' }); 
+//formato de cobro//
+
 //abono//
 db.regional.hasMany(db.cajero_ath, { foreignKey: 'regional_id' });
 db.cajero_ath.belongsTo(db.regional, { foreignKey: 'regional_id' }); 

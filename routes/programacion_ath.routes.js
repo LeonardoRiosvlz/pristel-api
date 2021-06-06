@@ -12,6 +12,12 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     router.post("/programacion/ath",[cpUpload,authJwt.verifyToken], programacionAthController.create);
 
     // Create a new cargo
+    router.get("/programacion/ath/servicios",[cpUpload,authJwt.verifyToken], programacionAthController.findTecnico);
+
+    // Create a new cargo
+    router.get("/programacion/ath/llamadasexcel",[cpUpload], programacionAthController.excelexport);
+
+    // Create a new cargo
     router.post("/programacion/ath/find",[cpUpload,authJwt.verifyToken], programacionAthController.find);
 
     // Create a new cargo

@@ -1,5 +1,6 @@
 const db = require("../models");
 const Sac = db.sacAth;
+const CuentaDeCobro = db.cdcath;
 const Programación = db.programacion_ath;
 
 
@@ -31,7 +32,15 @@ exports.create = async (req, res) => {
         message: err.message || "Some error occurred while creating the Book."
       });
     });
-    Programación.update({
+    if (req.body.tipo_tecnico==="Contratista") {
+      CuentaDeCobro.findOrCreate({where: {id_programacion: req.body.id},
+        defaults: {
+         id_programacion: req.body.id,
+         tecnico_id: req.body.tecnico_id,
+        }});
+    }
+
+      Programación.update({
         status: "Cerrada",
         motivo_cierre: req.body.motivo_cierre,
         aplica_sac: req.body.aplica_sac,
