@@ -9,7 +9,7 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
 
 
     // Create a new cargo
-    router.post("/programacion/ath",[cpUpload,authJwt.verifyToken], programacionAthController.create);
+    router.post("/programacion/ath",[cpUpload,authJwt.verifyToken,authJwt.isModeratorOrAdmin], programacionAthController.create);
 
     // Create a new cargo
     router.get("/programacion/ath/servicios",[cpUpload,authJwt.verifyToken], programacionAthController.findTecnico);
@@ -21,19 +21,19 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     router.post("/programacion/ath/find",[cpUpload,authJwt.verifyToken], programacionAthController.find);
 
     // Create a new cargo
-     router.post("/programacion/ath/programar",[cpUpload,authJwt.verifyToken], programacionAthController.programar);
+     router.post("/programacion/ath/programar",[cpUpload,authJwt.verifyToken,authJwt.isModeratorOrAdmin], programacionAthController.programar);
 
      // Create a new cargo
-    router.post("/programacion/ath/escalar",[cpUpload,authJwt.verifyToken], programacionAthController.escalar);
+    router.post("/programacion/ath/escalar",[cpUpload,authJwt.verifyToken,authJwt.isModeratorOrAdmin], programacionAthController.escalar,);
 
     // Create a new cargo
-    router.post("/programacion/ath/rechazar",[cpUpload,authJwt.verifyToken], programacionAthController.rechazar);
+    router.post("/programacion/ath/rechazar",[cpUpload,authJwt.verifyToken,authJwt.isModeratorOrAdmin], programacionAthController.rechazar);
 
     // Create a new cargo
-    router.post("/programacion/ath/archivar",[cpUpload,authJwt.verifyToken], programacionAthController.archivar);
+    router.post("/programacion/ath/archivar",[cpUpload,authJwt.verifyToken,authJwt.isModeratorOrAdmin], programacionAthController.archivar);
 
     // Create a new cargo
-    router.post("/programacion/ath/cerrar",[cpUpload,authJwt.verifyToken], programacionAthController.cerrar);
+    router.post("/programacion/ath/cerrar",[cpUpload,authJwt.verifyToken,authJwt.isModeratorOrAdmin], programacionAthController.cerrar);
 
     // Retrieve all cargos
     router.get("/programacion/ath", programacionAthController.findAll);
@@ -47,6 +47,14 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
 
     router.post("/programacion/ath/delete",[cpUpload,authJwt.verifyToken], programacionAthController.delete);
 
+
+
+
+
+    ///////////tecnico///////////////
+
+    // Create a new cargo
+    router.post("/tecnico/programacion/ath/rechazar",[cpUpload,authJwt.verifyToken,authJwt.isTecnico], programacionAthController.rechazar);
 
 
     module.exports = router;

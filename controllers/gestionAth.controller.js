@@ -19,21 +19,21 @@ exports.create = async (req, res) => {
   if (req.files['gallery_antes']) {
     let  gallery = req.files['gallery_antes']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`http://127.0.0.1:5000/public/${gallery[index].filename}`      
+        gallery[index]=`https://pristel.herokuapp.com/public/${gallery[index].filename}`      
     }
     body.evidencias_antes=gallery
   }
   if (req.files['gallery_durante']) {
     let  gallery = req.files['gallery_durante']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`http://127.0.0.1:5000/public/${gallery[index].filename}`      
+        gallery[index]=`https://pristel.herokuapp.com/public/${gallery[index].filename}`      
     }
     body.evidencias_durante=gallery
   }
   if (req.files['gallery_despues']) {
     let  gallery = req.files['gallery_despues']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`http://127.0.0.1:5000/public/${gallery[index].filename}`      
+        gallery[index]=`https://pristel.herokuapp.com/public/${gallery[index].filename}`      
     }
     body.evidencias_despues=gallery
   }
@@ -172,21 +172,21 @@ exports.update = async (req, res) => {
   if (req.files['gallery_antes']) {
     let  gallery = req.files['gallery_antes']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`http://127.0.0.1:5000/public/${gallery[index].filename}`      
+        gallery[index]=`https://pristel.herokuapp.com/public/${gallery[index].filename}`      
     }
     body.evidencias_antes=gallery
   }
   if (req.files['gallery_durante']) {
     let  gallery = req.files['gallery_durante']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`http://127.0.0.1:5000/public/${gallery[index].filename}`      
+        gallery[index]=`https://pristel.herokuapp.com/public/${gallery[index].filename}`      
     }
     body.evidencias_durante=gallery
   }
   if (req.files['gallery_despues']) {
     let  gallery = req.files['gallery_despues']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`http://127.0.0.1:5000/public/${gallery[index].filename}`      
+        gallery[index]=`https://pristel.herokuapp.com/public/${gallery[index].filename}`      
     }
     body.evidencias_despues=gallery
   }

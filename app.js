@@ -49,6 +49,7 @@ app.use('/api', require('./routes/cajeros_ath.routes'));
 app.use('/api', require('./routes/programacion_ath.routes'));
 app.use('/api', require('./routes/cobrosAth.routes'));
 app.use('/api', require('./routes/fscAth.routes'));
+app.use('/api', require('./routes/ascath.routes'));
 
 // Middleware para Vue.js router modo history
 const history = require('connect-history-api-fallback');

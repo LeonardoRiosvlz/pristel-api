@@ -62,6 +62,13 @@ exports.create = async (req, res) => {
             res.send({
               message: "editado satisfactoriamente."
             });
+            if (req.body.tipo_tecnico==="Contratista") {
+              CuentaDeCobro.findOrCreate({where: {id_programacion: req.body.id},
+                defaults: {
+                 id_programacion: req.body.id,
+                 tecnico_id: req.body.tecnico_id,
+                }});
+            }
           } else {
             res.send({
               message: `No puede editar el coargo con el  el =${id}. Tal vez el cargo no existe o la peticion es vacia!`

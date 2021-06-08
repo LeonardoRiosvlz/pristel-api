@@ -10,9 +10,9 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           primaryKey: true
         },
         status: {
-          type: DataTypes.ENUM('Pendiente','Aprobado','Rechazado'),
-          defaultValue: 'Pendiente',
-          unique: false
+          type: DataTypes.ENUM('Creado','Pendiente','Aprobado','Rechazado'),
+          defaultValue: 'Creado',
+          unique: false 
        }, 
        status_pago: {
         type: DataTypes.ENUM('','Pendiente','Cancelado'),

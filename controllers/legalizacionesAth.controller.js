@@ -20,7 +20,7 @@ exports.create = async (req, res) => {
   if (req.files['evidencias']) {
     let  gallery = req.files['evidencias']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`http://127.0.0.1:5000/public/${gallery[index].filename}`      
+        gallery[index]=`https://pristel.herokuapp.com/public/${gallery[index].filename}`      
     }
     body.evidencias=gallery
   }
@@ -162,7 +162,7 @@ exports.update = async (req, res) => {
     if (req.files['evidencias']) {
       let  gallery = req.files['evidencias']  
       for (let index = 0; index < gallery.length; index++) {
-          gallery[index]=`http://127.0.0.1:5000/public/${gallery[index].filename}`      
+          gallery[index]=`https://pristel.herokuapp.com/public/${gallery[index].filename}`      
       }
       body.evidencias=gallery
     }

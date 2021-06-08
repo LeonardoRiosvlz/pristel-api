@@ -9,7 +9,7 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 },{ name: 'firma
 
 
   router.post(
-    "/api/auth/signup",
+    "/auth/signup",
     [ cpUpload,verifySignUp.checkDuplicateUsernameOrEmail],controller.signup
   );
 

@@ -7,7 +7,7 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }]);
     const formatoController = require("../controllers/formato.controller.js");
 
     // Create a new cargo
-    router.post("/formatos",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], formatoController.create);
+    router.post("/formatos",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdmin], formatoController.create);
 
     // Create a new cargo
     router.post("/formatos/status",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], formatoController.status);
@@ -19,10 +19,10 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }]);
     router.get("/formatos", formatoController.findAll);
 
     // Update a cargo with id
-    router.put("/formatos",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], formatoController.update);
+    router.put("/formatos",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdmin], formatoController.update);
 
     // Delete a cargo with id
-    router.post("/formatos/delete",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], formatoController.delete);
+    router.post("/formatos/delete",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdmin], formatoController.delete);
 
 
     module.exports = router;

@@ -51,7 +51,7 @@ exports.findTecnico = (req, res) => {
       tipo: 'Tecnico',
       status: 'activo'
     },
-     attributes: ['nombre', 'apellido','id','email',  'codigo', 'telefono','imagen','direccion','tipo_tecnico','cuenta','nombre_cuenta'] })
+     attributes: ['nombre', 'apellido','id','email',  'codigo', 'telefono','imagen','direccion','tipo_tecnico','tipo_cuenta','cuenta','nombre_cuenta'] })
     .then(data => {
       res.send(data);
     })
@@ -174,12 +174,12 @@ exports.update = (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.imagen= `http://localhost:5000/public/${filename}`;
+    body.imagen= `https://pristel.herokuapp.com/public/${filename}`;
     console.log(body.imagen);
   }
   if(req.files['firma']){
     const { firma } = req.files['firma'][0]
-    body.firma= `http://localhost:5000/public/${firma}`;
+    body.firma= `https://pristel.herokuapp.com/public/${firma}`;
     console.log(body.imagen);
   }
   if (req.codigo) {

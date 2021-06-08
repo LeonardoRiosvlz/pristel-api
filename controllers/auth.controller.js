@@ -10,11 +10,11 @@ exports.signup = (req, res) => {
 
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    req.body.imagen= `http://localhost:5000/public/${filename}`
+    req.body.imagen= `https://pristel.herokuapp.com/public/${filename}`
   }
   if(req.files['firma']){
     const { filename } = req.files['firma'][0]
-    req.body.firma= `http://localhost:5000/public/${filename}`;
+    req.body.firma= `https://pristel.herokuapp.com/public/${filename}`;
   }
   User.create({
     username: req.body.username,
@@ -28,7 +28,8 @@ exports.signup = (req, res) => {
     telefono: req.body.telefono,
     imagen: req.body.imagen,
     tipo: req.body.tipo,
-    tipo: req.body.regional,
+    regional: req.body.regional,
+    dependencia: req.body.dependencia,
     status: req.body.status,
     direccion: req.body.direccion,
     tipo_tecnico: req.body.tipo_tecnico,
@@ -57,11 +58,11 @@ exports.update = (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.imagen= `http://localhost:5000/public/${filename}`
+    body.imagen= `https://pristel.herokuapp.com/public/${filename}`
   }
   if(req.files['firma']){
     const { filename } = req.files['firma'][0]
-    body.firma= `http://localhost:5000/public/${filename}`;
+    body.firma= `https://pristel.herokuapp.com/public/${filename}`;
   }
   body.nombre= req.body.nombre;
   body.apellido= req.body.apellido;

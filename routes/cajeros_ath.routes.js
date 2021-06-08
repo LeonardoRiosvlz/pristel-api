@@ -20,7 +20,7 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     router.put("/cajeros/ath",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], cajerosAthController.update);
 
     // Delete  with id
-    router.post("/cajeros/ath/find",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], cajerosAthController.find);
+    router.post("/cajeros/ath/find",[cpUpload,authJwt.verifyToken], cajerosAthController.find);
 
     // Delete  with id
     router.post("/byid",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], cajerosAthController.byid);

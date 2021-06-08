@@ -77,11 +77,17 @@ await ProgramacionAth.findAndCountAll({
       model: Legalizaciones,
     },
     {
+      model: Sac,
+    },
+    {
       model: Gestion,
+      order: [
+        ['id', 'ASC'],
+      ],
     },
     {
       model: Cajero,
-      attributes:[ 'codigo','regional_id'],
+      attributes:[ 'codigo','regional_id','entidad_bancaria','terminal'],
       include: [{ model: Ciudad,attributes:[ 'ciudad'] },
       { model: Entidad,attributes:[ 'imagen','id'] }
       
@@ -301,8 +307,8 @@ exports.programar = async (req, res) => {
             // Create 
 
             const datos = {
-              titulo: `Programción ATH-${req.body.id} (${req.body.status})`,
-              descripcion: `Programción ${req.body.status} para la fecha ${req.body.vencimiento_tecnico}`,
+              titulo: `Programación ATH-${req.body.id} (${req.body.status})`,
+              descripcion: `Llamada ${req.body.status}.`,
               origen: "",
               modulo: "llamadas",
               icon: "ri-calendar-line",

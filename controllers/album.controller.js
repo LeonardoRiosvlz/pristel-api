@@ -20,19 +20,24 @@ exports.create = async (req, res) => {
   body.observaciones=req.body.observaciones;
   if(req.files['perimetro']){
     const { filename } = req.files['perimetro'][0]
-    body.perimetro= `http://localhost:5000/public/${filename}`;
+    body.perimetro= `https://pristel.herokuapp.com/public/${filename}`;
+    //body.perimetro= `http://localhost:5000/public/${filename}`;
   }
   if(req.files['site']){
-    const { filename } = req.files['site'][0]
-    body.site= `http://localhost:5000/public/${filename}`;
+    
+    const { filename } = req.files['site'][0];
+      body.site= `https://pristel.herokuapp.com/public/${filename}`;
+    //body.site= `http://localhost:5000/public/${filename}`;
   }
   if(req.files['frente']){
     const { filename } = req.files['frente'][0]
-    body.frente= `http://localhost:5000/public/${filename}`;
+    body.frente= `https://pristel.herokuapp.com/public/${filename}`;
+    //body.frente= `http://localhost:5000/public/${filename}`;
   }
   if(req.files['fachada']){
     const { filename } = req.files['fachada'][0]
-    body.fachada= `http://localhost:5000/public/${filename}`;
+    body.fachada= `https://pristel.herokuapp.com/public/${filename}`;
+    //body.fachada= `http://localhost:5000/public/${filename}`;
   }
   // Save Book in database
  await Album.create(body)
@@ -119,19 +124,24 @@ exports.update = async (req, res) => {
   body.observaciones=req.body.observaciones;
   if(req.files['perimetro']){
     const { filename } = req.files['perimetro'][0]
-    body.perimetro= `http://localhost:5000/public/${filename}`;
+    body.perimetro= `https://pristel.herokuapp.com/public/${filename}`;
+    //body.perimetro= `http://localhost:5000/public/${filename}`;
   }
   if(req.files['site']){
-    const { filename } = req.files['site'][0]
-    body.site= `http://localhost:5000/public/${filename}`;
+    
+    const { filename } = req.files['site'][0];
+      body.site= `https://pristel.herokuapp.com/public/${filename}`;
+    //body.site= `http://localhost:5000/public/${filename}`;
   }
   if(req.files['frente']){
     const { filename } = req.files['frente'][0]
-    body.frente= `http://localhost:5000/public/${filename}`;
+    body.frente= `https://pristel.herokuapp.com/public/${filename}`;
+    //body.frente= `http://localhost:5000/public/${filename}`;
   }
   if(req.files['fachada']){
     const { filename } = req.files['fachada'][0]
-    body.fachada= `http://localhost:5000/public/${filename}`;
+    body.fachada= `https://pristel.herokuapp.com/public/${filename}`;
+    //body.fachada= `http://localhost:5000/public/${filename}`;
   }
 await  Album.update(body,{
     where: { id: id }

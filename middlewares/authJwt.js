@@ -27,8 +27,8 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-const isCoordinadorPrivilegiado = (req, res, next) => {
-  Permiso.findAndCountAll({
+const isCoordinadorPrivilegiado =async (req, res, next) => {
+ await Permiso.findAndCountAll({
     where: {
       uid: req.userId,
       eid: req.body.eid
@@ -47,69 +47,56 @@ const isCoordinadorPrivilegiado = (req, res, next) => {
 
 
 const isAdmin =async (req, res, next) => {
-await  User.findByPk(req.userId).then(user => {
+  await User.findByPk(req.userId).then(user => {
     if (user.tipo==="Administrador") {
       next();
       return;
-    }
-    res.status(403).send({
-      message: "Requiere rol Super administrador"
-    });
-    return;
-  });
-};
-const isTecnico = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
-      for (let i = 0; i < roles.lenth; i++) {
-        if (roles[i].name === "tecnico") {
-          next();
-          return;
-        }
-      }
+    }else{
       res.status(403).send({
-        message: "Require Tecnico Role!"
+        message: "No eres un administrador!"
       });
       return;
-    });
+    }
   });
 };
-const isModerator = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
-      for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "coordinador") {
-          next();
-          return;
-        }
-      }
-
+const isTecnico =async (req, res, next) => {
+ await User.findByPk(req.userId).then(user => {
+    if (user.tipo==="Tecnico") {
+      next();
+      return;
+    }else{
       res.status(403).send({
-        message: "Require Rol Coordinador!"
+        message: "No eres un tecnico!"
       });
-    });
+      return;
+    }
+  });
+};
+const isModerator =async (req, res, next) => {
+  await User.findByPk(req.userId).then(user => {
+    if (user.tipo==="Coordinador") {
+      next();
+      return;
+    }else{
+      res.status(403).send({
+        message: "No eres un tecnico!"
+      });
+      return;
+    }
   });
 };
 
-const isModeratorOrAdmin = (req, res, next) => {
-  User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
-      for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "coordinador") {
-          next();
-          return;
-        }
-
-        if (roles[i].name === "admin") {
-          next();
-          return;
-        }
-      }
-
+const isModeratorOrAdmin =async (req, res, next) => {
+  await User.findByPk(req.userId).then(user => {
+    if (user.tipo==="Administrador"||user.tipo==="Coordinador") {
+      next();
+      return;
+    }else{
       res.status(403).send({
-        message: "Require Moderator or Admin Role!"
+        message: "No tienes permiso para esta accion!"
       });
-    });
+      return;
+    }
   });
 };
 

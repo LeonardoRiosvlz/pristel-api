@@ -16,7 +16,7 @@ exports.create = async (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.logo= `http://localhost:5000/public/${filename}`;  
+    body.logo= `https://pristel.herokuapp.com/public/${filename}`;  
   }
   body.tipo_cliente= req.body.tipo_cliente;
   body.tipo_documento= req.body.tipo_documento;
@@ -139,7 +139,7 @@ exports.update = async (req, res) => {
     const body={};
     if(req.files['filename']){
       const { filename } = req.files['filename'][0]
-      body.logo= `http://localhost:5000/public/${filename}`;  
+      body.logo= `https://pristel.herokuapp.com/public/${filename}`;  
     }
     body.tipo_cliente= req.body.tipo_cliente;
     body.tipo_documento= req.body.tipo_documento;
