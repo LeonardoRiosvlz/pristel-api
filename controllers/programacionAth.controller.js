@@ -16,7 +16,7 @@ const Notificacion = db.notificacion;
 const Legalizaciones = db.legalizacionAth; 
 
 // Create and Save a new Book
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   // Validate request
   if (!req.body.id_cajero) {
     res.status(400).send({
@@ -44,7 +44,7 @@ exports.create = (req, res) => {
   };
 
   // Save Book in database
-  ProgramacionAth.create(program)
+ await ProgramacionAth.create(program)
     .then(data => {
       res.send(data);
     })
