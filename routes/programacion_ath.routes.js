@@ -18,7 +18,7 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     // Create a new cargo
      router.post("/programacion/ath/programar",[cpUpload,authJwt.verifyToken,authJwt.isModeratorOrAdmin], programacionAthController.programar);
      // Create a new cargo
-    router.post("/programacion/ath/escalar",[cpUpload,authJwt.verifyToken,authJwt.isModeratorOrAdmin], programacionAthController.escalar);
+   // router.post("/programacion/ath/escalar",[cpUpload,authJwt.verifyToken,authJwt.isModeratorOrAdmin], programacionAthController.escalar);
     // Create a new cargo
     router.post("/programacion/ath/rechazar",[cpUpload,authJwt.verifyToken,authJwt.isModeratorOrAdmin], programacionAthController.rechazar);
     // Create a new cargo

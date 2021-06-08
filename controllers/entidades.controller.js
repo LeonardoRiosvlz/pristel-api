@@ -17,7 +17,7 @@ exports.create = async (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.imagen= `http://localhost:5000/public/${filename}`;
+    body.imagen= `https://pristel.herokuapp.com/public/${filename}`;
     console.log(body.imagen);
   }
   body.nombre= req.body.nombre;
@@ -91,7 +91,7 @@ exports.update =async (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.imagen= `http://localhost:5000/public/${filename}`;
+    body.imagen= `https://pristel.herokuapp.com/public/${filename}`;
   
   }
   body.nombre= req.body.nombre;
