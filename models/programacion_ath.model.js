@@ -46,16 +46,18 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           unique: false
         },
         motivo_escalado: {
-          type: DataTypes.STRING
+          type: DataTypes.STRING(200),
+          
         },
         motivo_rechazo: {
-          type: DataTypes.STRING
+          type: DataTypes.STRING(200),
+          
         },   
         motivo_archivado: {
-          type: DataTypes.STRING
+          type: DataTypes.STRING(200),
         },   
         motivo_cierre: {
-          type: DataTypes.STRING
+          type: DataTypes.STRING(200), 
         },  
         fecha_creacion: {
           allowNull: true,
