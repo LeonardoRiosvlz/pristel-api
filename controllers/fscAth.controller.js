@@ -15,7 +15,7 @@ exports.create = (req, res) => {
   // Create a Book
   const book = {
     status: "Pendiente",
-    status_pago: "Creado",
+    status_pago: "Pendiente",
     items: req.body.items,
     total: req.body.total,
     tecnico_id: req.body.tecnico_id,

@@ -29,7 +29,7 @@ exports.create = async (req, res) => {
       res.send(data);
       const datos = {
         titulo: `Abono realizado (${req.body.tipo})`,
-        descripcion: `Se realizó un abono con el valor de $ ${req.body.valor_abono}`,
+        descripcion: `Se realizó un abono con el valor de $ ${req.body.valor_abono} al F.S.T.-${req.body.formato_id}`,
         origen: "",
         modulo: "abonos",
         icon: "ri-money-dollar-box-line",

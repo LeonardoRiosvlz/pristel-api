@@ -1,6 +1,7 @@
 const db = require("../models");
 const Cuenta = db.cdcath;
 const Prgramacion = db.programacion_ath;
+const Gestion = db.gestionAth;
 const Cajero = db.cajero_ath;
 const Ciudad = db.ciudad;
 
@@ -24,6 +25,9 @@ exports.findAll = (req, res) => {
                   attributes:['departamento','ciudad',],
                 },
               ]
+            },
+            {
+              model: Gestion,
             },
           ]
       },
