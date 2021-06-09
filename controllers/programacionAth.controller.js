@@ -88,7 +88,7 @@ await ProgramacionAth.findAndCountAll({
     {
       model: Cajero,
       attributes:[ 'codigo','regional_id','entidad_bancaria','terminal'],
-      include: [{ model: Ciudad,attributes:[ 'ciudad'] },
+      include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
       { model: Entidad,attributes:[ 'imagen','id'] }
       
       ]
@@ -140,7 +140,7 @@ exports.find = async (req, res) => {
         model: Cajero,
         attributes:[ 'codigo'],
         include: [
-          { model: Ciudad,attributes:[ 'ciudad','regional_id'] },
+          { model: Ciudad,attributes:[ 'ciudad','departamento','regional_id'] },
           { model: Entidad,attributes:[ 'imagen','id'] },
         ]
       }],
@@ -217,7 +217,7 @@ exports.find = async (req, res) => {
           {
             model: Cajero,
             attributes:[ 'codigo','regional_id','terminal','direccion'],
-            include: [{ model: Ciudad,attributes:[ 'ciudad'] },
+            include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
             { model: Entidad,attributes:[ 'imagen','id'] }
             
             ]
