@@ -14,15 +14,9 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             defaultValue: 'Pendiente',
             unique: false
         },
-        tipo: {
-            type: DataTypes.STRING(20)
-        },
         observaciones: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING(255)
         },
-        abono: {
-          type: DataTypes.STRING(150)
-        }, 
         excedente: {
             type: DataTypes.STRING(20)
         },
@@ -30,7 +24,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             type: DataTypes.JSON
         },
         observaciones_analista: {
-          type: DataTypes.TEXT 
+          type: DataTypes.STRING(255)
         },
         items: {
             type: DataTypes.JSON

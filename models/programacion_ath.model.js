@@ -92,10 +92,10 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           type: DataTypes.DATE
         },
         descripcion: {
-            type: DataTypes.STRING
+            type: DataTypes.STRING(200)
         },
         observacion_cierre: {
-          type: DataTypes.STRING
+          type: DataTypes.STRING(200)
         },
         created_at: {
             allowNull: false,

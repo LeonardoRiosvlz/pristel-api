@@ -56,6 +56,10 @@ exports.findAll = (req, res) => {
     order: [
       ['id', 'DESC'],
     ],
+    include: [{
+      model: User, as: 'remitente',
+      attributes:['nombre', 'apellido','imagen']
+    }]
   })
     .then(data => {
       res.send(data);

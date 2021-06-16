@@ -51,7 +51,7 @@ exports.findTecnico = (req, res) => {
       tipo: 'Tecnico',
       status: 'activo'
     },
-     attributes: ['nombre', 'apellido','id','email',  'codigo', 'telefono','imagen','direccion','tipo_tecnico','tipo_cuenta','cuenta','nombre_cuenta'] })
+     attributes: ['nombre', 'apellido','id','email',  'codigo', 'telefono','imagen','direccion','tipo_tecnico','tipo_cuenta','cuenta','nombre_cuenta','nequi'] })
     .then(data => {
       res.send(data);
     })

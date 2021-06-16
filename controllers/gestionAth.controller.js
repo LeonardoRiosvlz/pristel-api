@@ -39,6 +39,7 @@ exports.create = async (req, res) => {
   }
   body.asunto= req.body.asunto;
   body.descripcion= req.body.descripcion;
+  body.descripcion_larga= req.body.descripcion_larga;
   body.observaciones= req.body.observaciones;
   body.id_programacion= req.body.id_programacion;
   // Save Book in database
@@ -53,6 +54,7 @@ exports.create = async (req, res) => {
         icon: "ri-hammer-line",
         color: "avatar-title bg-success rounded-circle font-size-16",
         uid: req.body.coordinador_id,
+        uidr:req.userId,
         canal: "",
       };
       CrearNotificacion(datos);
@@ -192,6 +194,7 @@ exports.update = async (req, res) => {
   }
   body.asunto= req.body.asunto;
   body.descripcion= req.body.descripcion;
+  body.descripcion_larga= req.body.descripcion_larga;
   body.observaciones= req.body.observaciones;
   body.id_programacion= req.body.id_programacion;
   const id = req.body.id;
@@ -248,6 +251,7 @@ exports.respuesta = async (req, res) => {
             icon: "ri-reply-fill",
             color: "avatar-title bg-danger rounded-circle font-size-16",
             uid: req.body.tecnico_id,
+            uidr:req.userId,
             canal: "",
           };
           CrearNotificacion(datos);
@@ -260,6 +264,7 @@ exports.respuesta = async (req, res) => {
             icon: "ri-check-fill",
             color: "avatar-title bg-success rounded-circle font-size-16",
             uid: req.body.tecnico_id,
+            uidr:req.userId,
             canal: "",
           };
           CrearNotificacion(datos);

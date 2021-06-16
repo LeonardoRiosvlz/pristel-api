@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           type: DataTypes.STRING(25)
         },
         tipo: {
-            type: DataTypes.ENUM('Efectivo','Transferencia','Giro'),
+            type: DataTypes.ENUM('Efectivo','Transferencia','Giro','Nequi'),
         },
         descripcion_abono: {
           type: DataTypes.STRING

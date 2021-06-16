@@ -14,6 +14,8 @@ const Gestion = db.gestionAth;
 const Sac = db.sacAth;
 const Notificacion = db.notificacion;
 const Legalizaciones = db.legalizacionAth; 
+const Regional = db.regional; 
+
 
 // Create and Save a new Book
 exports.create = async (req, res) => {
@@ -87,7 +89,7 @@ await ProgramacionAth.findAndCountAll({
     },
     {
       model: Cajero,
-      attributes:[ 'codigo','regional_id','entidad_bancaria','terminal'],
+      attributes:[ 'codigo','regional_id','direccion','comparte_site','numero_site','entidad_bancaria','terminal','tipo'],
       include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
       { model: Entidad,attributes:[ 'imagen','id'] }
       
@@ -138,10 +140,11 @@ exports.find = async (req, res) => {
       },
       {
         model: Cajero,
-        attributes:[ 'codigo'],
+        attributes:[ 'codigo','regional_id','direccion','comparte_site','numero_site','entidad_bancaria','terminal','tipo','tipologia'],
         include: [
           { model: Ciudad,attributes:[ 'ciudad','departamento','regional_id'] },
           { model: Entidad,attributes:[ 'imagen','id'] },
+          { model: Regional,attributes:[ 'nombre'] },
         ]
       }],
     }) 
@@ -314,6 +317,7 @@ exports.programar = async (req, res) => {
               icon: "ri-calendar-line",
               color: "avatar-title bg-primary rounded-circle font-size-16",
               uid: req.body.tecnico_id,
+              uidr:req.userId,
               canal: "",
             };
             CrearNotificacion(datos);
@@ -439,6 +443,7 @@ exports.rechazar = async (req, res) => {
               icon: "ri-close-fill",
               color: "avatar-title bg-danger rounded-circle font-size-16",
               uid: req.body.coordinador_id,
+              uidr:req.userId,
               canal: "",
             };
             CrearNotificacion(datos);

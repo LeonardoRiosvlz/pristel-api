@@ -16,7 +16,7 @@ const cpUpload = upload.fields([
     router.post("/legalizaciones/ath",[cpUpload,authJwt.verifyToken], legalizacionesAthController.create);
 
     // Delete a cargo with id
-    router.post("/legalizaciones/ath/respuesta",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], legalizacionesAthController.respuesta);
+    router.post("/legalizaciones/ath/respuesta",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdmin], legalizacionesAthController.respuesta);
 
      // Retrieve all cargos
      router.post("/legalizaciones/ath/find",[cpUpload,authJwt.verifyToken], legalizacionesAthController.find);

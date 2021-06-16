@@ -1,9 +1,10 @@
+const { album } = require("../models");
 const db = require("../models");
 const CajerosAth = db.cajero_ath;
 const Entidad = db.entidad;
 const Ciudad = db.ciudad;
 const Regional = db.regional;
-
+const Album = db.album;
 
 // Create and Save a new Book
 exports.create = (req, res) => {
@@ -85,6 +86,9 @@ exports.find = (req, res) => {
         model:Regional,
       },
       {
+        model:Album,
+      },
+      {
         model:Entidad,
         attributes:['imagen']
       },
@@ -114,6 +118,10 @@ exports.byid = (req, res) => {
       {
         model:Ciudad,
         attributes:['ciudad']
+      },
+      {
+        model:Regional,
+        attributes:['nombre']
       }
     ],
     })

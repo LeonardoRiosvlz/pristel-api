@@ -35,6 +35,7 @@ exports.create = async (req, res) => {
         icon: "ri-money-dollar-box-line",
         color: "avatar-title bg-success rounded-circle font-size-16",
         uid: req.body.tecnico_id,
+        uidr:req.userId,
         canal: "",
       };
       CrearNotificacion(datos);

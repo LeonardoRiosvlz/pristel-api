@@ -18,12 +18,14 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             allowNull: true,
             type: DataTypes.DATEONLY
         }, 
-
         asunto: {
             type: DataTypes.STRING(100)
         },
         descripcion: {
             type: DataTypes.STRING(250)
+        },
+        descripcion_larga: {
+          type: DataTypes.TEXT
         },
         observaciones_analista: {
             type: DataTypes.TEXT 

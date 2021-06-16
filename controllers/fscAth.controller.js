@@ -34,6 +34,7 @@ exports.create = (req, res) => {
         icon: "ri-currency-line",
         color: "avatar-title bg-primary rounded-circle font-size-16",
         uid: req.body.coordinador_id,
+        uidr:req.userId,
         canal: "",
       };
       CrearNotificacion(datos);
@@ -234,6 +235,7 @@ exports.status =async (req, res) => {
              icon: "ri-check-double-line",
              color: "avatar-title bg-success rounded-circle font-size-16",
              uid: req.body.solicitante_id,
+             uidr:req.userId,
              canal: "",
            };
            CrearNotificacion(datos);
@@ -246,6 +248,7 @@ exports.status =async (req, res) => {
              icon: "ri-close-line",
              color: "avatar-title bg-danger rounded-circle font-size-16",
              uid: req.body.solicitante_id,
+             uidr:req.userId,
              canal: "",
            };
            CrearNotificacion(datos);
@@ -286,6 +289,9 @@ exports.procesarFormato = (req, res) => {
 
   Formato.update({
     status: "Pendiente",
+    items: req.body.items,
+    observacion: req.body.observacion,
+    total: req.body.total_cuenta,
     autorizador_id: req.body.autorizador_id
     },{
     where: { id: id }
@@ -303,6 +309,7 @@ exports.procesarFormato = (req, res) => {
           icon: "ri-currency-line",
           color: "avatar-title bg-primary rounded-circle font-size-16",
           uid: req.body.autorizador_id,
+          uidr:req.userId,
           canal: "",
         };
         CrearNotificacion(datos);

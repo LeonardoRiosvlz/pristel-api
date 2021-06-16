@@ -38,6 +38,7 @@ await  Notas.create(body)
         icon: "ri-file-text-line",
         color: "avatar-title bg-info rounded-circle font-size-16",
         uid: body.uid,
+        uidr:req.userId,
         canal: "",
       };
       CrearNotificacion(datos);

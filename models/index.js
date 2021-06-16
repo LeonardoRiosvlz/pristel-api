@@ -66,6 +66,8 @@ db.user.hasMany(db.album, { foreignKey: 'user_id' });
 db.album.belongsTo(db.user, { foreignKey: 'user_id' });
 db.entidad.hasMany(db.album, { foreignKey: 'entidad_id' });
 db.album.belongsTo(db.entidad, { foreignKey: 'entidad_id' });
+db.cajero_ath.hasMany(db.album, { foreignKey: 'cajero_ath_id' });
+db.album.belongsTo(db.cajero_ath, { foreignKey: 'cajero_ath_id' });
 //imputaciones//
 db.entidad.hasMany(db.imputaciones, { foreignKey: 'id_entidad' });
 db.imputaciones.belongsTo(db.entidad, { foreignKey: 'id_entidad' });
@@ -109,8 +111,8 @@ db.regional.hasMany(db.cajero_ath, { foreignKey: 'regional_id' });
 db.cajero_ath.belongsTo(db.regional, { foreignKey: 'regional_id' }); 
 db.regional.hasMany(db.ciudad, { foreignKey: 'regional_id' });
 db.ciudad.belongsTo(db.regional, { foreignKey: 'regional_id' });
-db.ciudad.hasMany(db.cajero_ath, { foreignKey: 'cuidades_id' });
-db.cajero_ath.belongsTo(db.ciudad, { foreignKey: 'cuidades_id' }); 
+db.ciudad.hasMany(db.cajero_ath, { foreignKey: 'ciudades_id' });
+db.cajero_ath.belongsTo(db.ciudad, { foreignKey: 'ciudades_id' }); 
 //abono//
 //abono//
 db.formato.hasMany(db.abonos, { foreignKey: 'formato_id' });
@@ -142,8 +144,13 @@ db.permiso.belongsTo(db.entidad, { foreignKey: 'eid' });
 
 
 
-db.notificacion.belongsTo(db.user, { foreignKey: 'uid' });
-db.user.hasMany(db.notificacion, { foreignKey: 'uid' });
+
+db.user.hasMany(db.notificacion, { as: 'destinatario', foreignKey: 'uid' });
+db.user.hasMany(db.notificacion, { as: 'remitente', foreignKey: 'uidr' });
+db.notificacion.belongsTo(db.user, { as: 'remitente', foreignKey: 'uidr' });
+db.notificacion.belongsTo(db.user, { as: 'destinatario', foreignKey: 'uid' });
+
+
 
 ///chat///
 db.conversacion.hasMany(db.suscripciones, { foreignKey: 'id_conversacion' }); 

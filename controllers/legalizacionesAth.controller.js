@@ -24,14 +24,9 @@ exports.create = async (req, res) => {
     }
     body.evidencias=gallery
   }
-  if(req.files['filename']){
-    const { filename } = req.files['filename'][0]
-    body.abono= `https://pristel.herokuapp.com/public/${filename}`;
-  }
   body.observaciones= req.body.observaciones;
   body.excedente= req.body.excedente;
   body.items= req.body.items;
-  body.tipo= req.body.tipo;
   body.id_programacion= req.body.id_programacion;
   // Save Book in database
  await Legalizaciones.create(body)
@@ -45,6 +40,7 @@ exports.create = async (req, res) => {
         icon: "ri-exchange-dollar-fill",
         color: "avatar-title bg-success rounded-circle font-size-16",
         uid: req.body.coordinador_id,
+        uidr:req.userId,
         canal: "",
       };
       CrearNotificacion(datos);
@@ -166,14 +162,9 @@ exports.update = async (req, res) => {
       }
       body.evidencias=gallery
     }
-    if(req.files['filename']){
-      const { filename } = req.files['filename'][0]
-      body.abono= `https://pristel.herokuapp.com/public/${filename}`;
-    }
     body.observaciones= req.body.observaciones;
     body.excedente= req.body.excedente;
     body.items= req.body.items;
-    body.tipo= req.body.tipo;
     body.id_programacion= req.body.id_programacion;
   const id = req.body.id;
 
@@ -194,6 +185,7 @@ exports.update = async (req, res) => {
           icon: "ri-exchange-dollar-fill",
           color: "avatar-title bg-success rounded-circle font-size-16",
           uid: req.body.coordinador_id,
+          uidr:req.userId,
           canal: "",
         };
         CrearNotificacion(datos);
@@ -263,6 +255,7 @@ exports.respuesta = async (req, res) => {
             icon: "ri-reply-fill",
             color: "avatar-title bg-danger rounded-circle font-size-16",
             uid: req.body.tecnico_id,
+            uidr:req.userId,
             canal: "",
           };
           CrearNotificacion(datos);
@@ -275,6 +268,7 @@ exports.respuesta = async (req, res) => {
             icon: "ri-check-fill",
             color: "avatar-title bg-success rounded-circle font-size-16",
             uid: req.body.tecnico_id,
+            uidr:req.userId,
             canal: "",
           };
           CrearNotificacion(datos);

@@ -48,6 +48,7 @@ exports.create =async (req, res) => {
         icon: "ri-coins-line",
         color: "avatar-title bg-primary rounded-circle font-size-16",
         uid: req.body.autorizador_id,
+        uidr:req.userId,
         canal: "",
       };
       CrearNotificacion(datos);
@@ -248,6 +249,7 @@ exports.status =async (req, res) => {
             icon: "ri-check-double-line",
             color: "avatar-title bg-success rounded-circle font-size-16",
             uid: req.body.solicitante_id,
+            uidr:req.userId,
             canal: "",
           };
           CrearNotificacion(datos);

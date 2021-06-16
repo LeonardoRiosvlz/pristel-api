@@ -58,11 +58,11 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         unique: false
       },
       canal: {
-        type: DataTypes.STRING(25),
+        type: DataTypes.STRING(125),
         unique: false
       },
       cedula: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(125),
         unique: false
       },
       nombre_cuenta: {

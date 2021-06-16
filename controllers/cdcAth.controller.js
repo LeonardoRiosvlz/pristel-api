@@ -4,6 +4,7 @@ const Prgramacion = db.programacion_ath;
 const Gestion = db.gestionAth;
 const Cajero = db.cajero_ath;
 const Ciudad = db.ciudad;
+const Legalizacion = db.legalizacionAth;
 
 exports.findAll = (req, res) => {
 
@@ -28,6 +29,9 @@ exports.findAll = (req, res) => {
             },
             {
               model: Gestion,
+            },
+            {
+              model: Legalizacion,
             },
           ]
       },
