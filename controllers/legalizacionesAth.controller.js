@@ -107,7 +107,7 @@ exports.findAll = (req, res) => {
     include: [
     {
       model: ProgramacionAth,
-      attributes:['id'],
+      attributes:['id','llamada','tipo_llamada'],
       include: [
         {
           model: User, as: 'Tecnico_ath',

@@ -17,7 +17,7 @@ exports.create = async (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.imagen= `https://pristel.herokuapp.com/public/${filename}`;
+    body.imagen= `https://pristelapp.herokuapp.com/public/${filename}`;
     console.log(body.imagen);
   }
   body.nombre= req.body.nombre;
@@ -29,7 +29,6 @@ exports.create = async (req, res) => {
   body.nit= req.body.nit;
   body.telefono_empresa= req.body.telefono_empresa;
   body.direccion= req.body.direccion;
-  body.categorias=req.body.categorias;
   body.valor_contrato= req.body.valor_contrato;
   body.requiere_presupuesto= req.body.requiere_presupuesto;
   body.presupuesto= req.body.presupuesto;
@@ -50,16 +49,16 @@ await  Entidad.create(body)
 
 exports.findAll = async (req, res) => {
 
- await   Entidad.findAndCountAll({
+ await Entidad.findAndCountAll({
     limit: 3000000,
     offset: 0,
-    where: {}, // conditions
+    where: {
+      
+    }, // conditions
     order: [
       ['id', 'DESC'],
     ],
-  
-  })
-    .then(data => {
+  }).then(data => {
       res.send(data);
     })
     .catch(err => {
@@ -91,8 +90,7 @@ exports.update =async (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.imagen= `https://pristel.herokuapp.com/public/${filename}`;
-  
+    body.imagen= `https://pristelapp.herokuapp.com/public/${filename}`;
   }
   body.nombre= req.body.nombre;
   body.apellido= req.body.apellido;
@@ -103,7 +101,6 @@ exports.update =async (req, res) => {
   body.nit= req.body.nit;
   body.telefono_empresa= req.body.telefono_empresa;
   body.direccion= req.body.direccion;
-  body.categorias=req.body.categorias;
   body.valor_contrato= req.body.valor_contrato;
   body.requiere_presupuesto= req.body.requiere_presupuesto;
   body.presupuesto= req.body.presupuesto;

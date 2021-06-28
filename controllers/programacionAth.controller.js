@@ -4,6 +4,7 @@ const path = require('path');
 const mime = require('mime');
 const fs = require('fs');
 
+const Sequelize = db.sequelize;
 const Op = db.Op;
 const ProgramacionAth = db.programacion_ath;
 const Cajero = db.cajero_ath;
@@ -342,6 +343,7 @@ exports.escalar = async (req, res) => {
   const id = req.body.id;
   const program = {
     motivo_escalado: req.body.motivo_escalado,
+    aplica_escalado:"Aplica",
     status:"Escalada",
   };
  await ProgramacionAth.update(program,{
@@ -519,6 +521,320 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+
+
+
+exports.filtro = async (req, res) => {
+  console.log(req.body);
+  const desde =req.body.desde;
+  const hasta =req.body.hasta;
+  const regionals =req.body.regional;
+  let body=[];
+  if (req.body.desde && req.body.hasta && req.body.criterio && req.body.regional==='' && req.body.entidad_bancaria==='') {
+    if (req.body.criterio==='llamada') {
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          created_at: {
+            [Op.between]: [desde, hasta]
+          },
+        }, // conditions
+        order: [
+          ['id', 'DESC'],
+        ],
+        include: [{
+          model: User, as: 'Tecnico_ath',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Coordinador',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: Legalizaciones,
+        },
+        {
+          model: Sac,
+        },
+        {
+          model: Gestion,
+          order: [
+            ['id', 'ASC'],
+          ],
+        },
+        {
+          model: Cajero,
+          attributes:[ 'codigo','regional_id','direccion','comparte_site','numero_site','entidad_bancaria','terminal','tipo'],
+          include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
+          { model: Entidad,attributes:[ 'imagen','id'] }
+          
+          ]
+        }],
+      }
+    }else{
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+
+        }, // conditions
+        order: [
+          ['id', 'DESC'],
+        ],
+        include: [{
+          model: User, as: 'Tecnico_ath',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Coordinador',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: Legalizaciones,
+        },
+        {
+          model: Sac,
+        },
+        {
+          model: Gestion,
+          order: [
+            ['id', 'ASC'],
+          ],
+          where:{
+            created_at: {
+              [Op.between]: [desde, hasta]
+            },
+
+          }      
+        },
+        {
+          model: Cajero,
+          attributes:[ 'codigo','regional_id','direccion','comparte_site','numero_site','entidad_bancaria','terminal','tipo'],
+          include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
+          { model: Entidad,attributes:[ 'imagen','id'] }
+          
+          ]
+        }],
+      }
+    }
+
+  }
+
+  if (req.body.desde && req.body.hasta && req.body.criterio && req.body.regional && req.body.entidad_bancaria==='') {
+
+    if (req.body.criterio==='llamada') {
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          created_at: {
+            [Op.between]: [desde, hasta]
+          },
+        }, // conditions
+        order: [
+          ['id', 'DESC'],
+        ],
+        include: [{
+          model: User, as: 'Tecnico_ath',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Coordinador',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: Legalizaciones,
+        },
+        {
+          model: Sac,
+        },
+        {
+          model: Gestion,
+          order: [
+            ['id', 'ASC'],
+          ],
+        },
+        {
+          model: Cajero,
+          order: [
+            ['id', 'ASC'],
+          ],
+          where:{
+            regional_id:req.body.regional
+          },
+          include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
+          { model: Entidad,attributes:[ 'imagen','id'] }]
+        }],
+      }
+    }else{
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+
+        }, // conditions
+        order: [
+          ['id', 'DESC'],
+        ],
+        include: [{
+          model: User, as: 'Tecnico_ath',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Coordinador',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: Legalizaciones,
+        },
+        {
+          model: Sac,
+        },
+        {
+          model: Gestion,
+          order: [
+            ['id', 'ASC'],
+          ],
+          where:{
+            created_at: {
+              [Op.between]: [desde, hasta]
+            },
+          }      
+        },
+        {
+          model: Cajero,
+          order: [
+            ['id', 'ASC'],
+          ],
+          where:{
+            regional_id:req.body.regional
+          },
+          include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
+          { model: Entidad,attributes:[ 'imagen','id'] }
+          
+          ]
+        }],
+      }
+    }
+
+  }
+  if (req.body.desde && req.body.hasta && req.body.criterio && req.body.regional && req.body.entidad_bancaria) {
+
+    if (req.body.criterio==='llamada') {
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          created_at: {
+            [Op.between]: [desde, hasta]
+          },
+        }, // conditions
+        order: [
+          ['id', 'DESC'],
+        ],
+        include: [{
+          model: User, as: 'Tecnico_ath',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Coordinador',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: Legalizaciones,
+        },
+        {
+          model: Sac,
+        },
+        {
+          model: Gestion,
+          order: [
+            ['id', 'ASC'],
+          ],
+        },
+        {
+          model: Cajero,
+          order: [
+            ['id', 'ASC'],
+          ],
+          where:{
+            regional_id:req.body.regional,
+            entidad_bancaria:req.body.entidad_bancaria
+          },
+          include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
+          { model: Entidad,attributes:[ 'imagen','id'] }]
+        }],
+      }
+    }else{
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+
+        }, // conditions
+        order: [
+          ['id', 'DESC'],
+        ],
+        include: [{
+          model: User, as: 'Tecnico_ath',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Coordinador',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: Legalizaciones,
+        },
+        {
+          model: Sac,
+        },
+        {
+          model: Gestion,
+          order: [
+            ['id', 'ASC'],
+          ],
+          where:{
+            created_at: {
+              [Op.between]: [desde, hasta]
+            },
+          }      
+        },
+        {
+          model: Cajero,
+          order: [
+            ['id', 'ASC'],
+          ],
+          where:{
+            regional_id:req.body.regional,
+            entidad_bancaria:req.body.entidad_bancaria
+          },
+          include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
+          { model: Entidad,attributes:[ 'imagen','id'] }
+          
+          ]
+        }],
+      }
+    }
+
+  }
+
+  await  ProgramacionAth.findAll(body)
+      .then(data => {
+        res.send(data);
+        console.log(body);
+      })
+      .catch(err => {
+        res.send(500).send({
+          message: err.message || "Some error accurred while retrieving books."
+        });
+      });
+  };
+
+
+
 
 
 // Delete a Book with the specified id in the request

@@ -32,7 +32,7 @@ exports.findAll = (req, res) => {
             },
             {
               model: Legalizacion,
-            },
+            }
           ]
       },
     ],

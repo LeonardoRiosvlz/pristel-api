@@ -50,7 +50,8 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         unique: false
       },
       tipo_tecnico: {
-        type: DataTypes.ENUM('Nomina', 'Contratista'),
+        type: DataTypes.ENUM('Nomina', 'Contratista','NA'),
+        defaultValue: 'NA',
         unique: false
       },
       tipo_cuenta: {
@@ -58,7 +59,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         unique: false
       },
       canal: {
-        type: DataTypes.STRING(125),
+        type: DataTypes.STRING(25),
         unique: false
       },
       cedula: {

@@ -36,9 +36,6 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         direccion: {
             type: DataTypes.STRING(60)
         },
-        categorias: {
-            type: DataTypes.JSON
-        },
         valor_contrato: {
             type: DataTypes.STRING(60)
         },

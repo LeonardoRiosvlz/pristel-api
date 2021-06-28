@@ -2,6 +2,7 @@ const db = require("../models");
 const Formato = db.fscAth;
 const Notificacion = db.notificacion;
 const Cuenta = db.cdcath;
+const Abonos = db.ascAth;
 const User = db.user;
 // Create and Save a new Book
 exports.create = (req, res) => {
@@ -107,7 +108,10 @@ exports.findAllAdmin = (req, res) => {
       },
       { model: User, as: 'Solicitante_athc',
         attributes:['id', 'nombre', 'apellido']
+      },
+      { model: Abonos
       }
+
       ],
   })
     .then(data => {

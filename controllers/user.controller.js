@@ -174,12 +174,12 @@ exports.update = (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.imagen= `https://pristel.herokuapp.com/public/${filename}`;
+    body.imagen= `https://pristelapp.herokuapp.com/public/${filename}`;
     console.log(body.imagen);
   }
   if(req.files['firma']){
     const { firma } = req.files['firma'][0]
-    body.firma= `https://pristel.herokuapp.com/public/${firma}`;
+    body.firma= `https://pristelapp.herokuapp.com/public/${firma}`;
     console.log(body.imagen);
   }
   if (req.codigo) {

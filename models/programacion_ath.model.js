@@ -76,6 +76,10 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           type: DataTypes.ENUM('','Aplica','No aplica'),
           unique: false
         },
+        aplica_escalado: {
+          type: DataTypes.ENUM('','Aplica','No aplica'),
+          unique: false
+        },
         total_tecnico: {
           type: DataTypes.STRING(20)
          },
