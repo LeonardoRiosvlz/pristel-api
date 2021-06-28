@@ -55,7 +55,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         unique: false
       },
       tipo_cuenta: {
-        type: DataTypes.ENUM('Ahorro', 'Corriente'),
+        type: DataTypes.ENUM('Ahorro', 'Corriente','NA'),
         unique: false
       },
       canal: {

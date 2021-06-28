@@ -193,6 +193,7 @@ exports.update = async (req, res) => {
     body.evidencias_despues=gallery
   }
   body.asunto= req.body.asunto;
+  body.status= "Pendiente";
   body.descripcion= req.body.descripcion;
   body.descripcion_larga= req.body.descripcion_larga;
   body.observaciones= req.body.observaciones;
@@ -207,6 +208,18 @@ exports.update = async (req, res) => {
         res.send({
           message: "editado satisfactoriamente."
         });
+        const datos = {
+          titulo: `Gestión realizada`,
+          descripcion: `Se edito una gestión para el consecutivo (ATH-${req.body.id_programacion})`,
+          origen: "",
+          modulo: "llamadas_ATH",
+          icon: "ri-hammer-line",
+          color: "avatar-title bg-success rounded-circle font-size-16",
+          uid: req.body.coordinador_id,
+          uidr:req.userId,
+          canal: "",
+        };
+        CrearNotificacion(datos);
       } else {
         res.send({
           message: `No puede editar el coargo con el  el =${id}. Tal vez el cargo no existe o la peticion es vacia!`

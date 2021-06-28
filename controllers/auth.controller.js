@@ -31,6 +31,7 @@ exports.signup = (req, res) => {
   body.direccion= req.body.direccion;
   body.status= req.body.status;
   body.dependencia= req.body.dependencia;
+  body.password = bcrypt.hashSync(req.body.password, 8);
   if(req.body.tipo_tecnico){
     body.tipo_tecnico= req.body.tipo_tecnico;
   }
@@ -60,6 +61,7 @@ exports.signup = (req, res) => {
 
 // Update a Book by the id in the request
 exports.update = (req, res) => {
+  console.log(req.body);
   const id = req.body.id;
   const body={};
   if(req.files['filename']){
@@ -75,20 +77,24 @@ exports.update = (req, res) => {
   body.sexo= req.body.sexo;
   body.entidad= req.body.entidad;
   body.cargo= req.body.cargo;
-  body.codigo= req.body.codigo;
   body.telefono= req.body.telefono;
   body.tipo= req.body.tipo;
-  body.nequi= req.body.nequi;
-  body.regional= req.body.regional;
   body.direccion= req.body.direccion;
   body.status= req.body.status;
   body.dependencia= req.body.dependencia;
+  if (req.body.codigo) {
+    body.codigo= req.body.codigo;
+  }
+  if (req.body.nequi) {
+    body.nequi= req.body.nequi;
+  }
+  if (req.body.regional) {
+    body.regional= req.body.regional;
+  }
   if(req.body.tipo_tecnico){
     body.tipo_tecnico= req.body.tipo_tecnico;
   }
-  if(req.body.tipo_cuenta){
-    body.tipo_cuenta= req.body.tipo_cuenta;
-  }
+
   if(req.body.nombre_cuenta){
     body.nombre_cuenta= req.body.nombre_cuenta;
   }
@@ -111,7 +117,7 @@ exports.update = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating User with id=" + id
+        message: "Error updating User with id=" + id+ err
       });
     });
 };

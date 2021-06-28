@@ -40,7 +40,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             type: DataTypes.STRING(15)
         },
         descripcion_formato: {
-            type: DataTypes.STRING
+            type: DataTypes.TEXT('long')
         },
         valor: {
             type: DataTypes.STRING(15)

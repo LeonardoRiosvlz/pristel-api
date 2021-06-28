@@ -174,29 +174,31 @@ exports.update = (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.imagen= `https://pristelapp.herokuapp.com/public/${filename}`;
-    console.log(body.imagen);
+    body.imagen= `https://pristelapp.herokuapp.com/public/${filename}`
   }
   if(req.files['firma']){
-    const { firma } = req.files['firma'][0]
-    body.firma= `https://pristelapp.herokuapp.com/public/${firma}`;
-    console.log(body.imagen);
+    const { filename } = req.files['firma'][0]
+    body.firma= `https://pristelapp.herokuapp.com/public/${filename}`;
   }
-  if (req.codigo) {
-    body.codigo= req.body.codigo;
-  }
-  if (req.entidad) {
-    body.entidad= req.body.entidad;
-  }
-  body.direccion= req.body.nombrdireccion;
-  body.status= req.body.status;
   body.nombre= req.body.nombre;
   body.apellido= req.body.apellido;
   body.sexo= req.body.sexo;
+  body.entidad= req.body.entidad;
+  body.cargo= req.body.cargo;
   body.telefono= req.body.telefono;
-  body.regional= req.body.regional;
-  body.nequi= req.body.nequi;
-  body.dependencia= req.dependencia;
+  body.tipo= req.body.tipo;
+  body.direccion= req.body.direccion;
+  body.status= req.body.status;
+  body.dependencia= req.body.dependencia;
+  if (req.body.codigo) {
+    body.codigo= req.body.codigo;
+  }
+  if (req.body.nequi) {
+    body.nequi= req.body.nequi;
+  }
+  if (req.body.regional) {
+    body.regional= req.body.regional;
+  }
   if(req.body.tipo_tecnico){
     body.tipo_tecnico= req.body.tipo_tecnico;
   }
