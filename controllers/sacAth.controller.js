@@ -43,6 +43,7 @@ exports.create = async (req, res) => {
       Programación.update({
         status: "Cerrada",
         motivo_cierre: req.body.motivo_cierre,
+        fecha_cierre: Date.now(),
         aplica_sac: req.body.aplica_sac,
         total_tecnico: req.body.total_tecnico,
         },{
@@ -52,6 +53,7 @@ exports.create = async (req, res) => {
       await Programación.update({
         status: "Cerrada",
         motivo_cierre: req.body.motivo_cierre,
+        fecha_cierre: Date.now(),
         aplica_sac: req.body.aplica_sac,
         total_tecnico: req.body.total_tecnico,
         },{

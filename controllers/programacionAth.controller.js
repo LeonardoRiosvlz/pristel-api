@@ -90,9 +90,9 @@ await ProgramacionAth.findAndCountAll({
     },
     {
       model: Cajero,
-      attributes:[ 'codigo','regional_id','direccion','comparte_site','numero_site','entidad_bancaria','terminal','tipo'],
       include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
-      { model: Entidad,attributes:[ 'imagen','id'] }
+      { model: Entidad,attributes:[ 'imagen','id'] },
+      { model: Regional,attributes:[ 'nombre'] },
       
       ]
     }],
@@ -220,10 +220,9 @@ exports.find = async (req, res) => {
           },
           {
             model: Cajero,
-            attributes:[ 'codigo','regional_id','terminal','direccion'],
             include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
-            { model: Entidad,attributes:[ 'imagen','id'] }
-            
+            { model: Entidad,attributes:[ 'imagen','id'] },
+            { model: Regional,attributes:[ 'nombre'] }
             ]
           }],
         }) 
@@ -399,6 +398,7 @@ exports.cerrar = async (req, res) => {
   const program = {
     motivo_cierre: req.body.motivo_cierre,
     status:"Cerrada",
+    fecha_cierre: Date.now(),
   };
  await ProgramacionAth.update(program,{
     where: { id: id }
@@ -566,10 +566,9 @@ exports.filtro = async (req, res) => {
         },
         {
           model: Cajero,
-          attributes:[ 'codigo','regional_id','direccion','comparte_site','numero_site','entidad_bancaria','terminal','tipo'],
           include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
-          { model: Entidad,attributes:[ 'imagen','id'] }
-          
+          { model: Entidad,attributes:[ 'imagen','id'] },
+          { model: Regional,attributes:[ 'nombre'] }
           ]
         }],
       }
@@ -611,9 +610,9 @@ exports.filtro = async (req, res) => {
         },
         {
           model: Cajero,
-          attributes:[ 'codigo','regional_id','direccion','comparte_site','numero_site','entidad_bancaria','terminal','tipo'],
           include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
-          { model: Entidad,attributes:[ 'imagen','id'] }
+          { model: Entidad,attributes:[ 'imagen','id'] },
+          { model: Regional,attributes:[ 'nombre'] }
           
           ]
         }],
@@ -664,8 +663,11 @@ exports.filtro = async (req, res) => {
           where:{
             regional_id:req.body.regional
           },
-          include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
-          { model: Entidad,attributes:[ 'imagen','id'] }]
+          include: [
+              { model: Ciudad,attributes:[ 'ciudad','departamento'] },
+              { model: Entidad,attributes:[ 'imagen','id'] },
+              { model: Regional,attributes:[ 'nombre'] }
+          ]
         }],
       }
     }else{
@@ -711,9 +713,10 @@ exports.filtro = async (req, res) => {
           where:{
             regional_id:req.body.regional
           },
-          include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
-          { model: Entidad,attributes:[ 'imagen','id'] }
-          
+          include: [
+          { model: Ciudad,attributes:[ 'ciudad','departamento'] },
+          { model: Entidad,attributes:[ 'imagen','id'] },
+          { model: Regional,attributes:[ 'nombre'] }
           ]
         }],
       }
@@ -763,8 +766,10 @@ exports.filtro = async (req, res) => {
             regional_id:req.body.regional,
             entidad_bancaria:req.body.entidad_bancaria
           },
-          include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
-          { model: Entidad,attributes:[ 'imagen','id'] }]
+          include: [
+            { model: Ciudad,attributes:[ 'ciudad','departamento'] },
+            { model: Entidad,attributes:[ 'imagen','id'] },
+            { model: Regional,attributes:[ 'nombre'] }]
         }],
       }
     }else{
@@ -811,8 +816,10 @@ exports.filtro = async (req, res) => {
             regional_id:req.body.regional,
             entidad_bancaria:req.body.entidad_bancaria
           },
-          include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
-          { model: Entidad,attributes:[ 'imagen','id'] }
+          include: [
+            { model: Ciudad,attributes:[ 'ciudad','departamento'] },
+            { model: Entidad,attributes:[ 'imagen','id'] },
+            { model: Regional,attributes:[ 'nombre'] }
           
           ]
         }],
@@ -823,6 +830,7 @@ exports.filtro = async (req, res) => {
 
   await  ProgramacionAth.findAll(body)
       .then(data => {
+        console.log(body);
         res.send(data);
         console.log(body);
       })
