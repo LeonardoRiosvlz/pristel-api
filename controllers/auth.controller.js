@@ -146,7 +146,7 @@ exports.signin = (req, res) => {
         });
       }
 
-      let token = jwt.sign({ id: user.id,rol: user.tipo, email: user.email,nombre: user.nombre,apellido: user.apellido}, config.auth.secret, {
+      let token = jwt.sign({ id: user.id,rol: user.tipo, email: user.email,nombre: user.nombre,apellido: user.apellido,imagen: user.imagen}, config.auth.secret, {
         expiresIn: '365d' // 24 hours
       });
       res.status(200).send({
