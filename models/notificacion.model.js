@@ -24,9 +24,13 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         color: {
           type: DataTypes.STRING
         },
+        status: {
+          type: DataTypes.ENUM('Pendiente','Vista'),
+          defaultValue: 'Pendiente',
+        }, 
         modulo: {
             type: DataTypes.STRING
-        },
+        }, 
         created_at: {
           allowNull: false,
           type: DataTypes.DATE

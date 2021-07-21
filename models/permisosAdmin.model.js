@@ -1,24 +1,13 @@
 module.exports = (sequelize, Sequelize, DataTypes) => {
-    const Mensaje = sequelize.define(
-      "mensaje", // Model name
+    const PermisoAdmin = sequelize.define(
+      "permiso_admin", // Model name
       {
-        // Model attributes
+        // Attributes
         id: {
           type: DataTypes.INTEGER,
           allowNull: false,
           autoIncrement: true,
           primaryKey: true
-        },
-        texto: {
-          type: DataTypes.TEXT('long')
-        },
-        created_at: {
-          allowNull: false,
-          type: DataTypes.DATE
-        },
-        updated_at: {
-          allowNull: false,
-          type: DataTypes.DATE
         }
       },
       {
@@ -29,7 +18,9 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         updatedAt: "updated_at"
       }
     );
-  
-    return Mensaje;
+    
+    
+    
+    return PermisoAdmin;
   };
   

@@ -16,10 +16,6 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         titulo: {
           type: DataTypes.STRING(45),
         },
-        consecutivo: {
-            type: DataTypes.STRING(15),
-            unique: true
-        },
         codigo_tecnico: {
             type: DataTypes.STRING(15)
         },
@@ -36,28 +32,28 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           type: DataTypes.STRING(100)
         },
         prioridad: {
-          type: DataTypes.STRING(20)
+          type: DataTypes.STRING(40)
         },
         margen: {
-          type: DataTypes.STRING(20)
+          type: DataTypes.STRING(52)
         },
         estado_pago: {
           type: DataTypes.ENUM('No aplica','Pendiente','Listado',),
           unique: false
         },
         motivo_escalado: {
-          type: DataTypes.STRING(200),
+          type: DataTypes.TEXT('long')
           
         },
         motivo_rechazo: {
-          type: DataTypes.STRING(200),
+          type: DataTypes.TEXT('long')
           
         },   
         motivo_archivado: {
-          type: DataTypes.STRING(200),
+          type: DataTypes.TEXT('long')
         },   
         motivo_cierre: {
-          type: DataTypes.STRING(200), 
+          type: DataTypes.TEXT('long') 
         },  
         fecha_creacion: {
           allowNull: true,
@@ -96,10 +92,10 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           type: DataTypes.DATE
         },
         descripcion: {
-            type: DataTypes.STRING(200)
+            type: DataTypes.TEXT('long')
         },
         observacion_cierre: {
-          type: DataTypes.STRING(200)
+          type: DataTypes.TEXT('long')
         },
         created_at: {
             allowNull: false,

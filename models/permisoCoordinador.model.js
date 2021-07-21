@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize, DataTypes) => {
-  const Permiso = sequelize.define(
-    "permiso", // Model name
+  const PermisoCoordinador = sequelize.define(
+    "permiso_coordinador", // Model name
     {
       // Attributes
       id: {
@@ -21,5 +21,5 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
   
   
   
-  return Permiso;
+  return PermisoCoordinador; 
 };

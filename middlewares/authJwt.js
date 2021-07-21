@@ -3,6 +3,7 @@ const config = require("../config/config.js");
 const db = require("../models");
 const User = db.user;
 const Permiso = db.permiso;
+const PermisoAnalista = db.permisosAnalista;
 const Conversacion = db.conversacion;
 
 const verifyToken = (req, res, next) => {
@@ -59,6 +60,43 @@ const isAdmin =async (req, res, next) => {
     }
   });
 };
+
+
+const isAnalista =async (req, res, next) => {
+  await User.findByPk(req.userId).then(user => {
+    if (user.tipo==="Analista") {
+      next();
+      return;
+    }else{
+      res.status(403).send({
+        message: "No eres un analista!"
+      });
+      return;
+    }
+  });
+};
+
+const isAnalistaPrivilegiado =async (req, res, next) => {
+  await PermisoAnalista.findAndCountAll({
+    where: {
+      uid: req.userId,
+      rid: req.body.id
+     }
+  }).then(data => {
+      if (data.count> 0) {
+        next();
+        return;
+      } else {
+        return res.status(401).send({
+          message: "No tienes permiso para esto"
+        });
+      }
+    })
+};
+
+
+
+
 const isTecnico =async (req, res, next) => {
  await User.findByPk(req.userId).then(user => {
     if (user.tipo==="Tecnico") {
@@ -88,7 +126,7 @@ const isModerator =async (req, res, next) => {
 
 const isModeratorOrAdmin =async (req, res, next) => {
   await User.findByPk(req.userId).then(user => {
-    if (user.tipo==="Administrador"||user.tipo==="Coordinador") {
+    if (user.tipo==="Administrador"||user.tipo==="Coordinador"||user.tipo==="Analista") {
       next();
       return;
     }else{
@@ -125,6 +163,8 @@ const authJwt = {
   verifyToken: verifyToken,
   isAdmin: isAdmin,
   isTecnico: isTecnico,
+  isAnalista: isAnalista,
+  isAnalistaPrivilegiado: isAnalistaPrivilegiado,
   isModerator: isModerator,
   isModeratorOrAdmin: isModeratorOrAdmin,
   isAdminSala: isAdminSala,

@@ -19,10 +19,10 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             type: DataTypes.DATEONLY
         }, 
         descripcion: {
-          type: DataTypes.TEXT 
+          type: DataTypes.TEXT  
         },
         evidencias: {
-            type: DataTypes.JSON
+          type: DataTypes.JSON
         },
         created_at: {
           allowNull: false,

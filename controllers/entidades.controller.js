@@ -1,6 +1,10 @@
+const { permisosAdmin, permisosAnalista } = require("../models");
 const db = require("../models");
 const Entidad = db.entidad;
-const Permiso = db.permiso;
+const PermisoCoordinador = db.permisoCoordinador;
+const PermisoAdmin = db.permisosAdmin;
+const PermisoAnalista = db.permisosAnalista;
+const Regional = db.regional;
 const User = db.user;
 
 
@@ -54,7 +58,7 @@ exports.findAll = async (req, res) => {
     offset: 0,
     where: {
       
-    }, // conditions
+    },
     order: [
       ['id', 'DESC'],
     ],
@@ -67,6 +71,93 @@ exports.findAll = async (req, res) => {
       });
     });
 };
+
+
+exports.findPermisosCoordinador = async (req, res) => {
+
+  await PermisoCoordinador.findAndCountAll({
+     limit: 3000000,
+     offset: 0,
+     where: {
+       uid:req.userId
+     },
+     include: [
+       { 
+         model: Entidad,
+       }
+    ], // conditions
+     order: [
+       ['id', 'DESC'],
+     ],
+   }).then(data => {
+       res.send(data);
+     })
+     .catch(err => {
+       res.send(500).send({
+         message: err.message || "Some error accurred while retrieving books."
+       });
+     });
+ };
+ 
+ 
+exports.findPermisosAdministrador = async (req, res) => {
+
+  await PermisoAdmin.findAndCountAll({
+     limit: 3000000,
+     offset: 0,
+     where: {
+       uid:req.userId
+     },
+     include: [
+       { 
+         model: Entidad,
+       }
+    ], // conditions
+     order: [
+       ['id', 'DESC'],
+     ],
+   }).then(data => {
+       res.send(data);
+     })
+     .catch(err => {
+       res.send(500).send({
+         message: err.message || "Some error accurred while retrieving books."
+       });
+     });
+ };
+
+
+ 
+ exports.findPermisosAnalistas = async (req, res) => {
+
+  await PermisoAnalista.findAndCountAll({
+     limit: 3000000,
+     offset: 0,
+     where: {
+       uid:req.userId
+     },
+     include: [
+       { 
+         model: Entidad,
+         attributes: ['empresa','imagen']
+       },
+       {
+         model: Regional,
+       }
+    ], // conditions
+     order: [
+       ['id', 'DESC'],
+     ],
+   }).then(data => {
+       res.send(data);
+     })
+     .catch(err => {
+       res.send(500).send({
+         message: err.message || "Some error accurred while retrieving books."
+       });
+     });
+ };
+
 
 // Find a single with an id
 exports.findOne = async (req, res) => {
@@ -153,7 +244,15 @@ exports.delete = (req, res) => {
 };
 
 
-exports.create_permiso = (req, res) => {
+
+
+
+
+
+
+
+
+exports.create_permiso_coordinador = (req, res) => {
   // Validate request
   if (!req.body.uid) {
     res.status(400).send({
@@ -168,7 +267,7 @@ exports.create_permiso = (req, res) => {
   };
 
   // Save Book in database
-  Permiso.create(permiso)
+  PermisoCoordinador.create(permiso)
     .then(data => {
       res.send(data);
     })
@@ -179,9 +278,9 @@ exports.create_permiso = (req, res) => {
     });
 };
 
-exports.findAll_permisos = (req, res) => {
+exports.findAll_permisos_coordinador = (req, res) => {
   const id = req.body.id;
-  Permiso.findAll({
+  PermisoCoordinador.findAll({
   limit: 3000000,
   offset: 0,
   where: { eid: id }, // conditions
@@ -208,10 +307,178 @@ exports.findAll_permisos = (req, res) => {
 };
 
 
-exports.delete_permiso = (req, res) => {
+exports.delete_permiso_coordinador = (req, res) => {
   console.log(req)
   const id = req.body.id;
-  Permiso.destroy({
+  PermisoCoordinador.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Permiso borrado satisfactoriamente!"
+        });
+      } else {
+        res.send({
+          message: `No se pudo borrar el permiso con el id=${id}. Tal vez no existe!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "No se pudo borrar el permiso con el id=" + id
+      });
+    });
+};
+
+
+
+
+exports.create_permiso_admin = (req, res) => {
+  // Validate request
+  if (!req.body.uid) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+  // Create a Book
+  const permiso = {
+    uid: req.body.uid,
+    eid: req.body.eid,
+  };
+
+  // Save Book in database
+  PermisoAdmin.create(permiso)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "ocurrio un erro para crear el permismo."
+      });
+    });
+};
+
+exports.findAll_permisos_admin = (req, res) => {
+  const id = req.body.id;
+  PermisoAdmin.findAll({
+  limit: 3000000,
+  offset: 0,
+  where: { eid: id }, // conditions
+  order: [
+    ['id', 'DESC'],
+  ],
+  include: [{
+    model: User,
+    attributes:['nombre', 'apellido', 'tipo','email' ],
+  }, 
+  {
+    model: Entidad,
+    attributes:['empresa', 'nit', 'imagen' ],
+  }], 
+})
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.send(500).send({
+      message: err.message || "Some error accurred while retrieving books."
+    });
+  });
+};
+
+
+exports.delete_permiso_admin = (req, res) => {
+  console.log(req)
+  const id = req.body.id;
+  PermisoAdmin.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Permiso borrado satisfactoriamente!"
+        });
+      } else {
+        res.send({
+          message: `No se pudo borrar el permiso con el id=${id}. Tal vez no existe!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "No se pudo borrar el permiso con el id=" + id
+      });
+    });
+};
+
+
+
+exports.create_permisos_analista = (req, res) => {
+  // Validate request
+  if (!req.body.uid) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+  // Create a Book
+  const permiso = {
+    uid: req.body.uid,
+    eid: req.body.eid,
+    rid: req.body.rid,
+  };
+
+  // Save Book in database
+  PermisoAnalista.create(permiso)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "ocurrio un erro para crear el permismo."
+      });
+    });
+};
+
+exports.findAll_permisos_analista = (req, res) => {
+  const id = req.body.id;
+  const rid = req.body.rid;
+  PermisoAnalista.findAll({
+  limit: 3000000,
+  offset: 0,
+  where: { 
+    eid: id,
+    rid: rid
+  }, // conditions
+  order: [
+    ['id', 'DESC'],
+  ],
+  include: [{
+    model: User,
+    attributes:['nombre', 'apellido', 'tipo','email' ],
+  }, 
+  {
+    model: Entidad,
+    attributes:['empresa', 'nit', 'imagen' ],
+  }], 
+})
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.send(500).send({
+      message: err.message || "Some error accurred while retrieving books."
+    });
+  });
+};
+
+
+exports.delete_permisos_analista = (req, res) => {
+  console.log(req)
+  const id = req.body.id;
+  PermisoAnalista.destroy({
     where: { id: id }
   })
     .then(num => {

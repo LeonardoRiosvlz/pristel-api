@@ -15,7 +15,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             unique: false
         },
         observaciones: {
-            type: DataTypes.STRING(255)
+            type: DataTypes.TEXT('long')
         },
         excedente: {
             type: DataTypes.STRING(20)
@@ -24,7 +24,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             type: DataTypes.JSON
         },
         observaciones_analista: {
-          type: DataTypes.STRING(255)
+          type: DataTypes.TEXT('long')
         },
         items: {
             type: DataTypes.JSON

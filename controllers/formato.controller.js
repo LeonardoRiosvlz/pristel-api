@@ -9,6 +9,7 @@ const Notificacion = db.notificacion;
 
 // Create and Save a new Book
 exports.create =async (req, res) => {
+  console.log(req.body);
   // Validate request
   if (!req.body.consecutivo) {
     res.status(400).send({
@@ -29,7 +30,9 @@ exports.create =async (req, res) => {
     tecnico_id: req.body.tecnico_id,
     autorizador_id: req.body.autorizador_id,
     entidad_id: req.body.entidad_id,
+    analista_id: req.body.analista_id,
     solicitante_id: req.userId,
+    id_programacion: req.body.programacion_id,
   };
   if (req.body.tercero_id) {
     formato.tercero_id= req.body.tercero_id;
@@ -44,7 +47,7 @@ exports.create =async (req, res) => {
         titulo: "F.S.T.",
         descripcion: `Nueva solicitud de transferencia  para el consecvutivo ${formato.consecutivo}`,
         origen: "",
-        modulo: "fst",
+        modulo: "fst_ATH",
         icon: "ri-coins-line",
         color: "avatar-title bg-primary rounded-circle font-size-16",
         uid: req.body.autorizador_id,
@@ -243,9 +246,9 @@ exports.status =async (req, res) => {
         if (req.body.status==="Aprobado") {
           const datos = {
             titulo: "F.S.T. APROBADO ",
-            descripcion: `Su solicitud de transferencia para el consecutivo ${req.body.consecutivo} fue aprobada`,
+            descripcion: `Su solicitud de transferencia para el consecutivo ATH-${req.body.consecutivo} fue aprobada`,
             origen: "",
-            modulo: "fst",
+            modulo: `/llamada_ath_tablero/${req.body.consecutivo}`,
             icon: "ri-check-double-line",
             color: "avatar-title bg-success rounded-circle font-size-16",
             uid: req.body.solicitante_id,
@@ -255,13 +258,14 @@ exports.status =async (req, res) => {
           CrearNotificacion(datos);
         }else{
           const datos = {
-            titulo:`F.S.T. RECHAZADA CONSECUTIVO-${req.body.consecutivo}`,
+            titulo:`F.S.T. RECHAZADA CONSECUTIVO ATH-${req.body.consecutivo}`,
             descripcion: `Motivo: ${req.body.observacion}`,
             origen: "",
-            modulo: "fst",
+            modulo: `/llamada_ath_tablero/${req.body.consecutivo}`,
             icon: "ri-close-line",
             color: "avatar-title bg-danger rounded-circle font-size-16",
             uid: req.body.solicitante_id,
+            uidr:req.userId,
             canal: "",
           };
           CrearNotificacion(datos);

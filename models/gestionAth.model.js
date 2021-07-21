@@ -19,19 +19,19 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             type: DataTypes.DATEONLY
         }, 
         asunto: {
-            type: DataTypes.STRING(100)
+            type: DataTypes.TEXT('long')
         },
         descripcion: {
-            type: DataTypes.STRING(250)
+            type: DataTypes.TEXT('long')
         },
         descripcion_larga: {
-          type: DataTypes.TEXT
+          type: DataTypes.TEXT('long')
         },
         observaciones_analista: {
-            type: DataTypes.TEXT 
+            type: DataTypes.TEXT('long') 
         },
         observaciones: {
-          type: DataTypes.TEXT 
+          type: DataTypes.TEXT('long')
         },
         evidencias_antes: {
             type: DataTypes.JSON

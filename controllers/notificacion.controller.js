@@ -71,6 +71,34 @@ exports.findAll = (req, res) => {
     });
 };
 
+
+
+exports.findAllPendiente = (req, res) => {
+  Notificacion.findAndCountAll({
+    limit: 3000000,
+    offset: 0,
+    where: {
+      uid:req.userId,
+      status:"Pendiente"
+    }, // conditions
+    order: [
+      ['id', 'DESC'],
+    ],
+    include: [{
+      model: User, as: 'remitente',
+      attributes:['nombre', 'apellido','imagen']
+    }]
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.send(500).send({
+        message: err.message || "Some error accurred while retrieving books."
+      });
+    });
+};
+
 // Find a single with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -118,9 +146,37 @@ exports.update = (req, res) => {
     });
 };
 
+// Update a Book by the id in the request
+exports.update = (req, res) => {
+  const id = req.body.id;
+
+  Notificacion.update({
+    status: "Vista"
+    },{
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "editado satisfactoriamente."
+        });
+      } else {
+        res.send({
+          message: `No puede editar el coargo con el  el =${id}. Tal vez el cargo no existe o la peticion es vacia!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error al intentar editar el cargo con el id=" + id
+      });
+    });
+};
+
+
+
 // Delete a Book with the specified id in the request
 exports.delete = (req, res) => {
-  console.log(req)
   const id = req.body.id;
   Notificacion.destroy({
     where: { id: id }

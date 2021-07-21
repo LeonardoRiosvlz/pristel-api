@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             type: DataTypes.ENUM('Efectivo','Transferencia','Giro','Nequi'),
         },
         descripcion_abono: {
-          type: DataTypes.STRING
+          type: DataTypes.TEXT('long')
         },
         archivo_abono: {
             type: DataTypes.STRING

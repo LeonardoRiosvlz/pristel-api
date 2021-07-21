@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             type: DataTypes.STRING(25)
         },
         observaciones: {
-            type: DataTypes.STRING(25)
+            type: DataTypes.TEXT('long')
         },
         created_at: {
           allowNull: false,

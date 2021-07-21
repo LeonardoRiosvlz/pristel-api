@@ -10,13 +10,16 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     router.post("/notificacion",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], notificacionController.create);
 
     // Retrieve all cargos
-    router.get("/notificacion",authJwt.verifyToken, notificacionController.findAll);
+    router.get("/notificacion",authJwt.verifyToken, notificacionController.findAllPendiente);
+
+    // Retrieve all cargos
+    router.get("/notificacion/todas",authJwt.verifyToken, notificacionController.findAll);
 
     // Update a cargo with id
-    router.put("/notificacion",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], notificacionController.update);
+    router.put("/notificacion",[cpUpload,authJwt.verifyToken], notificacionController.update);
 
     // Delete a cargo with id
-    router.post("/notificacion/delete",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], notificacionController.delete);
+    router.post("/notificacion/delete",[cpUpload,authJwt.verifyToken], notificacionController.delete);
 
 
     module.exports = router;

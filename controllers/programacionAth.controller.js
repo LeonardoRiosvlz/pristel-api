@@ -43,7 +43,8 @@ exports.create = async (req, res) => {
     requiere_cita: req.body.requiere_cita,
     subcateogoria: req.body.subcateogoria,
     id_cajero: req.body.id_cajero,
-    coordinador_id:req.userId,
+
+    analista_id:req.userId,
   };
 
   // Save Book in database
@@ -57,6 +58,49 @@ exports.create = async (req, res) => {
       });
     });
 };
+
+
+// Create and Save a new Book
+exports.createByAnalista = async (req, res) => {
+  // Validate request
+  if (!req.body.id_cajero) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+  // Create a Book
+  const program = {
+    fecha_vencimiento: req.body.fecha_vencimiento,
+    prioridad: req.body.prioridad,
+    categoria: req.body.categoria,
+    subcategoria: req.body.subcategoria,
+    tipo_llamada: req.body.tipo_llamada,
+    llamada: req.body.llamada,
+    margen: req.body.margen,
+    titulo: req.body.titulo,
+    descripcion: req.body.descripcion,
+    codigo_cajero: req.body.codigo_cajero,
+    tipo_servicio: req.body.tipo_servicio,
+    requiere_cita: req.body.requiere_cita,
+    subcateogoria: req.body.subcateogoria,
+    id_cajero: req.body.id_cajero,
+
+    analista_id:req.userId,
+  };
+
+  // Save Book in database
+ await ProgramacionAth.create(program)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while creating the Book."
+      });
+    });
+};
+
 
 
 exports.findAll = async (req, res) => {
@@ -109,6 +153,61 @@ await ProgramacionAth.findAndCountAll({
 
 
 
+
+
+
+
+exports.findAllAnalista = async (req, res) => {
+
+  await ProgramacionAth.findAndCountAll({
+      limit: 3000000,
+      offset: 0,
+      where: {
+        analista_id:req.userId
+      }, // conditions
+      order: [
+        ['fecha_vencimiento', 'ASC'],
+      ],
+      include: [{
+        model: User, as: 'Tecnico_ath',
+        attributes:['nombre', 'apellido','imagen' ],
+      }, 
+      {
+        model: User, as: 'Coordinador',
+        attributes:['nombre', 'apellido','imagen' ],
+      }, 
+      {
+        model: Legalizaciones,
+      },
+      {
+        model: Sac,
+      },
+      {
+        model: Gestion,
+        order: [
+          ['id', 'ASC'],
+        ],
+      },
+      {
+        model: Cajero,
+          include: [{ model: Ciudad,attributes:[ 'ciudad','departamento'] },
+          { model: Entidad,attributes:[ 'imagen','id'] },
+          { model: Regional
+          },     
+        ]
+      }],
+    }) 
+      .then(data => {
+        res.send(data);
+        console.log(data);
+      })
+      .catch(err => {
+        console.log(err);
+        res.send(500).send({
+          message: err.message || "Ocurrio un erro al intentar acceder a este recursos."
+        });
+      });
+  };
 
 
 

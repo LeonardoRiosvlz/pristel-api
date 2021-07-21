@@ -10,11 +10,16 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     // Create a new cargo
     router.post("/programacion/ath",[cpUpload,authJwt.verifyToken,authJwt.isModeratorOrAdmin],programacionAthController.create);
     // Create a new cargo
+    router.post("/programacion/ath/analista",[cpUpload,authJwt.verifyToken,authJwt.isAnalista],programacionAthController.createByAnalista);
+    // Create a new cargo
     router.get("/programacion/ath/servicios",[cpUpload,authJwt.verifyToken], programacionAthController.findTecnico);
     // Create a new cargo
     router.get("/programacion/ath/llamadasexcel",[cpUpload], programacionAthController.excelexport);
     // Create a new cargo
     router.post("/programacion/ath/find",[cpUpload,authJwt.verifyToken], programacionAthController.find);
+
+    router.post("/programacion/ath/listaranalista",[cpUpload,authJwt.verifyToken, authJwt.isAnalista, authJwt.isAnalista], programacionAthController.findAllAnalista);
+
     // Create a new cargo
      router.post("/programacion/ath/programar",[cpUpload,authJwt.verifyToken,authJwt.isModeratorOrAdmin], programacionAthController.programar);
      // Create a new cargo

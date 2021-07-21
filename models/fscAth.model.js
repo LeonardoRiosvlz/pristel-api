@@ -23,8 +23,12 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           type: DataTypes.JSON
         },
         observacion: {
-            type: DataTypes.STRING(255)
+            type: DataTypes.TEXT('long')
         },
+        fecha_pagado: {
+          allowNull: true,
+          type: DataTypes.DATEONLY
+        }, 
         total: {
             type: DataTypes.STRING(15)
         },

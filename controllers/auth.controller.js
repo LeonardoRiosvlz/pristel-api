@@ -31,7 +31,7 @@ exports.signup = (req, res) => {
   body.direccion= req.body.direccion;
   body.status= req.body.status;
   body.dependencia= req.body.dependencia;
-  body.password = bcrypt.hashSync(req.body.password, 8);
+  body.password = bcrypt.hashSync(req.body.email, 8);
   if(req.body.tipo_tecnico){
     body.tipo_tecnico= req.body.tipo_tecnico;
   }

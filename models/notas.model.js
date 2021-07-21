@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           primaryKey: true
         },
         texto: {
-          type: DataTypes.STRING
+          type: DataTypes.TEXT('long')
         },
         consecutivo: {
             type: DataTypes.STRING(25)

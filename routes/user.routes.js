@@ -19,7 +19,11 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 },{ name: 'firma
 
   router.post("/user/regional",[cpUpload,authJwt.verifyToken], controller.findregional);
 
-  router.get("/user/adminstrador",[cpUpload,authJwt.verifyToken], controller.findAdministrador);
+  router.get("/user/administrador",[cpUpload,authJwt.verifyToken], controller.findAdministrador);
+
+  router.get("/user/administrador/ath",[cpUpload,authJwt.verifyToken], controller.findAdministradorAth);
+
+  router.get("/user/analistas",[cpUpload,authJwt.verifyToken], controller.findAnalista);
 
   router.put("/pefil",[cpUpload ,authJwt.verifyToken], controller.update);
 

@@ -2,8 +2,9 @@ const config = require("../config/config");
 const db = require("../models");
 const jwt = require("jsonwebtoken");
 const User = db.user;
-
-
+const Pcoordinadores = db.permisoCoordinador;
+const Padministrdores = db.permisosAdmin;
+const Panalistas = db.permisosAnalista;
 // Retrieve all Books from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
@@ -67,7 +68,13 @@ exports.findCoordinadores = (req, res) => {
 
   User.findAll({
     where: {tipo:"Coordinador"}, // conditions
-    attributes: ['nombre', 'apellido','id', 'email',]
+    attributes: ['nombre', 'apellido','id', 'email',],
+    include: [
+      { model: Padministrdores },
+      { model: Panalistas },
+      { model: Pcoordinadores }
+    
+    ]
   })
     .then(data => {
       res.send(data);
@@ -84,7 +91,12 @@ exports.findAdministrador = async (req, res) => {
 
  await User.findAll({
     where: {tipo:"Administrador"}, // conditions
-    attributes: ['nombre', 'apellido','id', 'email',]
+    attributes: ['nombre', 'apellido','id', 'email',],
+    include: [
+      { model: Padministrdores },
+      { model: Panalistas },
+      { model: Pcoordinadores }
+    ]
   }).then(data => {
       res.send(data);
     })
@@ -96,6 +108,53 @@ exports.findAdministrador = async (req, res) => {
 };
 
 
+exports.findAdministradorAth = async (req, res) => {
+
+
+  await User.findAll({
+     where: {tipo:"Administrador"}, // conditions
+     attributes: ['nombre', 'apellido','id', 'email',],
+     include: [
+       { model: Padministrdores,
+          where:{
+            eid:1
+          } 
+        },
+       { model: Panalistas },
+       { model: Pcoordinadores }
+     ]
+   }).then(data => {
+       res.send(data);
+     })
+     .catch(err => {
+       res.send(500).send({
+         message: err.message || "Ocurrio un erro al acceder ."
+       });
+     });
+ };
+
+
+exports.findAnalista = async (req, res) => {
+
+
+  await User.findAll({
+     where: {tipo:"Analista"}, // conditions
+     attributes: ['nombre', 'apellido','id', 'email',],
+     include: [
+      { model: Padministrdores },
+      { model: Panalistas },
+      { model: Pcoordinadores }
+    ]
+   }).then(data => {
+       res.send(data);
+     })
+     .catch(err => {
+       res.send(500).send({
+         message: err.message || "Ocurrio un erro al acceder ."
+       });
+     });
+ };
+ 
 
 exports.findregional = async (req, res) => {
   const id= req.body.id;

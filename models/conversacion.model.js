@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           primaryKey: true
         }, 
         titulo: {
-            type: DataTypes.STRING(25)
+            type: DataTypes.STRING(250)
         },
         tipo: {
             type: DataTypes.ENUM('Privada','Graupal'),
