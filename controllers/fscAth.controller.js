@@ -20,7 +20,7 @@ exports.create = (req, res) => {
     items: req.body.items,
     total: req.body.total,
     tecnico_id: req.body.tecnico_id,
-    solicitante_id: req.body.coordinador_id,
+    analista_id: req.body.analista_id,
   };
 
   // Save Book in database
@@ -34,7 +34,7 @@ exports.create = (req, res) => {
         modulo: "pagos_ath",
         icon: "ri-currency-line",
         color: "avatar-title bg-primary rounded-circle font-size-16",
-        uid: req.body.coordinador_id,
+        uid: req.body.analista_id,
         uidr:req.userId,
         canal: "",
       };
@@ -108,8 +108,6 @@ exports.findAllAdmin = (req, res) => {
       },
       { model: User, as: 'Solicitante_athc',
         attributes:['id', 'nombre', 'apellido']
-      },
-      { model: Abonos
       }
 
       ],
@@ -125,6 +123,37 @@ exports.findAllAdmin = (req, res) => {
 };
 
 exports.findAllAnalista = (req, res) => {
+
+  Formato.findAndCountAll({
+    limit: 3000000,
+    offset: 0,
+    where: {analista_id:req.userId}, // conditions
+    order: [
+      ['id', 'DESC'],
+    ],
+    include: [  
+      { model: User, as: 'Tecnico_athc',
+        attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+      },
+      { model: User, as: 'Autorizador_athc',
+      attributes:['id', 'nombre', 'apellido']
+      },
+      { model: User, as: 'Solicitante_athc',
+        attributes:['id', 'nombre', 'apellido']
+      }
+      ],
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.send(500).send({
+        message: err.message || "Some error accurred while retrieving books."
+      });
+    });
+};
+
+exports.findAllCoordinador = (req, res) => {
 
   Formato.findAndCountAll({
     limit: 3000000,
@@ -149,6 +178,7 @@ exports.findAllAnalista = (req, res) => {
       res.send(data);
     })
     .catch(err => {
+      console.log(err);
       res.send(500).send({
         message: err.message || "Some error accurred while retrieving books."
       });
@@ -180,6 +210,7 @@ exports.findAllTecnico = (req, res) => {
       res.send(data);
     })
     .catch(err => {
+      console.log(err);
       res.send(500).send({
         message: err.message || "Some error accurred while retrieving books."
       });
@@ -221,7 +252,7 @@ exports.findAll = (req, res) => {
 // Update a Book by the id in the request
 exports.status =async (req, res) => {
   await Formato.update({
-   observacion: req.body.observacion,
+   observacion_administrador: req.body.observacion_administrador,
    status: req.body.status,
  },{ where: { id: req.body.id }
    })
@@ -232,10 +263,10 @@ exports.status =async (req, res) => {
          });
          if (req.body.status==="Aprobado") {
            const datos = {
-             titulo: "F.S.C. APROBADO ",
-             descripcion: `Su solicitud de pago fue aprobada`,
+             titulo: `CUENTA DE COBRO  nº ${req.body.id} | APROBADA `,
+             descripcion: `Cuenta de cobro para el tecnico ${req.body.nombre},  fue aprobada`,
              origen: "",
-             modulo: "fst",
+             modulo: "pagos",
              icon: "ri-check-double-line",
              color: "avatar-title bg-success rounded-circle font-size-16",
              uid: req.body.solicitante_id,
@@ -245,10 +276,10 @@ exports.status =async (req, res) => {
            CrearNotificacion(datos);
          }else{
            const datos = {
-             titulo:`F.S.C. RECHAZADA `,
-             descripcion: `Motivo: ${req.body.observacion}`,
+             titulo:`CUENTA DE COBRO  nº ${req.body.id} | Rechazada `,
+             descripcion: `Cuenta de cobro para el tecnico ${req.body.nombre},  fue rechazada motivo: ${req.body.observacion_administrador}`,
              origen: "",
-             modulo: "fst",
+             modulo: "pagos",
              icon: "ri-close-line",
              color: "avatar-title bg-danger rounded-circle font-size-16",
              uid: req.body.solicitante_id,
@@ -329,6 +360,53 @@ exports.procesarFormato = (req, res) => {
       });
     });
 };
+
+
+// Update a Book by the id in the request
+exports.revisar = (req, res) => {
+  console.log(req)
+  const id = req.body.id;
+
+  Formato.update({
+    status: "Revisado",
+    items: req.body.items,
+    observacion: req.body.observacion,
+    total: req.body.total_cuenta,
+    solicitante_id: req.body.solicitante_id
+    },{
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "editado satisfactoriamente."
+        });
+        const datos = {
+          titulo: `Formatos de solicitud de cobro revisado `,
+          descripcion: `Pendiente por revision del coordinador`,
+          origen: "",
+          modulo: "pagos_ath",
+          icon: "ri-currency-line",
+          color: "avatar-title bg-primary rounded-circle font-size-16",
+          uid: req.body.solicitante_id,
+          uidr:req.userId,
+          canal: "",
+        };
+        CrearNotificacion(datos);
+      } else {
+        res.send({
+          message: `No puede editar el coargo con el  el =${id}. Tal vez el cargo no existe o la peticion es vacia!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error al intentar editar el cargo con el id=" + id
+      });
+    });
+};
+
+
 // Update a Book by the id in the request
 exports.update = (req, res) => {
   console.log(req)

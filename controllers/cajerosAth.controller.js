@@ -5,6 +5,8 @@ const Entidad = db.entidad;
 const Ciudad = db.ciudad;
 const Regional = db.regional;
 const Album = db.album;
+const User = db.user;
+const Permisos = db.permisosAnalista;
 
 // Create and Save a new Book
 exports.create = (req, res) => {
@@ -84,6 +86,17 @@ exports.find = (req, res) => {
       },
       {
         model:Regional,
+        include: [ 
+         { 
+           model:Permisos,
+           include: [ 
+            { 
+              model:User,
+              attributes:['nombre','apellido','id']
+            }
+           ]
+         }
+        ]
       },
       {
         model:Album,

@@ -1,5 +1,6 @@
 const { permisosAdmin, permisosAnalista } = require("../models");
 const db = require("../models");
+const config = require("../config/config");
 const Entidad = db.entidad;
 const PermisoCoordinador = db.permisoCoordinador;
 const PermisoAdmin = db.permisosAdmin;
@@ -21,7 +22,7 @@ exports.create = async (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.imagen= `https://pristelapp.herokuapp.com/public/${filename}`;
+    body.imagen= `${config.server.SERVER+filename}`;
     console.log(body.imagen);
   }
   body.nombre= req.body.nombre;
@@ -181,7 +182,7 @@ exports.update =async (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.imagen= `https://pristelapp.herokuapp.com/public/${filename}`;
+    body.imagen= `${config.server.SERVER+filename}`;
   }
   body.nombre= req.body.nombre;
   body.apellido= req.body.apellido;
@@ -245,6 +246,62 @@ exports.delete = (req, res) => {
 
 
 
+
+
+exports.findPermisosaCoordinadores = async (req, res) => {
+
+  await PermisoCoordinador.findAll({
+     limit: 3000000,
+     offset: 0,
+     where: {
+
+     },
+     include: [
+       { 
+        model: User,
+        attributes: ['nombre','apellido']
+      }
+    ], // conditions
+     order: [
+       ['id', 'DESC'],
+     ],
+   }).then(data => {
+       res.send(data);
+     })
+     .catch(err => {
+       res.send(500).send({
+         message: err.message || "Some error accurred while retrieving books."
+       });
+     });
+ };
+ 
+ exports.findPermisosaAdministradores = async (req, res) => {
+
+  await PermisoAdmin.findAll({
+     limit: 3000000,
+     offset: 0,
+     where: {
+
+     },
+     include: [
+       { 
+        model: User,
+        attributes: ['nombre','apellido']
+      }
+    ], // conditions
+     order: [
+       ['id', 'DESC'],
+     ],
+   }).then(data => {
+       res.send(data);
+     })
+     .catch(err => {
+       res.send(500).send({
+         message: err.message || "Some error accurred while retrieving books."
+       });
+     });
+ };
+ 
 
 
 

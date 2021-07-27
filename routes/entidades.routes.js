@@ -24,6 +24,11 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
 
     // Retrieve all cargos
     router.get("/entidades/permisoscoordinadores",[cpUpload,authJwt.verifyToken], categoriaController.findPermisosCoordinador);
+    // Retrieve all cargos
+    router.get("/entidades/permisosacoordinadores",[cpUpload,authJwt.verifyToken], categoriaController.findPermisosaCoordinadores);
+
+    // Retrieve all cargos
+    router.get("/entidades/permisosa_adminstradores",[cpUpload,authJwt.verifyToken], categoriaController.findPermisosaAdministradores);
 
     // Retrieve all cargos
     router.get("/entidades/permisosadministradores",[cpUpload,authJwt.verifyToken], categoriaController.findPermisosAdministrador);

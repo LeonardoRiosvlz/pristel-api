@@ -1,4 +1,5 @@
 const db = require("../models");
+const config = require("../config/config.js");
 const Abonos = db.abonos;
 const Notificacion = db.notificacion;
 const User = db.user;
@@ -16,8 +17,7 @@ exports.create = async (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.archivo_abono= `https://pristelapp.herokuapp.com/public/${filename}`;
-    //body.archivo_abono= `http://localhost:5000/public/${filename}`;
+    body.archivo_abono= `${config.server.SERVER+filename}`;
   }
   body.tipo= req.body.tipo;
   body.valor_abono= req.body.valor_abono;
@@ -31,7 +31,7 @@ exports.create = async (req, res) => {
         titulo: `Abono realizado (${req.body.tipo})`,
         descripcion: `Se realizó un abono con el valor de $ ${req.body.valor_abono} al F.S.T.-${req.body.formato_id}`,
         origen: "",
-        modulo: "abonos",
+        modulo: `/llamada_ath_tablero/${req.body.id_programacion}`,
         icon: "ri-money-dollar-box-line",
         color: "avatar-title bg-success rounded-circle font-size-16",
         uid: req.body.tecnico_id,
@@ -141,8 +141,7 @@ exports.update = async (req, res) => {
     const body={};
     if(req.files['filename']){
       const { filename } = req.files['filename'][0]
-      body.archivo_abono= `https://pristelapp.herokuapp.com/public/${filename}`;
-      //body.archivo_abono= `http://localhost:5000/public/${filename}`;
+      body.archivo_abono= `${config.server.SERVER+filename}`;
     }
     body.tipo= req.body.tipo;
     body.valor_abono= req.body.valor_abono;

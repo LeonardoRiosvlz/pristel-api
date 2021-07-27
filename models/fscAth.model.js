@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           primaryKey: true
         },
         status: {
-          type: DataTypes.ENUM('Creado','Pendiente','Aprobado','Rechazado'),
+          type: DataTypes.ENUM('Creado','Revisado','Pendiente','Aprobado','Rechazado'),
           defaultValue: 'Creado',
           unique: false 
        }, 
@@ -24,6 +24,12 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         },
         observacion: {
             type: DataTypes.TEXT('long')
+        },
+        observacion_coordinador: {
+          type: DataTypes.TEXT('long')
+        },
+        observacion_administrador: { 
+          type: DataTypes.TEXT('long')
         },
         fecha_pagado: {
           allowNull: true,

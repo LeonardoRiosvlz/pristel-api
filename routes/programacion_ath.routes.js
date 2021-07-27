@@ -40,6 +40,8 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     router.post("/programacion/ath/delete",[cpUpload,authJwt.verifyToken], programacionAthController.delete);
 
     router.post("/programacion/ath/filtro",[cpUpload,authJwt.verifyToken], programacionAthController.filtro);
+
+    router.post("/programacion/ath/filtroanalista",[cpUpload,authJwt.verifyToken], programacionAthController.filtroAnalista);
     ///////////tecnico///////////////
     // Create a new cargo
     router.post("/tecnico/programacion/ath/rechazar",[cpUpload,authJwt.verifyToken,authJwt.isTecnico], programacionAthController.rechazar);

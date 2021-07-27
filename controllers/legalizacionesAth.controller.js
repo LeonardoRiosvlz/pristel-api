@@ -1,4 +1,5 @@
 const db = require("../models");
+const config = require("../config/config");
 const Legalizaciones = db.legalizacionAth;
 const ProgramacionAth = db.programacion_ath;
 const Notificaciones = db.notificacion;
@@ -20,7 +21,7 @@ exports.create = async (req, res) => {
   if (req.files['evidencias']) {
     let  gallery = req.files['evidencias']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`https://pristelapp.herokuapp.com/public/${gallery[index].filename}`      
+        gallery[index]=`${config.server.SERVER+gallery[index].filename}`      
     }
     body.evidencias=gallery
   }
@@ -36,10 +37,10 @@ exports.create = async (req, res) => {
         titulo: `Legalización realizada `,
         descripcion: `Se realizó una legalización para el consecutivo (ATH-${req.body.id_programacion})`,
         origen: "",
-        modulo: "legalizaciones",
+        modulo: `/llamada_ath_tablero/${req.body.id_programacion}`,
         icon: "ri-exchange-dollar-fill",
         color: "avatar-title bg-success rounded-circle font-size-16",
-        uid: req.body.coordinador_id,
+        uid: req.body.analista_id,
         uidr:req.userId,
         canal: "",
       };
@@ -158,7 +159,7 @@ exports.update = async (req, res) => {
     if (req.files['evidencias']) {
       let  gallery = req.files['evidencias']  
       for (let index = 0; index < gallery.length; index++) {
-          gallery[index]=`https://pristelapp.herokuapp.com/public/${gallery[index].filename}`      
+          gallery[index]=`${config.server.SERVER+gallery[index].filename}`      
       }
       body.evidencias=gallery
     }
@@ -181,10 +182,10 @@ exports.update = async (req, res) => {
           titulo: `Legalización corregida     `,
           descripcion: `Se corrigió una legalización para el consecutivo (ATH-${req.body.id_programacion})`,
           origen: "",
-          modulo: "legalizaciones",
+          modulo: `/llamada_ath_tablero/${req.body.id_programacion}`,
           icon: "ri-exchange-dollar-fill",
           color: "avatar-title bg-success rounded-circle font-size-16",
-          uid: req.body.coordinador_id,
+          uid: req.body.analista_id,
           uidr:req.userId,
           canal: "",
         };

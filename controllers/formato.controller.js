@@ -196,20 +196,18 @@ exports.findOne =async (req, res) => {
 
 // Update a Book by the id in the request
 exports.update =async (req, res) => {
-  console.log(req.body.id);
+  console.log(req.body);
  await Formato.update({
-  pago_terceros: req.body.pago_terceros,
   consecutivo: req.body.consecutivo,
   otros: req.body.otros,
   observacion: req.body.observacion,
   descripcion_formato: req.body.descripcion_formato,
   items: req.body.items,
   valor: req.body.valor,
+  status: "Pendiente",
   codigo_tecnico: req.body.codigo_tecnico,
   tecnico_id: req.body.tecnico_id,
   autorizador_id: req.body.autorizador_id,
-  entidad_id: req.body.entidad_id,
-  solicitante_id: req.userId,
 },{ where: { id: req.body.id }
   })
     .then(num => {
@@ -217,6 +215,18 @@ exports.update =async (req, res) => {
         res.send({
           message: "editado satisfactoriamente."
         });
+        const datos = {
+          titulo: "F.S.T.",
+          descripcion: `Formato editado ${req.body.consecutivo}`,
+          origen: "",
+          modulo: "fst_ATH",
+          icon: "ri-coins-line",
+          color: "avatar-title bg-primary rounded-circle font-size-16",
+          uid: req.body.autorizador_id,
+          uidr:req.userId,
+          canal: "",
+        };
+        CrearNotificacion(datos);
       } else {
         res.send({
           message: `No puede editar el tal vez el cargo no existe o la peticion es vacia!`
@@ -224,6 +234,7 @@ exports.update =async (req, res) => {
       }
     })
     .catch(err => {
+      console.log(err);
       res.status(500).send({
         message: "Error al intentar editar el cargo con el id=" + id
       });

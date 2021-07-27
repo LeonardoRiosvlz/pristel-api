@@ -1,4 +1,5 @@
 const db = require("../models");
+const config = require("../config/config");
 const Gestion = db.gestionAth;
 const Notificacion = db.notificacion;
 const ProgramacionAth = db.programacion_ath;
@@ -6,6 +7,7 @@ const User = db.user;
 
 // Create and Save a new Book
 exports.create = async (req, res) => {
+  console.log(req.body);
   // Validate request
   if (!req.body.asunto) {
     res.status(400).send({
@@ -19,21 +21,21 @@ exports.create = async (req, res) => {
   if (req.files['gallery_antes']) {
     let  gallery = req.files['gallery_antes']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`https://pristelapp.herokuapp.com/public/${gallery[index].filename}`      
+        gallery[index]=`${config.server.SERVER+gallery[index].filename}`      
     }
     body.evidencias_antes=gallery
   }
   if (req.files['gallery_durante']) {
     let  gallery = req.files['gallery_durante']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`https://pristelapp.herokuapp.com/public/${gallery[index].filename}`      
+        gallery[index]=`${config.server.SERVER+gallery[index].filename}`      
     }
     body.evidencias_durante=gallery
   }
   if (req.files['gallery_despues']) {
     let  gallery = req.files['gallery_despues']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`https://pristelapp.herokuapp.com/public/${gallery[index].filename}`      
+        gallery[index]=`${config.server.SERVER+gallery[index].filename}`      
     }
     body.evidencias_despues=gallery
   }
@@ -50,10 +52,10 @@ exports.create = async (req, res) => {
         titulo: `Gestion realizada `,
         descripcion: `Se realizó una gestión para el consecutivo (ATH-${req.body.id_programacion})`,
         origen: "",
-        modulo: "llamadas_ATH",
+        modulo: `/llamada_ath_tablero/${req.body.id_programacion}`,
         icon: "ri-hammer-line",
         color: "avatar-title bg-success rounded-circle font-size-16",
-        uid: req.body.coordinador_id,
+        uid: req.body.analista_id,
         uidr:req.userId,
         canal: "",
       };
@@ -174,21 +176,21 @@ exports.update = async (req, res) => {
   if (req.files['gallery_antes']) {
     let  gallery = req.files['gallery_antes']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`https://pristelapp.herokuapp.com/public/${gallery[index].filename}`      
+        gallery[index]=`${config.server.SERVER+gallery[index].filename}`      
     }
     body.evidencias_antes=gallery
   }
   if (req.files['gallery_durante']) {
     let  gallery = req.files['gallery_durante']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`https://pristelapp.herokuapp.com/public/${gallery[index].filename}`      
+        gallery[index]=`${config.server.SERVER+gallery[index].filename}`      
     }
     body.evidencias_durante=gallery
   }
   if (req.files['gallery_despues']) {
     let  gallery = req.files['gallery_despues']  
     for (let index = 0; index < gallery.length; index++) {
-        gallery[index]=`https://pristelapp.herokuapp.com/public/${gallery[index].filename}`      
+        gallery[index]=`${config.server.SERVER+gallery[index].filename}`      
     }
     body.evidencias_despues=gallery
   }
@@ -212,10 +214,10 @@ exports.update = async (req, res) => {
           titulo: `Gestión realizada`,
           descripcion: `Se edito una gestión para el consecutivo (ATH-${req.body.id_programacion})`,
           origen: "",
-          modulo: "llamadas_ATH",
+          modulo: `/llamada_ath_tablero/${req.body.id_programacion}`,
           icon: "ri-hammer-line",
           color: "avatar-title bg-success rounded-circle font-size-16",
-          uid: req.body.coordinador_id,
+          uid: req.body.analista_id,
           uidr:req.userId,
           canal: "",
         };
@@ -260,7 +262,7 @@ exports.respuesta = async (req, res) => {
             titulo: `Gestión devuelta (ATH-${req.body.id_programacion})`,
             descripcion: `Observaciones: ${req.body.observaciones_analista}`,
             origen: "",
-            modulo: "llamadas_ATH",
+            modulo: `/llamada_ath_tablero/${req.body.id_programacion}`,
             icon: "ri-reply-fill",
             color: "avatar-title bg-danger rounded-circle font-size-16",
             uid: req.body.tecnico_id,

@@ -11,11 +11,11 @@ exports.signup = (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.imagen= `https://pristelapp.herokuapp.com/public/${filename}`
+    body.imagen= `${config.server.SERVER+filename}`
   }
   if(req.files['firma']){
     const { filename } = req.files['firma'][0]
-    body.firma= `https://pristelapp.herokuapp.com/public/${filename}`;
+    body.firma= `${config.server.SERVER+filename}`;
   }
   body.nombre= req.body.nombre;
   body.apellido= req.body.apellido;
@@ -66,11 +66,11 @@ exports.update = (req, res) => {
   const body={};
   if(req.files['filename']){
     const { filename } = req.files['filename'][0]
-    body.imagen= `https://pristelapp.herokuapp.com/public/${filename}`
+    body.imagen= `${config.server.SERVER+filename}`
   }
   if(req.files['firma']){
     const { filename } = req.files['firma'][0]
-    body.firma= `https://pristelapp.herokuapp.com/public/${filename}`;
+    body.firma= `${config.server.SERVER+filename}`;
   }
   body.nombre= req.body.nombre;
   body.apellido= req.body.apellido;

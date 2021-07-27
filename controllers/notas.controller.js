@@ -21,7 +21,7 @@ exports.create = async (req, res) => {
     user_id: req.userId,
   };
   if (req.userId==req.body.tecnico_id) {
-    body.uid=req.body.coordinador_id
+    body.uid=req.body.analista_id
   }else{
     body.uid=req.body.tecnico_id
   }
@@ -34,7 +34,7 @@ await  Notas.create(body)
         titulo: `Nota consecutivo  ${req.body.consecutivo}`,
         descripcion: `${req.body.texto}`,
         origen: "",
-        modulo: "llamadas_ATH",
+        modulo:`/llamada_ath_tablero/${req.body.id_programacion}`,
         icon: "ri-file-text-line",
         color: "avatar-title bg-info rounded-circle font-size-16",
         uid: body.uid,

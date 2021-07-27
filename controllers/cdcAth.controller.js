@@ -15,7 +15,7 @@ exports.findAll = (req, res) => {
     include: [
       {
         model: Prgramacion,
-        attributes:['id','tipo_llamada','llamada','descripcion','total_tecnico','coordinador_id'],
+        attributes:['id','tipo_llamada','llamada','descripcion','total_tecnico','coordinador_id','analista_id'],
         include: [
             {
               model: Cajero,

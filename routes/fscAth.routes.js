@@ -10,9 +10,14 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     // Delete a cargo with id
     router.get("/ath/formatodecobro/admin",[cpUpload,authJwt.verifyToken, authJwt.isAdmin ], Controller.findAllAdmin);
     // Delete a cargo with id
-    router.get("/ath/formatodecobro/analista",[cpUpload,authJwt.verifyToken, authJwt.isModerator ], Controller.findAllAnalista); 
+    router.get("/ath/formatodecobro/coordinador",[cpUpload,authJwt.verifyToken ], Controller.findAllCoordinador); 
     // Delete a cargo with id
-    router.post("/ath/formatodecobro/procesar",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdmin ], Controller.procesarFormato);    
+    router.get("/ath/formatodecobro/analista",[cpUpload,authJwt.verifyToken ], Controller.findAllAnalista); 
+    // Delete a cargo with id
+    router.post("/ath/formatodecobro/procesar",[cpUpload,authJwt.verifyToken ], Controller.procesarFormato);    
+
+    // Delete a cargo with id
+    router.post("/ath/formatodecobro/revisar",[cpUpload,authJwt.verifyToken ], Controller.revisar);  
     // Create a new cargo
     router.post("/ath/formatodecobro/status",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdmin], Controller.status);
     // Delete a cargo with id

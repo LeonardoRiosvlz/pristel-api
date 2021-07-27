@@ -1,7 +1,9 @@
 module.exports = {
   NODE_ENV: process.env.NODE_ENV,
   PORT: process.env.PORT,
-
+  server:{
+    SERVER:"https://pristelapp.herokuapp.com/public/"
+  },
  // /** DATABASE */
   db: {
     DB_HOST: "brcsvl5ao6prwpeq0sp3-mysql.services.clever-cloud.com",

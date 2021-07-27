@@ -114,37 +114,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update a Book by the id in the request
-exports.update = (req, res) => {
-  console.log(req)
-  const id = req.body.id;
 
-  Notificacion.update({
-    titulo: req.body.titulo,
-    descripcion: req.body.descripcion,
-    origen: req.body.origen,
-    modulo: req.body.modulo,
-    uid: req.body.uid,
-    },{
-    where: { id: id }
-  })
-    .then(num => {
-      if (num == 1) {
-        res.send({
-          message: "editado satisfactoriamente."
-        });
-      } else {
-        res.send({
-          message: `No puede editar el coargo con el  el =${id}. Tal vez el cargo no existe o la peticion es vacia!`
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Error al intentar editar el cargo con el id=" + id
-      });
-    });
-};
 
 // Update a Book by the id in the request
 exports.update = (req, res) => {
