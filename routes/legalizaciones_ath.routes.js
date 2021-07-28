@@ -12,6 +12,9 @@ const cpUpload = upload.fields([
     // Retrieve all cargos
     router.get("/legalizaciones/ath", legalizacionesAthController.findAll);
 
+    // Retrieve all cargos
+    router.get("/legalizaciones/ath/analistas",[cpUpload,authJwt.verifyToken], legalizacionesAthController.findAllAnalistas);
+    
     // Create a new cargo
     router.post("/legalizaciones/ath",[cpUpload,authJwt.verifyToken], legalizacionesAthController.create);
 

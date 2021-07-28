@@ -28,7 +28,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         observacion_coordinador: {
           type: DataTypes.TEXT('long')
         },
-        observacion_administrador: { 
+        observacion_pagado: { 
           type: DataTypes.TEXT('long')
         },
         fecha_pagado: {

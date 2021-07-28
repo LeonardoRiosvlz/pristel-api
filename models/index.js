@@ -125,7 +125,7 @@ db.fscAth.belongsTo(db.user, { as: 'Autorizador_athc', foreignKey: 'autorizador_
 db.fscAth.belongsTo(db.user, { as: 'Solicitante_athc', foreignKey: 'solicitante_id' }); 
 
 //formato de cobro//
-
+ 
 //abono//
 db.regional.hasMany(db.cajero_ath, { foreignKey: 'regional_id' });
 db.cajero_ath.belongsTo(db.regional, { foreignKey: 'regional_id' }); 

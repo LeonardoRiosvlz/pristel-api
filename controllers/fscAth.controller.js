@@ -362,6 +362,51 @@ exports.procesarFormato = (req, res) => {
 };
 
 
+
+// Update a Book by the id in the request
+exports.pagarFormato = (req, res) => {
+  console.log(req.body)
+  const id = req.body.id;
+
+  Formato.update({
+    status_pago: "Cancelado",
+    observacion_pagado: req.body.observacion_pagado,
+    total: req.body.total_cuenta,
+    autorizador_id: req.body.autorizador_id
+    },{
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "editado satisfactoriamente."
+        });
+        const datos = {
+          titulo: `Pago realizado`,
+          descripcion: `para la cuenta de cobro ${req.body.id}`,
+          origen: "",
+          modulo: "pagos_ath",
+          icon: "ri-currency-line",
+          color: "avatar-title bg-primary rounded-circle font-size-16",
+          uid: req.body.tecnico_id,
+          uidr:req.userId,
+          canal: "",
+        };
+        CrearNotificacion(datos);
+      } else {
+        res.send({
+          message: `No puede editar el coargo con el  el =${id}. Tal vez el cargo no existe o la peticion es vacia!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error al intentar editar el cargo con el id=" + id
+      });
+    });
+};
+
+
 // Update a Book by the id in the request
 exports.revisar = (req, res) => {
   console.log(req)

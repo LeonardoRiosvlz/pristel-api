@@ -113,11 +113,11 @@ await ProgramacionAth.findAndCountAll({
     offset: 0,
     where: {
       status:{
-        [Op.or]: ["Creada","Programada","Reprogramada","Reprogramada","Devuelta","Aceptada","Rechazada"]
+        [Op.or]: ["Creada","Programada","Reprogramada","Reprogramada","Devuelta","Aceptada","Rechazada","En proceso"]
       }
     }, // conditions
     order: [
-      ['id', 'DESC'],
+      ['fecha_vencimiento', 'ASC'],
     ],
     include: [{
       model: User, as: 'Tecnico_ath',
@@ -169,7 +169,7 @@ exports.findAllAnalista = async (req, res) => {
       where: {
         analista_id:req.userId,
         status:{
-          [Op.or]: ["Creada","Programada","Reprogramada","Reprogramada","Devuelta","Aceptada","Rechazada"]
+          [Op.or]: ["Creada","Programada","Reprogramada","Reprogramada","Devuelta","Aceptada","Rechazada","En proceso"]
         }
       }, // conditions
       order: [
@@ -419,7 +419,7 @@ exports.programar = async (req, res) => {
               titulo: `Programación ATH-${req.body.id} (${req.body.status})`,
               descripcion: `Llamada ${req.body.status}.`,
               origen: "",
-              modulo: "llamadas",
+              modulo: `/llamada_ath_tablero/${req.body.id}`,
               icon: "ri-calendar-line",
               color: "avatar-title bg-primary rounded-circle font-size-16",
               uid: req.body.tecnico_id,

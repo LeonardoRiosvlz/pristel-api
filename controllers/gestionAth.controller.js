@@ -269,13 +269,24 @@ exports.respuesta = async (req, res) => {
             uidr:req.userId,
             canal: "",
           };
+          ProgramacionAth.update({
+            status:"Rechazada",
+            vencimiento_tecnico:req.body.vencimiento_tecnico,
+          },{
+            where: { id: req.body.id_programacion }
+          });
           CrearNotificacion(datos);
         }else{
+          ProgramacionAth.update({
+            status:"Cumplida"
+          },{
+            where: { id: req.body.id_programacion }
+          })
           const datos = {
             titulo: `Gestión aprobada: (ATH-${req.body.id_programacion})`,
             descripcion: `El analista aprobo su gestión para esta llamada`,
             origen: "",
-            modulo: "llamadas_ATH",
+            modulo:`/llamada_ath_tablero/${req.body.id_programacion}`,
             icon: "ri-check-fill",
             color: "avatar-title bg-success rounded-circle font-size-16",
             uid: req.body.tecnico_id,
@@ -298,18 +309,7 @@ exports.respuesta = async (req, res) => {
       });
     });
 
-    ProgramacionAth.update({
-      status:req.body.status,
-      vencimiento_tecnico:req.body.vencimiento_tecnico,
-    },{
-      where: { id: req.body.id_programacion }
-    })
-      .then(num => {
 
-      })
-      .catch(err => {
-
-      });
 };
 
 

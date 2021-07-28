@@ -117,7 +117,12 @@ exports.findAll = (req, res) => {
         {
           model: User, as: 'Coordinador',
           attributes:['id','nombre', 'apellido','imagen' ],
-        }]
+        }, 
+        {
+          model: User, as: 'Analista_ath',
+          attributes:['id','nombre', 'apellido','imagen' ],
+        }
+      ]
     }],
   })
     .then(data => {
@@ -129,6 +134,53 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+
+
+
+exports.findAllAnalistas = (req, res) => {
+
+  Legalizaciones.findAndCountAll({
+    limit: 3000000,
+    offset: 0,
+    where: {}, // conditions
+    order: [
+      ['id', 'DESC'],
+    ],
+    include: [
+    {
+      model: ProgramacionAth,
+      where:{
+        analista_id: req.userId
+      },
+      attributes:['id','llamada','tipo_llamada'],
+      include: [
+        {
+          model: User, as: 'Tecnico_ath',
+          attributes:['id','nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Coordinador',
+          attributes:['id','nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Analista_ath',
+          attributes:['id','nombre', 'apellido','imagen' ],
+        }
+      ]
+    }],
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.send(500).send({
+        message: err.message || "Some error accurred while retrieving books."
+      });
+    });
+};
+
+
 
 
 exports.find = async (req, res) => {
