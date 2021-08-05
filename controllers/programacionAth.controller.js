@@ -169,7 +169,7 @@ exports.findAllAnalista = async (req, res) => {
       where: {
         analista_id:req.userId,
         status:{
-          [Op.or]: ["Creada","Programada","Reprogramada","Reprogramada","Devuelta","Aceptada","Rechazada","En proceso"]
+          [Op.or]: ["Creada","Programada","Reprogramada","Reprogramada","Devuelta","Aceptada","Rechazada","Cumplida","En proceso"]
         }
       }, // conditions
       order: [
@@ -1460,34 +1460,66 @@ exports.filtroAnalista = async (req, res) => {
   };
 
 
-///Fin del filtro de analistas 
+///alertas
 
-// Delete a Book with the specified id in the request
-exports.excelexport =async(req, res) => {
-  let id_rdi= "pp"
-  let workbook = new Excel.Workbook();
-  workbook = await workbook.xlsx.readFile("./storage/Rf.xlsx");
-  // Guardar Informacion en la template
 
-  // Crear Excel
-  // AQUI USARAS EL METODO writeBuffer() que devuelve un Buffer
-  const buffer =  await workbook.xlsx.writeBuffer();
-  
-  //DECLARAS EL NOMBRE DE TU ARCHIVO
-  const fileName = `F-RFI-V${id_rdi}.xlsx`
-  
-  // ESTABLECES LA CABECERA PARA INDICAR QUE ENVIARAS UN ARCHIVO PARA DESCARGAR
-  // EN LA CABECERA INDICAS EL NOMBRE DEL ARCHIVO
-  console.log('Sending buffer');
-  
-  res.set({
-    'Content-Type': 'application/octet-stream',
-    'Content-Disposition': 'attachment; filename="' + fileName + '"',
-    'x-processed-filename': fileName // <= cabezera personalizada para enviar el nombre del archivo procesado para su descarga
-  });
-  
-  // Usaremos el método send(), en vez del método sendFile().
-  await res.status(200).send(buffer); // <= No le veo el sentido a hacer la llamada con await
-    // res.download('./storage/leo.xlsx', 'leo.xlsx'); 
-};
+exports.alertasAdmin = async (req, res) => {
 
+  await ProgramacionAth.findAndCountAll({
+      limit: 3000000,
+      offset: 0,
+      where: {
+        status:{
+          [Op.or]: ["Creada","Programada","Reprogramada","Reprogramada","Devuelta","Aceptada","Rechazada","En proceso"]
+        }
+      }, // conditions
+      order: [
+        ['fecha_vencimiento', 'ASC'],
+      ],
+      include: [{
+        model: User, as: 'Tecnico_ath',
+        attributes:['nombre', 'apellido','imagen' ],
+      }, 
+      {
+        model: User, as: 'Coordinador',
+        attributes:['nombre', 'apellido','imagen' ],
+      }, 
+      {
+        model: Legalizaciones,
+      },
+      {
+        model: Sac,
+      },
+      {
+        model: Gestion
+      },
+      {
+        model: Cajero,
+        include: [{
+           model: Ciudad,
+           attributes:
+           [ 
+             'ciudad',
+             'departamento',
+             'alerta_administrador_critico',
+             'alerta_administrador_alto',
+             'alerta_administrador_mediano',
+             'alerta_administrador_bajo'
+            ]
+           },
+        { model: Entidad,attributes:[ 'imagen','id'] },
+        { model: Regional,attributes:[ 'nombre'] },
+        
+        ]
+      }],
+    }) 
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.send(500).send({
+          message: err.message || "Ocurrio un erro al intentar acceder a este recursos."
+        });
+      });
+  };
+  

@@ -29,7 +29,7 @@ exports.create = async (req, res) => {
       res.send(data);
       const datos = {
         titulo: `Abono realizado (${req.body.tipo})`,
-        descripcion: `Se realizó un abono con el valor de $ ${req.body.valor_abono} al F.S.T.-${req.body.formato_id}`,
+        descripcion: `Se realizó un abono con el valor de $ ${req.body.valor_abono} al  consecutivo ATH-${req.body.formato_id}`,
         origen: "",
         modulo: `/llamada_ath_tablero/${req.body.id_programacion}`,
         icon: "ri-money-dollar-box-line",

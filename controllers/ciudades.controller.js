@@ -25,6 +25,23 @@ exports.create = async (req, res) => {
   body.metrica_bajo= req.body.metrica_bajo;
   body.valor_bajo= req.body.valor_bajo;
   body.regional_id= req.body.regional_id;
+  body.alerta_tecnico_critico= req.body.alerta_tecnico_critico;
+  body.alerta_analista_critico= req.body.alerta_analista_critico;
+  body.alerta_coordinador_critico= req.body.alerta_coordinador_critico;
+  body.alerta_administrador_critico= req.body.alerta_administrador_critico;
+  body.alerta_tecnico_alto= req.body.alerta_tecnico_alto;
+  body.alerta_analista_alto= req.body.alerta_analista_alto;
+  body.alerta_coordinador_alto= req.body.alerta_coordinador_alto;
+  body.alerta_administrador_alto= req.body.alerta_administrador_alto;
+  body.alerta_tecnico_mediano= req.body.alerta_tecnico_mediano;
+  body.alerta_analista_mediano= req.body.alerta_analista_mediano;
+  body.alerta_coordinador_mediano= req.body.alerta_coordinador_mediano;
+  body.alerta_administrador_mediano= req.body.alerta_administrador_mediano;
+  body.alerta_tecnico_bajo= req.body.alerta_tecnico_bajo;
+  body.alerta_analista_bajo= req.body.alerta_analista_bajo;
+  body.alerta_coordinador_bajo= req.body.alerta_coordinador_bajo;
+  body.alerta_administrador_bajo= req.body.alerta_administrador_bajo;
+  
 
   // Save Book in database
  await Ciudades.create(body)
@@ -138,6 +155,22 @@ exports.update = async (req, res) => {
   body.metrica_bajo= req.body.metrica_bajo;
   body.valor_bajo= req.body.valor_bajo;
   body.regional_id= req.body.regional_id;
+  body.alerta_tecnico_critico= req.body.alerta_tecnico_critico;
+  body.alerta_analista_critico= req.body.alerta_analista_critico;
+  body.alerta_coordinador_critico= req.body.alerta_coordinador_critico;
+  body.alerta_administrador_critico= req.body.alerta_administrador_critico;
+  body.alerta_tecnico_alto= req.body.alerta_tecnico_alto;
+  body.alerta_analista_alto= req.body.alerta_analista_alto;
+  body.alerta_coordinador_alto= req.body.alerta_coordinador_alto;
+  body.alerta_administrador_alto= req.body.alerta_administrador_alto;
+  body.alerta_tecnico_mediano= req.body.alerta_tecnico_mediano;
+  body.alerta_analista_mediano= req.body.alerta_analista_mediano;
+  body.alerta_coordinador_mediano= req.body.alerta_coordinador_mediano;
+  body.alerta_administrador_mediano= req.body.alerta_administrador_mediano;
+  body.alerta_tecnico_bajo= req.body.alerta_tecnico_bajo;
+  body.alerta_analista_bajo= req.body.alerta_analista_bajo;
+  body.alerta_coordinador_bajo= req.body.alerta_coordinador_bajo;
+  body.alerta_administrador_bajo= req.body.alerta_administrador_bajo;
 
  await Ciudades.update(body,{
     where: { id: id }

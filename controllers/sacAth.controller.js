@@ -2,7 +2,8 @@ const db = require("../models");
 const Sac = db.sacAth;
 const CuentaDeCobro = db.cdcath;
 const Programación = db.programacion_ath;
-
+const Notificacion = db.notificacion;
+const User = db.user;
 
 // Create and Save a new Book
 exports.create = async (req, res) => { 
@@ -31,6 +32,18 @@ exports.create = async (req, res) => {
       res.status(500).send({
         message: err.message || "Some error occurred while creating the Book."
       });
+      const datos = {
+        titulo: `Programación ATH-${req.body.id} fue cerrada con éxito`,
+        descripcion: `El analista determinó el costo de la gestión es de ${req.body.total_tecnico}.`,
+        origen: "",
+        modulo: `/llamada_ath_tablero/${req.body.id}`,
+        icon: "ri-checkbox-circle-line",
+        color: "avatar-title bg-primary rounded-circle font-size-16",
+        uid: req.body.tecnico_id,
+        uidr:req.userId,
+        canal: "",
+      };
+      CrearNotificacion(datos);
     });
     if (req.body.tipo_tecnico==="Contratista") {
       CuentaDeCobro.findOrCreate({where: {id_programacion: req.body.id},
@@ -70,6 +83,18 @@ exports.create = async (req, res) => {
                  id_programacion: req.body.id,
                  tecnico_id: req.body.tecnico_id,
                 }});
+                const datos = {
+                  titulo: `Programación ATH-${req.body.id} fue cerrada con éxito`,
+                  descripcion: `El analista determinó el costo de la gestión es de ${req.body.total_tecnico}.`,
+                  origen: "",
+                  modulo: `/llamada_ath_tablero/${req.body.id}`,
+                  icon: "ri-checkbox-circle-line",
+                  color: "avatar-title bg-primary rounded-circle font-size-16",
+                  uid: req.body.tecnico_id,
+                  uidr:req.userId,
+                  canal: "",
+                };
+                CrearNotificacion(datos);
             }
           } else {
             res.send({
@@ -215,31 +240,32 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all Books from the database.
-exports.deleteAll = (req, res) => {
-  Book.destroy({
-    where: {},
-    truncate: false
-  })
-    .then(nums => {
-      res.send({ message: `${nums} Books were deleted successfully!` });
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while removing all books."
-      });
-    });
-};
 
-// Find all published Books
-exports.findAllPublished = (req, res) => {
-  Book.findAll({ where: { published: true } })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving books."
-      });
+async function CrearNotificacion(datos){
+  // Save
+  await  Notificacion.create(datos)
+  .then( data => {
+    notificar(data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: err.message || "Some error occurred while creating the Book."
     });
-};
+    return;
+  });
+}
+
+async function notificar(data){
+await  User.findByPk(data.uid)
+.then(datas => {
+ console.log(datas);
+ global.io.to(datas.canal).emit('cliente', data);
+})
+.catch(err => {
+ res.status(500).send({
+   message: `erro al editar el cargo= ${id}`
+ });
+});
+
+}
+
