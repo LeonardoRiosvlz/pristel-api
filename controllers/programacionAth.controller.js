@@ -3,6 +3,7 @@ const Excel = require('exceljs');
 const path = require('path');
 const mime = require('mime');
 const fs = require('fs');
+const { permisosAdmin } = require("../models");
 
 const Sequelize = db.sequelize;
 const Op = db.Op;
@@ -16,7 +17,8 @@ const Sac = db.sacAth;
 const Notificacion = db.notificacion;
 const Legalizaciones = db.legalizacionAth; 
 const Regional = db.regional; 
-
+const PermisoAdmin = db.permisosAdmin;
+const PermisoCoordinador = db.permisoCoordinador;
 
 // Create and Save a new Book
 exports.create = async (req, res) => {
@@ -1497,19 +1499,20 @@ exports.alertasAdmin = async (req, res) => {
         model: Cajero,
         include: [{
            model: Ciudad,
-           attributes:
-           [ 
-             'ciudad',
-             'departamento',
-             'alerta_administrador_critico',
-             'alerta_administrador_alto',
-             'alerta_administrador_mediano',
-             'alerta_administrador_bajo'
-            ]
+           attributes:['ciudad','departamento','alerta_administrador_critico','alerta_administrador_alto','alerta_administrador_mediano','alerta_administrador_bajo']
            },
-        { model: Entidad,attributes:[ 'imagen','id'] },
-        { model: Regional,attributes:[ 'nombre'] },
-        
+        { 
+          model: Entidad,
+          include: [
+            { 
+              model: PermisoAdmin,
+            }
+          ]
+        },
+        { 
+          model: Regional,
+          attributes:[ 'nombre'] 
+        },
         ]
       }],
     }) 
@@ -1517,9 +1520,195 @@ exports.alertasAdmin = async (req, res) => {
         res.send(data);
       })
       .catch(err => {
+        console.log(err);
         res.send(500).send({
           message: err.message || "Ocurrio un erro al intentar acceder a este recursos."
         });
       });
   };
   
+
+
+
+  exports.alertasCoordinadores = async (req, res) => {
+
+    await ProgramacionAth.findAndCountAll({
+        limit: 3000000,
+        offset: 0,
+        where: {
+          status:{
+            [Op.or]: ["Creada","Programada","Reprogramada","Reprogramada","Devuelta","Aceptada","Rechazada","En proceso"]
+          }
+        }, // conditions
+        order: [
+          ['fecha_vencimiento', 'ASC'],
+        ],
+        include: [{
+          model: User, as: 'Tecnico_ath',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Coordinador',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: Legalizaciones,
+        },
+        {
+          model: Sac,
+        },
+        {
+          model: Gestion
+        },
+        {
+          model: Cajero,
+          include: [{
+             model: Ciudad,
+             attributes:['ciudad','departamento','alerta_coordinador_critico','alerta_coordinador_alto','alerta_coordinador_mediano','alerta_coordinador_bajo']
+             },
+          { 
+            model: Entidad,
+            include: [
+              { 
+                model: PermisoCoordinador,
+              }
+            ]
+          },
+          { 
+            model: Regional,
+            attributes:[ 'nombre'] 
+          },
+          ]
+        }],
+      }) 
+        .then(data => {
+          res.send(data);
+        })
+        .catch(err => {
+          console.log(err);
+          res.send(500).send({
+            message: err.message || "Ocurrio un erro al intentar acceder a este recursos."
+          });
+        });
+    };
+    
+
+
+  exports.alertasAnalistas = async (req, res) => {
+
+    await ProgramacionAth.findAndCountAll({
+        limit: 3000000,
+        offset: 0,
+        where: {
+          status:{
+            [Op.or]: ["Creada","Programada","Reprogramada","Reprogramada","Devuelta","Aceptada","Rechazada","En proceso"]
+          },
+          analista_id:req.userId
+        }, // conditions
+        order: [
+          ['fecha_vencimiento', 'ASC'],
+        ],
+        include: [{
+          model: User, as: 'Tecnico_ath',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Coordinador',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: Legalizaciones,
+        },
+        {
+          model: Sac,
+        },
+        {
+          model: Gestion
+        },
+        {
+          model: Cajero,
+          include: [{
+             model: Ciudad,
+             attributes:['ciudad','departamento','alerta_analista_critico','alerta_analista_alto','alerta_analista_mediano','alerta_analista_bajo']
+             },
+          { 
+            model: Entidad,
+          },
+          { 
+            model: Regional,
+            attributes:[ 'nombre'] 
+          },
+          ]
+        }],
+      }) 
+        .then(data => {
+          res.send(data);
+        })
+        .catch(err => {
+          console.log(err);
+          res.send(500).send({
+            message: err.message || "Ocurrio un erro al intentar acceder a este recursos."
+          });
+        });
+    };
+    
+
+    
+  exports.alertasTecnicos = async (req, res) => {
+
+    await ProgramacionAth.findAndCountAll({
+        limit: 3000000,
+        offset: 0,
+        where: {
+          status:{
+            [Op.or]: ["Creada","Programada","Reprogramada","Reprogramada","Devuelta","Aceptada","Rechazada","En proceso"]
+          },
+          tecnico_id:req.userId
+        }, // conditions
+        order: [
+          ['fecha_vencimiento', 'ASC'],
+        ],
+        include: [{
+          model: User, as: 'Tecnico_ath',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Coordinador',
+          attributes:['nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: Legalizaciones,
+        },
+        {
+          model: Sac,
+        },
+        {
+          model: Gestion
+        },
+        {
+          model: Cajero,
+          include: [{
+             model: Ciudad,
+             attributes:['ciudad','departamento','alerta_tecnico_critico','alerta_tecnico_alto','alerta_tecnico_mediano','alerta_tecnico_bajo']
+             },
+          { 
+            model: Entidad,
+          },
+          { 
+            model: Regional,
+            attributes:[ 'nombre'] 
+          },
+          ]
+        }],
+      }) 
+        .then(data => {
+          res.send(data);
+        })
+        .catch(err => {
+          console.log(err);
+          res.send(500).send({
+            message: err.message || "Ocurrio un erro al intentar acceder a este recursos."
+          });
+        });
+    };
+    

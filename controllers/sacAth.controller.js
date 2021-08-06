@@ -3,6 +3,7 @@ const Sac = db.sacAth;
 const CuentaDeCobro = db.cdcath;
 const Programación = db.programacion_ath;
 const Notificacion = db.notificacion;
+const CierreAth = db.cierre_ath;
 const User = db.user;
 
 // Create and Save a new Book
@@ -53,6 +54,30 @@ exports.create = async (req, res) => {
         }});
     }
 
+    CierreAth.findOrCreate({where: {programacion_id: req.body.id},
+      defaults: {
+       id_programacion: req.body.id,
+       tecnico_id: req.body.tecnico_id,
+       consecutivo:req.body.consecutivo,
+       codigo_cajero:req.body.codigo_cajero,
+       tipo_llamada:req.body.tipo_llamada,
+       llamada:req.body.llamada,
+       descripcion:req.body.descripcion,
+       actividades_ejecutadas:req.body.actividades_ejecutadas,
+       titulo:req.body.titulo,
+       terminal:req.body.terminal,
+       total_sac:req.body.total_sac,
+       sac:req.body.sac,
+       antes:req.body.antes,
+       despues:req.body.despues,
+       entidad_bancaria:req.body.entidad_bancaria,
+       fecha_despacho:req.body.fecha_despacho,
+       fecha_atencion:req.body.fecha_atencion,
+       ciudad_origen:req.body.ciudad_origen,
+       ciudad_destino:req.body.ciudad_destino,
+       departamento:req.body.departamento,
+      }});
+
       Programación.update({
         status: "Cerrada",
         motivo_cierre: req.body.motivo_cierre,
@@ -95,6 +120,29 @@ exports.create = async (req, res) => {
                   canal: "",
                 };
                 CrearNotificacion(datos);
+                CierreAth.findOrCreate({where: {programacion_id: req.body.id},
+                  defaults: {
+                   id_programacion: req.body.id,
+                   tecnico_id: req.body.tecnico_id,
+                   consecutivo:req.body.consecutivo,
+                   codigo_cajero:req.body.codigo_cajero,
+                   tipo_llamada:req.body.tipo_llamada,
+                   llamada:req.body.llamada,
+                   descripcion:req.body.descripcion,
+                   actividades_ejecutadas:req.body.actividades_ejecutadas,
+                   titulo:req.body.titulo,
+                   terminal:req.body.terminal,
+                   total_sac:req.body.total_sac,
+                   sac:req.body.sac,
+                   antes:req.body.antes,
+                   despues:req.body.despues,
+                   entidad_bancaria:req.body.entidad_bancaria,
+                   fecha_despacho:req.body.fecha_despacho,
+                   fecha_atencion:req.body.fecha_atencion,
+                   ciudad_origen:req.body.ciudad_origen,
+                   ciudad_destino:req.body.ciudad_destino,
+                   departamento:req.body.departamento,
+                  }});
             }
           } else {
             res.send({

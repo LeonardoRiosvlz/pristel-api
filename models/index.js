@@ -38,6 +38,7 @@ db.permisoCoordinador = require("./permisoCoordinador.model.js")(sequelize, Sequ
 db.permisosAdmin = require("./permisosAdmin.model.js")(sequelize, Sequelize, DataTypes);
 db.permisosAnalista = require("./permisosAnalista.model.js")(sequelize, Sequelize, DataTypes);
 db.programacion_ath = require("./programacion_ath.model.js")(sequelize, Sequelize, DataTypes);
+db.cierre_ath = require("./cierre_ath.model.js")(sequelize, Sequelize, DataTypes);
 db.legalizacionAth = require("./legalizaciones_ath.model.js")(sequelize, Sequelize, DataTypes);
 db.area = require("./area.model.js")(sequelize, Sequelize, DataTypes);
 db.gestionAth = require("./gestionAth.model.js")(sequelize, Sequelize, DataTypes);
@@ -143,6 +144,8 @@ db.user.hasMany(db.trazabilidad_ath, { foreignKey: 'user_id' });
 db.trazabilidad_ath.belongsTo(db.user, { foreignKey: 'user_id' });
 //trazabilidad//
 //programacion//
+db.programacion_ath.hasMany(db.cierre_ath, { foreignKey: 'programacion_id' });
+db.cierre_ath.belongsTo(db.programacion_ath, { foreignKey: 'programacion_id' }); 
 db.cajero_ath.hasMany(db.programacion_ath, { foreignKey: 'id_cajero',onDelete: 'CASCADE'  });
 db.programacion_ath.belongsTo(db.cajero_ath, { foreignKey: 'id_cajero' ,onDelete: 'CASCADE'});
 db.cajero_ath.hasMany(db.trazabilidad_ath, { foreignKey: 'id_cajero' ,onDelete: 'CASCADE' });

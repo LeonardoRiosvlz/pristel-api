@@ -59,7 +59,14 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     router.post("/tecnico/programacion/ath/rechazar",[cpUpload,authJwt.verifyToken,authJwt.isTecnico], programacionAthController.rechazar);
 
 
+
+
     router.get("/programacion/ath/alertas/administadores",[cpUpload,authJwt.verifyToken], programacionAthController.alertasAdmin);
 
+    router.get("/programacion/ath/alertas/analistas",[cpUpload,authJwt.verifyToken], programacionAthController.alertasAnalistas);
+
+    router.get("/programacion/ath/alertas/tecnicos",[cpUpload,authJwt.verifyToken], programacionAthController.alertasTecnicos);
+
+    router.get("/programacion/ath/alertas/coordinadores",[cpUpload,authJwt.verifyToken], programacionAthController.alertasCoordinadores);
 
     module.exports = router;
