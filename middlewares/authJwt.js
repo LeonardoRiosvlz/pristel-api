@@ -28,6 +28,24 @@ const verifyToken = (req, res, next) => {
   });
 };
 
+const isActive = (req, res, next) => {
+  User.findAndCountAll({
+    where: { 
+      id: req.userId,
+      status: "activo"
+     }
+  }).then(data => {
+      if (data.count> 0) {
+        next();
+        return;
+      } else {
+        return res.status(403).send({
+          message: "Tu cuenta fue desasctivada"
+        });
+      }
+    })
+};
+
 const isCoordinadorPrivilegiado =async (req, res, next) => {
  await Permiso.findAndCountAll({
     where: {
@@ -162,6 +180,7 @@ const isAdminSala = (req, res, next) => {
 const authJwt = {
   verifyToken: verifyToken,
   isAdmin: isAdmin,
+  isActive: isActive,
   isTecnico: isTecnico,
   isAnalista: isAnalista,
   isAnalistaPrivilegiado: isAnalistaPrivilegiado,

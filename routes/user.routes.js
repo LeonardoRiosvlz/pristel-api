@@ -25,9 +25,9 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 },{ name: 'firma
 
   router.get("/user/analistas",[cpUpload,authJwt.verifyToken], controller.findAnalista);
 
-  router.put("/pefil",[cpUpload ,authJwt.verifyToken], controller.update);
+  router.put("/user/pefil",[cpUpload ,authJwt.verifyToken], controller.update);
 
-  router.put("/user/canal",[cpUpload ,authJwt.verifyToken], controller.updateCanal);
+  router.put("/user/canal",[cpUpload ,authJwt.verifyToken,authJwt.isActive], controller.updateCanal);
 
   router.get("/test/all", controller.allAccess);
 
