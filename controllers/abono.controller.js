@@ -2,6 +2,7 @@ const db = require("../models");
 const config = require("../config/config.js");
 const Abonos = db.abonos;
 const Notificacion = db.notificacion;
+const Formato = db.formato;
 const User = db.user;
 
 // Create and Save a new Book
@@ -195,3 +196,31 @@ exports.delete = async (req, res) => {
     });
 };
 
+/////dasboard
+
+exports.findAllDashboardTecnico = async (req, res) => {
+  const id =req.body.id;
+  await  Abonos.findAndCountAll({
+      limit: 3000000,
+      offset: 0,
+      where: { }, // conditions
+      order: [
+        ['id', 'DESC'],
+      ],
+      include: [{
+        model: Formato,
+        where:{
+          tecnico_id:req.userId
+        },
+        attributes:['id'],
+      }]
+    })
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.send(500).send({
+          message: err.message || "Some error accurred while retrieving books."
+        });
+      });
+  }; 

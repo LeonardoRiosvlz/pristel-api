@@ -20,7 +20,6 @@ exports.signup = (req, res) => {
   body.nombre= req.body.nombre;
   body.apellido= req.body.apellido;
   body.sexo= req.body.sexo;
-  body.entidad= req.body.entidad;
   body.cargo= req.body.cargo;
   body.codigo= req.body.codigo;
   body.telefono= req.body.telefono;
@@ -131,11 +130,12 @@ exports.signin = (req, res) => {
       email: email
     }
   }).then(user => {
-      if (user.status==="inactivo") {
-        return res.status(403).send({ message: "Usuario bloqueado." });
-      }
+    console.log(user);
       if (!user) {
         return res.status(404).send({ message: "User Not found." });
+      }
+      if (user.status==="inactivo") {
+        return res.status(403).send({ message: "Usuario bloqueado." });
       }
       let passwordIsValid = bcrypt.compareSync(
         password,

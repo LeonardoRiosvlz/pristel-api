@@ -1,5 +1,6 @@
 const db = require("../models");
 const config = require("../config/config");
+const { gestionAth, programacion_ath } = require("../models");
 const Gestion = db.gestionAth;
 const Notificacion = db.notificacion;
 const ProgramacionAth = db.programacion_ath;
@@ -339,3 +340,122 @@ exports.delete = async (req, res) => {
     });
 };
 
+
+
+
+
+////////////// dashboard////////
+
+
+
+exports.findAllDasbord = async (req, res) => {
+  const id =req.body.id;
+  await  gestionAth.findAndCountAll({
+      limit: 20,
+      offset: 0,
+      where: { }, // conditions
+      order: [
+        ['id', 'DESC'],
+      ],
+      include: [{
+        model: programacion_ath,
+        attributes:['status'],
+        include: [{
+          model: User, as: 'Tecnico_ath',
+          attributes:['nombre', 'apellido' ],
+        }, 
+        {
+          model: User, as: 'Analista_ath',
+          attributes:['nombre', 'apellido' ],
+        }, 
+      ]
+      }]
+    })
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.send(500).send({
+          message: err.message || "Some error accurred while retrieving books."
+        });
+      });
+  };
+
+  exports.findAllDasbordAnalista = async (req, res) => {
+    console.log(req.userId);
+    await  gestionAth.findAndCountAll({
+        limit: 20,
+        offset: 0,
+        where: {
+         }, // conditions
+        order: [
+          ['id', 'DESC'],
+        ],
+        include: [{
+          model: ProgramacionAth,
+          where:{
+            analista_id:15
+          },
+          attributes:['status'],
+          include: [{
+            model: User, as: 'Tecnico_ath',
+            attributes:['nombre', 'apellido' ],
+          }, 
+          {
+            model: User, as: 'Analista_ath',
+            attributes:['nombre', 'apellido' ],
+          }, 
+        ]
+        }]
+      })
+        .then(data => {
+          console.log(data);
+          res.send(data);
+
+        })
+        .catch(err => {
+          console.log(err);
+          res.send(500).send({
+            message: err.message || "Some error accurred while retrieving books."
+          });
+        });
+    };
+
+    
+  exports.findAllDasbordTecnico = async (req, res) => {
+    const id =req.body.id;
+    await  gestionAth.findAndCountAll({
+        limit: 20,
+        offset: 0,
+        where: {
+         
+         }, // conditions
+        order: [
+          ['id', 'DESC'],
+        ],
+        include: [{
+          model: ProgramacionAth,
+          where:{
+            tecnico_id:req.userId
+          },
+          attributes:['status','tecnico_id'],
+          include: [{
+            model: User, as: 'Tecnico_ath',
+            attributes:['nombre', 'apellido' ],
+          }, 
+          {
+            model: User, as: 'Analista_ath',
+            attributes:['nombre', 'apellido' ],
+          }, 
+        ]
+        }]
+      })
+        .then(data => {
+          res.send(data);
+        })
+        .catch(err => {
+          res.send(500).send({
+            message: err.message || "Some error accurred while retrieving books."
+          });
+        });
+    };

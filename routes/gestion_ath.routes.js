@@ -23,6 +23,15 @@ const cpUpload = upload.fields([
      // Retrieve all cargos
      router.post("/gestion/ath/find",[cpUpload,authJwt.verifyToken], gestionAthController.find);
 
+    // Retrieve all cargos
+    router.post("/gestion/ath/find/dashboard",[cpUpload,authJwt.verifyToken], gestionAthController.findAllDasbord);
+
+               // Retrieve all cargos
+    router.post("/gestion/ath/find/dashboard/analista",[cpUpload,authJwt.verifyToken], gestionAthController.findAllDasbordAnalista);
+
+    // Retrieve all cargos
+    router.post("/gestion/ath/find/dashboard/tecnico",[cpUpload,authJwt.verifyToken], gestionAthController.findAllDasbordTecnico);
+
     // Update a cargo with id
     router.put("/gestion/ath",[cpUpload,authJwt.verifyToken], gestionAthController.update);
 
