@@ -21,6 +21,9 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     
     // Delete a cargo with id
     router.get("/ath/cuentasdecobro/dashboard/tecnico", [cpUpload,authJwt.verifyToken ], cdcathController.findAllDashboardTecnico);
-
+    // Delete a cargo with id
+    router.get("/ath/cuentasdecobro/dashboard/analista", [cpUpload,authJwt.verifyToken ], cdcathController.findAllDashboardAnalista);
+    // Delete a cargo with id
+    router.get("/ath/cuentasdecobro/dashboard/administrador", [cpUpload,authJwt.verifyToken ], cdcathController.findAllDashboardAdministrador);
   module.exports = router;
  

@@ -203,3 +203,100 @@ exports.findAllDashboardTecnico = (req, res) => {
       });
     });
 };
+
+
+
+
+exports.findAllDashboardAnalista = (req, res) => {
+  Cuenta.findAll({
+  limit: 3000000,
+  offset: 0,
+  where: {
+    formato_id:null
+  }, // conditions+
+  include: [
+    {
+      model: Prgramacion,
+      attributes:['id','tipo_llamada','llamada','descripcion','total_tecnico','coordinador_id','analista_id'],
+      where:{
+        analista_id:req.userId
+      },
+      include: [
+          {
+            model: Cajero,
+            attributes:['codigo','terminal','direccion'],
+            include: [
+              {
+                model: Ciudad,
+                attributes:['departamento','ciudad',],
+              },
+            ]
+          },
+          {
+            model: Gestion,
+          },
+          {
+            model: Legalizacion,
+          }
+        ]
+    },
+  ],
+  order: [
+    ['id', 'DESC'],
+  ],
+})
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.send(500).send({
+      message: err.message || "Some error accurred while retrieving books."
+    });
+  });
+};
+
+
+exports.findAllDashboardAdministrador = (req, res) => {
+  Cuenta.findAll({
+  limit: 3000000,
+  offset: 0,
+  where: {
+    formato_id:null
+  }, // conditions+
+  include: [
+    {
+      model: Prgramacion,
+      attributes:['id','tipo_llamada','llamada','descripcion','total_tecnico','coordinador_id','analista_id'],
+      include: [
+          {
+            model: Cajero,
+            attributes:['codigo','terminal','direccion'],
+            include: [
+              {
+                model: Ciudad,
+                attributes:['departamento','ciudad',],
+              },
+            ]
+          },
+          {
+            model: Gestion,
+          },
+          {
+            model: Legalizacion,
+          }
+        ]
+    },
+  ],
+  order: [
+    ['id', 'DESC'],
+  ],
+})
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.send(500).send({
+      message: err.message || "Some error accurred while retrieving books."
+    });
+  });
+};
