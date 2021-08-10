@@ -115,7 +115,7 @@ await ProgramacionAth.findAndCountAll({
     offset: 0,
     where: {
       status:{
-        [Op.or]: ["Creada","Programada","Reprogramada","Reprogramada","Devuelta","Aceptada","Rechazada","En proceso"]
+        [Op.or]: ["Creada","Programada","Reprogramada","Reprogramada","Devuelta","Aceptada","Cumplida","Rechazada","En proceso"]
       }
     }, // conditions
     order: [
@@ -123,6 +123,10 @@ await ProgramacionAth.findAndCountAll({
     ],
     include: [{
       model: User, as: 'Tecnico_ath',
+      attributes:['nombre', 'apellido','imagen' ],
+    }, 
+    {
+      model: User, as: 'Analista_ath',
       attributes:['nombre', 'apellido','imagen' ],
     }, 
     {
@@ -182,6 +186,10 @@ exports.findAllAnalista = async (req, res) => {
         attributes:['nombre', 'apellido','imagen' ],
       }, 
       {
+        model: User, as: 'Analista_ath',
+        attributes:['nombre', 'apellido','imagen' ],
+      }, 
+      {
         model: User, as: 'Coordinador',
         attributes:['nombre', 'apellido','imagen' ],
       }, 
@@ -233,6 +241,10 @@ exports.find = async (req, res) => {
       include: [{
         model: User, as: 'Tecnico_ath',
         attributes:['nombre', 'apellido','imagen','codigo','direccion','telefono','email','tipo_tecnico'  ],
+      }, 
+      {
+        model: User, as: 'Analista_ath',
+        attributes:['nombre', 'apellido','imagen' ],
       }, 
       {
         model: User, as: 'Coordinador',
@@ -316,6 +328,10 @@ exports.find = async (req, res) => {
             model: User, as: 'Tecnico_ath',
             attributes:['nombre', 'apellido','imagen' ],
           }, 
+          {
+            model: User, as: 'Analista_ath',
+            attributes:['nombre', 'apellido','imagen' ],
+          },  
           {
             model: User, as: 'Coordinador',
             attributes:['nombre', 'apellido','imagen' ],

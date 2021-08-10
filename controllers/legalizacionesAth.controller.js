@@ -343,3 +343,136 @@ exports.respuesta = async (req, res) => {
 
 };
 
+
+
+
+//////dashboard//////
+
+
+
+exports.findAllDashboardAdministracion = (req, res) => {
+
+  Legalizaciones.findAndCountAll({
+    limit: 20,
+    offset: 0,
+    where: {}, // conditions
+    order: [
+      ['id', 'DESC'],
+    ],
+    include: [
+    {
+      model: ProgramacionAth,
+      attributes:['id','llamada','tipo_llamada'],
+      include: [
+        {
+          model: User, as: 'Tecnico_ath',
+          attributes:['id','nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Coordinador',
+          attributes:['id','nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Analista_ath',
+          attributes:['id','nombre', 'apellido','imagen' ],
+        }
+      ]
+    }],
+  })
+    .then(data => {
+      console.log(data);
+      res.send(data);
+    })
+    .catch(err => {
+      res.send(500).send({
+        message: err.message || "Some error accurred while retrieving books."
+      });
+    });
+};
+
+
+exports.findAllDashboardTecnico = (req, res) => {
+
+  Legalizaciones.findAndCountAll({
+    limit: 10,
+    offset: 0,
+    where: {}, // conditions
+    order: [
+      ['id', 'DESC'],
+    ],
+    include: [
+    {
+      model: ProgramacionAth,
+      where:{
+        tecnico_id: req.userId
+      },
+      attributes:['id','llamada','tipo_llamada'],
+      include: [
+        {
+          model: User, as: 'Tecnico_ath',
+          attributes:['id','nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Coordinador',
+          attributes:['id','nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Analista_ath',
+          attributes:['id','nombre', 'apellido','imagen' ],
+        }
+      ]
+    }],
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.send(500).send({
+        message: err.message || "Some error accurred while retrieving books."
+      });
+    });
+};
+
+
+
+exports.findAllDashboardAnalista = (req, res) => {
+
+  Legalizaciones.findAndCountAll({
+    limit: 10,
+    offset: 0,
+    where: {}, // conditions
+    order: [
+      ['id', 'DESC'],
+    ],
+    include: [
+    {
+      model: ProgramacionAth,
+      where:{
+        analista_id: req.userId
+      },
+      attributes:['id','llamada','tipo_llamada'],
+      include: [
+        {
+          model: User, as: 'Tecnico_ath',
+          attributes:['id','nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Coordinador',
+          attributes:['id','nombre', 'apellido','imagen' ],
+        }, 
+        {
+          model: User, as: 'Analista_ath',
+          attributes:['id','nombre', 'apellido','imagen' ],
+        }
+      ]
+    }],
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.send(500).send({
+        message: err.message || "Some error accurred while retrieving books."
+      });
+    });
+};

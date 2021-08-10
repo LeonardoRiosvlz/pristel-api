@@ -11,7 +11,10 @@ exports.findAll = (req, res) => {
     Cuenta.findAll({
     limit: 3000000,
     offset: 0,
-    where: {formato_id:null}, // conditions+
+    where: {
+      formato_id:null,
+      tecnico_id:req.userId
+    }, // conditions+
     include: [
       {
         model: Prgramacion,
@@ -144,6 +147,59 @@ exports.findAllPublished = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message: err.message || "Some error occurred while retrieving books."
+      });
+    });
+};
+
+
+
+
+////dashboard////
+
+
+
+exports.findAllDashboardTecnico = (req, res) => {
+    Cuenta.findAll({
+    limit: 3000000,
+    offset: 0,
+    where: {
+      formato_id:null,
+      tecnico_id:req.userId
+    }, // conditions+
+    include: [
+      {
+        model: Prgramacion,
+        attributes:['id','tipo_llamada','llamada','descripcion','total_tecnico','coordinador_id','analista_id'],
+        include: [
+            {
+              model: Cajero,
+              attributes:['codigo','terminal','direccion'],
+              include: [
+                {
+                  model: Ciudad,
+                  attributes:['departamento','ciudad',],
+                },
+              ]
+            },
+            {
+              model: Gestion,
+            },
+            {
+              model: Legalizacion,
+            }
+          ]
+      },
+    ],
+    order: [
+      ['id', 'DESC'],
+    ],
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.send(500).send({
+        message: err.message || "Some error accurred while retrieving books."
       });
     });
 };

@@ -31,4 +31,11 @@ const cpUpload = upload.fields([
     router.post("/legalizaciones/ath/delete",[cpUpload,authJwt.verifyToken], legalizacionesAthController.delete);
 
 
+
+    // Retrieve all cargos
+    router.get("/legalizaciones/ath/dashboard/analista",[cpUpload,authJwt.verifyToken], legalizacionesAthController.findAllDashboardAnalista);
+    // Retrieve all cargos
+    router.get("/legalizaciones/ath/dashboard/tecnico",[cpUpload,authJwt.verifyToken], legalizacionesAthController.findAllDashboardTecnico);
+    // Retrieve all cargos
+    router.get("/legalizaciones/ath/dashboard/administrador",[cpUpload,authJwt.verifyToken], legalizacionesAthController.findAllDashboardAdministracion);    
     module.exports = router;

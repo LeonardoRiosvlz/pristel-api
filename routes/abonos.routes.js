@@ -23,4 +23,11 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     // Delete a cargo with id
     router.post("/abonos/delete",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdmin], abonoController.delete);
 
+    // Retrieve all cargos
+    router.get("/abonos/dashboard/tecnico",[cpUpload,authJwt.verifyToken], abonoController.findAllDashboardTecnico);
+    // Retrieve all cargos
+    router.get("/abonos/dashboard/analista",[cpUpload,authJwt.verifyToken], abonoController.findAllDashboardAnalista);    
+    // Retrieve all cargos
+    router.get("/abonos/dashboard/administrador",[cpUpload,authJwt.verifyToken], abonoController.findAllDashboardAdministrador);   
+
  module.exports = router;

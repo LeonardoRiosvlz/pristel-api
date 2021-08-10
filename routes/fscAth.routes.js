@@ -29,4 +29,11 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     router.post("/ath/formatodecobro",[cpUpload,authJwt.verifyToken ], Controller.create);
 
 
+    // Delete a cargo with id    
+    router.get("/ath/formatodecobro/dashboard/analista",[cpUpload,authJwt.verifyToken], Controller.findAllDasboardAnalista);
+    // Delete a cargo with id    
+    router.get("/ath/formatodecobro/dashboard/administrador",[cpUpload,authJwt.verifyToken], Controller.findAllDasboardAdministracion);
+    // Delete a cargo with id    
+    router.get("/ath/formatodecobro/dashboard/tecnico",[cpUpload,authJwt.verifyToken], Controller.findAllDasboardTecnico);
+
   module.exports = router;

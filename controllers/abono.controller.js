@@ -1,7 +1,9 @@
 const db = require("../models");
 const config = require("../config/config.js");
+const { programacion_ath } = require("../models");
 const Abonos = db.abonos;
 const Notificacion = db.notificacion;
+const Programacion_ath = db.programacion_ath;
 const Formato = db.formato;
 const User = db.user;
 
@@ -201,7 +203,7 @@ exports.delete = async (req, res) => {
 exports.findAllDashboardTecnico = async (req, res) => {
   const id =req.body.id;
   await  Abonos.findAndCountAll({
-      limit: 3000000,
+      limit: 10,
       offset: 0,
       where: { }, // conditions
       order: [
@@ -209,13 +211,81 @@ exports.findAllDashboardTecnico = async (req, res) => {
       ],
       include: [{
         model: Formato,
+        attributes:['id','tecnico_id'],
         where:{
           tecnico_id:req.userId
         },
-        attributes:['id'],
+        include: [{
+          model: Programacion_ath,
+          attributes:['id','llamada','tipo_llamada'],
+        }]
       }]
     })
       .then(data => {
+        console.log(data);
+        res.send(data);
+      })
+      .catch(err => {
+        res.send(500).send({
+          message: err.message || "Some error accurred while retrieving books."
+        });
+      });
+  }; 
+
+  exports.findAllDashboardAdministrador= async (req, res) => {
+    const id =req.body.id;
+    await  Abonos.findAndCountAll({
+        limit: 15,
+        offset: 0,
+        where: { }, // conditions
+        order: [
+          ['id', 'DESC'],
+        ],
+        include: [{
+          model: Formato,
+          attributes:['id','tecnico_id'],
+          include: [{
+            model: Programacion_ath,
+            attributes:['id','llamada','tipo_llamada'],
+          }]
+        }]
+      })
+        .then(data => {
+          console.log(data);
+          res.send(data);
+        })
+        .catch(err => {
+          res.send(500).send({
+            message: err.message || "Some error accurred while retrieving books."
+          });
+        });
+    }; 
+
+
+    
+exports.findAllDashboardAnalista = async (req, res) => {
+  const id =req.body.id;
+  await  Abonos.findAndCountAll({
+      limit: 10,
+      offset: 0,
+      where: { }, // conditions
+      order: [
+        ['id', 'DESC'],
+      ],
+      include: [{
+        model: Formato,
+        attributes:['id','tecnico_id'],
+        include: [{
+          model: Programacion_ath,
+          where:{
+            analista_id:req.userId
+          },
+          attributes:['id','llamada','tipo_llamada','analista_id'],
+        }]
+      }]
+    })
+      .then(data => {
+        console.log(data);
         res.send(data);
       })
       .catch(err => {

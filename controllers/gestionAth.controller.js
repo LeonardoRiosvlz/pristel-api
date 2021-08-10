@@ -359,7 +359,7 @@ exports.findAllDasbord = async (req, res) => {
       ],
       include: [{
         model: programacion_ath,
-        attributes:['status'],
+        attributes:['status','tipo_llamada','llamada'],
         include: [{
           model: User, as: 'Tecnico_ath',
           attributes:['nombre', 'apellido' ],
@@ -396,7 +396,7 @@ exports.findAllDasbord = async (req, res) => {
           where:{
             analista_id:15
           },
-          attributes:['status'],
+          attributes:['status','tipo_llamada','llamada'],
           include: [{
             model: User, as: 'Tecnico_ath',
             attributes:['nombre', 'apellido' ],
@@ -438,7 +438,7 @@ exports.findAllDasbord = async (req, res) => {
           where:{
             tecnico_id:req.userId
           },
-          attributes:['status','tecnico_id'],
+          attributes:['status','tecnico_id','tipo_llamada','llamada'],
           include: [{
             model: User, as: 'Tecnico_ath',
             attributes:['nombre', 'apellido' ],

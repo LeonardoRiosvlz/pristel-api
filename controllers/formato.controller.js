@@ -1,3 +1,4 @@
+const { programacion_ath } = require("../models");
 const db = require("../models");
 const Formato = db.formato;
 const User = db.user;
@@ -5,7 +6,7 @@ const Tercero = db.tercero;
 const Entidad = db.entidad;
 const Abono = db.abonos;
 const Notificacion = db.notificacion;
-
+const Programacion = db.programacion_ath;
 
 // Create and Save a new Book
 exports.create =async (req, res) => {
@@ -321,3 +322,152 @@ exports.delete =async (req, res) => {
     });
 };
 
+
+
+
+//////dashboard/////
+
+
+exports.findAllDashboardAdmin = async (req, res) => {
+
+  await Formato.findAndCountAll({
+     limit: 3000000,
+     offset: 0,
+     where: {
+      status:"Pendiente"
+     }, // conditions
+     order: [
+       ['id', 'DESC'],
+     ],
+     include: [  
+     {
+       model:Programacion,
+       attributes:['id', 'tipo_llamada', 'llamada']
+     },
+     { model: User, as: 'Tecnico',
+       attributes:['id', 'nombre', 'apellido', 'codigo']
+     },
+     { model: User, as: 'Autorizador',
+     attributes:['id', 'nombre', 'apellido']
+     },
+     { model: User, as: 'Solicitante',
+       attributes:['id', 'nombre', 'apellido']
+     },
+     {
+       model: Tercero,
+       attributes:['nombre_tercero']
+     },
+     {
+       model: Entidad,
+       attributes:['empresa']
+    },
+     ],
+   })
+     .then(data => {
+       res.send(data);
+     })
+     .catch(err => {
+       res.send(500).send({
+         message: err.message || "Some error accurred while retrieving books."
+       });
+     });
+ };
+ 
+ 
+ exports.findAllDashboardAnalista = async (req, res) => {
+
+  await Formato.findAndCountAll({
+     limit: 3000000,
+     offset: 0,
+     where: {
+      analista_id:req.userId, 
+      status:"Pendiente"
+     },   
+     order: [
+       ['id', 'DESC'],
+     ],
+     include: [  
+     {
+       model:Programacion,
+       attributes:['id', 'tipo_llamada', 'llamada']
+     },
+     { model: User, as: 'Tecnico',
+       attributes:['id', 'nombre', 'apellido', 'codigo']
+     },
+     { model: User, as: 'Autorizador',
+     attributes:['id', 'nombre', 'apellido']
+     },
+     { model: User, as: 'Solicitante',
+       attributes:['id', 'nombre', 'apellido']
+     },
+     {
+       model: Tercero,
+       attributes:['nombre_tercero']
+     },
+     {
+       model: Entidad,
+       attributes:['empresa']
+    },
+     ],
+   })
+     .then(data => {
+       res.send(data);
+     })
+     .catch(err => {
+       res.send(500).send({
+         message: err.message || "Some error accurred while retrieving books."
+       });
+     });
+ };
+ 
+ 
+
+  
+ exports.findAllDashboardTecnico = async (req, res) => {
+
+  await Formato.findAndCountAll({
+     limit: 3000000,
+     offset: 0,
+     where: {
+      tecnico_id:req.userId, 
+      status:"Pendiente"
+
+     },   
+     order: [
+       ['id', 'DESC'],
+     ],
+     include: [  
+     {
+       model:Programacion,
+       attributes:['id', 'tipo_llamada', 'llamada']
+     },
+     { model: User, as: 'Tecnico',
+       attributes:['id', 'nombre', 'apellido', 'codigo']
+     },
+     { model: User, as: 'Autorizador',
+     attributes:['id', 'nombre', 'apellido']
+     },
+     { model: User, as: 'Solicitante',
+       attributes:['id', 'nombre', 'apellido']
+     },
+     {
+       model: Tercero,
+       attributes:['nombre_tercero']
+     },
+     {
+       model: Entidad,
+       attributes:['empresa']
+    },
+     ],
+   })
+     .then(data => {
+       res.send(data);
+     })
+     .catch(err => {
+       res.send(500).send({
+         message: err.message || "Some error accurred while retrieving books."
+       });
+     });
+ };
+ 
+ 

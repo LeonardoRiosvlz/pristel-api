@@ -534,3 +534,112 @@ exports.findAllPublished = (req, res) => {
       });
     });
 };
+
+
+////dashboard/////
+
+
+exports.findAllDasboardAdministracion = (req, res) => {
+
+  Formato.findAndCountAll({
+    limit: 10,
+    offset: 0,
+    where: {
+      status_pago:"Pendiente"
+    }, // conditions
+    order: [
+      ['id', 'DESC'],
+    ],
+    include: [  
+      { model: User, as: 'Tecnico_athc',
+        attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+      },
+      { model: User, as: 'Autorizador_athc',
+      attributes:['id', 'nombre', 'apellido']
+      },
+      { model: User, as: 'Solicitante_athc',
+        attributes:['id', 'nombre', 'apellido']
+      }
+      ],
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.send(500).send({
+        message: err.message || "Some error accurred while retrieving books."
+      });
+    });
+};
+
+
+
+
+exports.findAllDasboardAnalista = (req, res) => {
+
+  Formato.findAndCountAll({
+    limit: 10,
+    offset: 0,
+    where: {
+      status_pago:"Pendiente",
+      analista_id:req.userId
+    }, // conditions
+    order: [
+      ['id', 'DESC'],
+    ],
+    include: [  
+      { model: User, as: 'Tecnico_athc',
+        attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+      },
+      { model: User, as: 'Autorizador_athc',
+      attributes:['id', 'nombre', 'apellido']
+      },
+      { model: User, as: 'Solicitante_athc',
+        attributes:['id', 'nombre', 'apellido']
+      }
+      ],
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.send(500).send({
+        message: err.message || "Some error accurred while retrieving books."
+      });
+    });
+};
+
+
+exports.findAllDasboardTecnico = (req, res) => {
+
+  Formato.findAndCountAll({
+    limit: 10,
+    offset: 0,
+    where: {
+      tecnico_id:req.userId,
+      status_pago:"Pendiente"
+    }, // conditions
+    order: [
+      ['id', 'DESC'],
+    ],
+    include: [  
+      { model: User, as: 'Tecnico_athc',
+        attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+      },
+      { model: User, as: 'Autorizador_athc',
+      attributes:['id', 'nombre', 'apellido']
+      },
+      { model: User, as: 'Solicitante_athc',
+        attributes:['id', 'nombre', 'apellido']
+      }
+      ],
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.send(500).send({
+        message: err.message || "Some error accurred while retrieving books."
+      });
+    });
+};

@@ -25,4 +25,15 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }]);
     router.post("/formatos/delete",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdmin], formatoController.delete);
 
 
+
+
+    // Create a new cargo
+    router.post("/formatos/find/dashboard/admin",[cpUpload,authJwt.verifyToken], formatoController.findAllDashboardAdmin);
+
+    // Create a new cargo
+    router.post("/formatos/find/dashboard/analista",[cpUpload,authJwt.verifyToken], formatoController.findAllDashboardAnalista);
+
+    // Create a new cargo
+    router.post("/formatos/find/dashboard/tecnico",[cpUpload,authJwt.verifyToken], formatoController.findAllDashboardTecnico);
+    
     module.exports = router;
