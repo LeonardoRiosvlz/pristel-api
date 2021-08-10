@@ -23,3 +23,4 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     router.get("/ath/cuentasdecobro/dashboard/tecnico", [cpUpload,authJwt.verifyToken ], cdcathController.findAllDashboardTecnico);
 
   module.exports = router;
+ 
