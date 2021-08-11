@@ -57,6 +57,10 @@ db.sac = require("./sac.model.js")(sequelize, Sequelize, DataTypes);
 db.sacAth = require("./sacAth.model.js")(sequelize, Sequelize, DataTypes);
 db.cdcath = require("./cdcath.model.js")(sequelize, Sequelize, DataTypes);
 db.fscAth = require("./fscAth.model.js")(sequelize, Sequelize, DataTypes);
+db.cdaath = require("./cdaath.model.js")(sequelize, Sequelize, DataTypes);
+db.fsaAth = require("./fsaAth.model.js")(sequelize, Sequelize, DataTypes);
+
+
 
 db.user.hasMany(db.permisoCoordinador, { foreignKey: 'uid' });
 db.permisoCoordinador.belongsTo(db.user, { foreignKey: 'uid' });
@@ -126,7 +130,18 @@ db.fscAth.belongsTo(db.user, { as: 'Autorizador_athc', foreignKey: 'autorizador_
 db.fscAth.belongsTo(db.user, { as: 'Solicitante_athc', foreignKey: 'solicitante_id' }); 
 
 //formato de cobro//
- 
+
+
+////Ajustes///
+db.user.hasMany(db.fsaAth, { as: 'Tecnico_atha', foreignKey: 'tecnico_id' });
+db.fsaAth.belongsTo(db.user, { as: 'Tecnico_atha', foreignKey: 'tecnico_id' });
+db.user.hasMany(db.cdaath,{ foreignKey: 'tecnico_id' });  
+db.cdaath.belongsTo(db.user,{ foreignKey: 'tecnico_id' });
+/////ajustes///
+
+
+
+
 //abono//
 db.regional.hasMany(db.cajero_ath, { foreignKey: 'regional_id' });
 db.cajero_ath.belongsTo(db.regional, { foreignKey: 'regional_id' }); 
