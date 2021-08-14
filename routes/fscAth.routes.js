@@ -13,6 +13,12 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     router.get("/ath/formatodecobro/coordinador",[cpUpload,authJwt.verifyToken ], Controller.findAllCoordinador); 
     // Delete a cargo with id
     router.get("/ath/formatodecobro/analista",[cpUpload,authJwt.verifyToken ], Controller.findAllAnalista); 
+    // ajustes
+    router.get("/ath/formatodeajustes",[cpUpload,authJwt.verifyToken ], Controller.findAllAjustes); 
+    // ajustes
+    router.post("/ath/formatodeajuste",[cpUpload,authJwt.verifyToken ], Controller.createformatodeajuste);
+    // ajustes
+    router.post("/ath/formatodeajuste/archivar",[cpUpload,authJwt.verifyToken ], Controller.archivarAjuste); 
     // Delete a cargo with id
     router.post("/ath/formatodecobro/procesar",[cpUpload,authJwt.verifyToken ], Controller.procesarFormato);    
     // Delete a cargo with id

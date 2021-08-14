@@ -133,14 +133,18 @@ db.fscAth.belongsTo(db.user, { as: 'Solicitante_athc', foreignKey: 'solicitante_
 
 
 ////Ajustes///
+db.fsaAth.hasMany(db.cdaath,{ foreignKey: 'formato_id',onDelete: 'CASCADE' });
+db.cdaath.belongsTo(db.fsaAth,{ foreignKey: 'formato_id',onDelete: 'CASCADE' });
 db.user.hasMany(db.fsaAth, { as: 'Tecnico_atha', foreignKey: 'tecnico_id' });
 db.fsaAth.belongsTo(db.user, { as: 'Tecnico_atha', foreignKey: 'tecnico_id' });
 db.user.hasMany(db.cdaath,{ foreignKey: 'tecnico_id' });  
 db.cdaath.belongsTo(db.user,{ foreignKey: 'tecnico_id' });
+db.programacion_ath.hasMany(db.cdaath,{ foreignKey: 'id_programacion' }); 
+db.cdaath.belongsTo(db.programacion_ath,{ foreignKey: 'id_programacion' }); 
 /////ajustes///
 
 
-
+ 
 
 //abono//
 db.regional.hasMany(db.cajero_ath, { foreignKey: 'regional_id' });

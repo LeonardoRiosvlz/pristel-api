@@ -1,6 +1,7 @@
 const db = require("../models");
 const Sac = db.sacAth;
 const CuentaDeCobro = db.cdcath;
+const CuentaDeAjuste = db.cdaath;
 const Programación = db.programacion_ath;
 const Notificacion = db.notificacion;
 const CierreAth = db.cierre_ath;
@@ -8,6 +9,7 @@ const User = db.user;
 
 // Create and Save a new Book
 exports.create = async (req, res) => { 
+  console.log(req.body);
   if (req.body.aplica_sac==="Aplica") {
   // Validate request
   if (!req.body.items) {
@@ -33,18 +35,6 @@ exports.create = async (req, res) => {
       res.status(500).send({
         message: err.message || "Some error occurred while creating the Book."
       });
-      const datos = {
-        titulo: `Programación ATH-${req.body.id} fue cerrada con éxito`,
-        descripcion: `El analista determinó el costo de la gestión es de ${req.body.total_tecnico}.`,
-        origen: "",
-        modulo: `/llamada_ath_tablero/${req.body.id}`,
-        icon: "ri-checkbox-circle-line",
-        color: "avatar-title bg-primary rounded-circle font-size-16",
-        uid: req.body.tecnico_id,
-        uidr:req.userId,
-        canal: "",
-      };
-      CrearNotificacion(datos);
     });
     if (req.body.tipo_tecnico==="Contratista") {
       CuentaDeCobro.findOrCreate({where: {id_programacion: req.body.id},
@@ -52,6 +42,38 @@ exports.create = async (req, res) => {
          id_programacion: req.body.id,
          tecnico_id: req.body.tecnico_id,
         }});
+        const datos = {
+          titulo: `Programación ATH-${req.body.id} fue cerrada con éxito`,
+          descripcion: `El analista determinó el costo de la gestión es de ${req.body.total_tecnico}.`,
+          origen: "",
+          modulo: `/llamada_ath_tablero/${req.body.id}`,
+          icon: "ri-checkbox-circle-line",
+          color: "avatar-title bg-primary rounded-circle font-size-16",
+          uid: req.body.tecnico_id,
+          uidr:req.userId,
+          canal: "",
+        };
+        CrearNotificacion(datos);
+    }
+    if (req.body.tipo_tecnico==="Nomina"){
+      console.log("nomina");
+      CuentaDeAjuste.findOrCreate({where: {id_programacion: req.body.id},
+        defaults: {
+         id_programacion: req.body.id,
+         tecnico_id: req.body.tecnico_id,
+        }});
+        const datos = {
+          titulo: `Programación ATH-${req.body.id} fue cerrada con éxito`,
+          descripcion: `El analista aprobó su gestión.`,
+          origen: "",
+          modulo: `/llamada_ath_tablero/${req.body.id}`,
+          icon: "ri-checkbox-circle-line",
+          color: "avatar-title bg-primary rounded-circle font-size-16",
+          uid: req.body.tecnico_id,
+          uidr:req.userId,
+          canal: "",
+        };      
+        CrearNotificacion(datos);        
     }
 
     CierreAth.findOrCreate({where: {programacion_id: req.body.id},
@@ -143,6 +165,26 @@ exports.create = async (req, res) => {
                    ciudad_destino:req.body.ciudad_destino,
                    departamento:req.body.departamento,
                   }});
+            }
+            if (req.body.tipo_tecnico==="Nomina"){
+              console.log("nomina");
+              CuentaDeAjuste.findOrCreate({where: {id_programacion: req.body.id},
+                defaults: {
+                 id_programacion: req.body.id,
+                 tecnico_id: req.body.tecnico_id,
+                }});
+                const datos = {
+                  titulo: `Programación ATH-${req.body.id} fue cerrada con éxito`,
+                  descripcion: `El analista aprobó su gestión.`,
+                  origen: "",
+                  modulo: `/llamada_ath_tablero/${req.body.id}`,
+                  icon: "ri-checkbox-circle-line",
+                  color: "avatar-title bg-primary rounded-circle font-size-16",
+                  uid: req.body.tecnico_id,
+                  uidr:req.userId,
+                  canal: "",
+                };      
+                CrearNotificacion(datos);        
             }
           } else {
             res.send({

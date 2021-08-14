@@ -10,7 +10,9 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
 
     // Retrieve all cargos
     router.get("/ath/cuentasdecobro",[cpUpload,authJwt.verifyToken], cdcathController.findAll);
-
+    router.get("/ath/cuentasdeajuste",[cpUpload,authJwt.verifyToken], cdcathController.findAllCDA);
+    router.post("/ath/cuentasdeajuste",[cpUpload,authJwt.verifyToken], cdcathController.findAllCDAR);
+    router.get("/ath/cuentasdeajuste/tecnicos",[cpUpload,authJwt.verifyToken], cdcathController.findAllCDAT);
     // Update a cargo with id
     router.put("/ath/cuentasdecobro",[cpUpload,authJwt.verifyToken], cdcathController.update);
 
@@ -20,6 +22,7 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
 
     
     // Delete a cargo with id
+
     router.get("/ath/cuentasdecobro/dashboard/tecnico", [cpUpload,authJwt.verifyToken ], cdcathController.findAllDashboardTecnico);
     // Delete a cargo with id
     router.get("/ath/cuentasdecobro/dashboard/analista", [cpUpload,authJwt.verifyToken ], cdcathController.findAllDashboardAnalista);

@@ -1,10 +1,12 @@
 const db = require("../models");
 const Cuenta = db.cdcath;
+const CuentaDA = db.cdaath;
 const Prgramacion = db.programacion_ath;
 const Gestion = db.gestionAth;
 const Cajero = db.cajero_ath;
 const Ciudad = db.ciudad;
 const Legalizacion = db.legalizacionAth;
+const Tecnico = db.user;
 
 exports.findAll = (req, res) => {
 
@@ -52,6 +54,139 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+
+
+
+exports.findAllCDAR = (req, res) => {
+  console.log(req.body.id);
+  CuentaDA.findAll({
+  limit: 3000000,
+  offset: 0,
+  where: {
+    formato_id:null,
+    tecnico_id:req.body.id
+  }, // conditions+
+  include: [
+    {
+      model: Prgramacion,
+      attributes:['id','tipo_llamada','llamada','descripcion','total_tecnico','coordinador_id','analista_id'],
+      include: [
+          {
+            model: Cajero,
+            attributes:['codigo','terminal','direccion'],
+            include: [
+              {
+                model: Ciudad,
+                attributes:['departamento','ciudad',],
+              },
+            ]
+          },
+          {
+            model: Gestion,
+          },
+          {
+            model: Legalizacion,
+          }
+        ]
+    },
+  ],
+  order: [
+    ['id', 'DESC'],
+  ],
+})
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    res.send(500).send({
+      message: err.message || "Some error accurred while retrieving books."
+    });
+  });
+};
+
+
+exports.findAllCDA = (req, res) => {
+
+  CuentaDA.findAll({
+  limit: 3000000,
+  offset: 0,
+  where: {
+    formato_id:null,
+    tecnico_id:req.userId
+  }, // conditions+
+  include: [
+    {
+      model: Prgramacion,
+      attributes:['id','tipo_llamada','llamada','descripcion','total_tecnico','coordinador_id','analista_id'],
+      include: [
+          {
+            model: Cajero,
+            attributes:['codigo','terminal','direccion'],
+            include: [
+              {
+                model: Ciudad,
+                attributes:['departamento','ciudad',],
+              },
+            ]
+          },
+          {
+            model: Gestion,
+          },
+          {
+            model: Legalizacion,
+          }
+        ]
+    },
+  ],
+  order: [
+    ['id', 'DESC'],
+  ],
+})
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    console.log(err);
+    res.send(500).send({
+      message: err.message || "Some error accurred while retrieving books."
+    });
+  });
+};
+
+
+exports.findAllCDAT = (req, res) => {
+
+  Tecnico.findAll({
+  limit: 3000000,
+  offset: 0,
+  where: {
+    tipo_tecnico:"Nomina"
+  }, // conditions+
+  attributes:['id','nombre','apellido'],
+  include: [
+    {
+      model: CuentaDA,
+      where:{
+        formato_id:null
+      }
+    },
+  ],
+  order: [
+    ['id', 'DESC'],
+  ],
+})
+  .then(data => {
+    res.send(data);
+  })
+  .catch(err => {
+    console.log(err);
+    res.send(500).send({
+      message: err.message || "Some error accurred while retrieving books."
+    });
+  });
+};
+
 
 // Find a single with an id
 exports.findOne = (req, res) => {

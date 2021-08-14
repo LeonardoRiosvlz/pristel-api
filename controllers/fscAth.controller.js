@@ -1,7 +1,9 @@
 const db = require("../models");
 const Formato = db.fscAth;
+const FormatoSA = db.fsaAth;
 const Notificacion = db.notificacion;
 const Cuenta = db.cdcath;
+const CuentaDA= db.cdaath;
 const Abonos = db.ascAth;
 const User = db.user;
 // Create and Save a new Book
@@ -48,9 +50,57 @@ exports.create = (req, res) => {
     });
 };
 
+
+// Create and Save a new Book
+exports.createformatodeajuste = (req, res) => {
+  // Validate request
+  if (!req.body.total) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+  // Create a Book
+  const book = {
+    status: "Pendiente",
+    status_pago: "Pendiente",
+    items: req.body.items,
+    total: req.body.total,
+    tecnico_id: req.body.tecnico_id,
+  };
+
+  // Save Book in database
+  FormatoSA.create(book)
+    .then(data => {
+      res.send(data);
+      AdjuntarAjuste(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while creating the Book."
+      });
+    });
+};
+
+
 async function Adjuntar(data){
   // Save
  await Cuenta.update({
+    formato_id: data.id,
+    },{
+    where: { tecnico_id: data.tecnico_id }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: err.message || "Some error occurred while creating the Book."
+    });
+    return;
+  });
+}
+
+async function AdjuntarAjuste(data){
+  // Save
+ await CuentaDA.update({
     formato_id: data.id,
     },{
     where: { tecnico_id: data.tecnico_id }
@@ -152,6 +202,34 @@ exports.findAllAnalista = (req, res) => {
       });
     });
 };
+
+
+exports.findAllAjustes = (req, res) => {
+
+  FormatoSA.findAndCountAll({
+    limit: 3000000,
+    offset: 0,
+    where: {}, // conditions
+    order: [
+      ['id', 'DESC'],
+    ],
+    include: [  
+      { model: User, as: 'Tecnico_atha',
+        attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+      }
+      ],
+  })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.send(500).send({
+        message: err.message || "Some error accurred while retrieving books."
+      });
+    });
+};
+
+
 
 exports.findAllCoordinador = (req, res) => {
 
@@ -480,6 +558,36 @@ exports.update = (req, res) => {
       });
     });
 };
+
+
+// Update a Book by the id in the request
+exports.archivarAjuste = (req, res) => {
+  const id = req.body.id;
+  console.log(id);
+  FormatoSA.update({
+    status: "Archivado"
+    },{
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "editado satisfactoriamente."
+        });
+      } else {
+        res.send({
+          message: `No puede editar el coargo con el  el =${id}. Tal vez el cargo no existe o la peticion es vacia!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error al intentar editar el cargo con el id=" + id
+      });
+    });
+};
+
+
 
 // Delete a Book with the specified id in the request
 exports.delete = (req, res) => {
