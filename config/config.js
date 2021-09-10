@@ -5,7 +5,7 @@ module.exports = {
     SERVER:"https://pristelapp.herokuapp.com/public/"
   //SERVER:"http://localhost:5000/public/"
   },
-  /** DATABASE */
+  /** DATABASE 
   db: {
     DB_HOST: "brcsvl5ao6prwpeq0sp3-mysql.services.clever-cloud.com",
     DB_USER: "uar1r4tflbjyzvk6",
@@ -21,8 +21,8 @@ module.exports = {
       idle: 10000
     }
   }, 
- 
-  /** DATABASE 
+ */
+  /** DATABASE */
   db: { 
     DB_HOST: "176.223.143.24",
     DB_USER: "adminpristel_adminuser",
@@ -38,7 +38,7 @@ module.exports = {
       idle: 10000
     }
  },
- */
+
   /** AUTH KEY */
   auth: {
     secret: "our-secret-key"
