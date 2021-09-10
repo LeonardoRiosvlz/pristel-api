@@ -57,7 +57,7 @@ db.sac = require("./sac.model.js")(sequelize, Sequelize, DataTypes);
 db.sacAth = require("./sacAth.model.js")(sequelize, Sequelize, DataTypes);
 db.cdcath = require("./cdcath.model.js")(sequelize, Sequelize, DataTypes);
 db.fscAth = require("./fscAth.model.js")(sequelize, Sequelize, DataTypes);
-db.cdaath = require("./cdaath.model.js")(sequelize, Sequelize, DataTypes);
+db.cdaath = require("./cdaAth.model.js")(sequelize, Sequelize, DataTypes);
 db.fsaAth = require("./fsaAth.model.js")(sequelize, Sequelize, DataTypes);
 
 
