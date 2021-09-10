@@ -3,10 +3,12 @@ const router = express.Router();
 const { authJwt } = require("../middlewares");
 const upload = require('../libs/storage');
 const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
-
+const uploads = require("../middlewares/uploads");
 
     const ciudadesController = require("../controllers/ciudades.controller.js");
 
+    // Create a new cargo
+    router.post("/ciudades/csv",[uploads.single("file"),authJwt.verifyToken], ciudadesController.upload);
 
     // Create a new cargo
     router.post("/ciudad/",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], ciudadesController.create);

@@ -67,7 +67,7 @@ const isCoordinadorPrivilegiado =async (req, res, next) => {
 
 const isAdmin =async (req, res, next) => {
   await User.findByPk(req.userId).then(user => {
-    if (user.tipo==="Administrador") {
+    if (user.tipo==="Administrador" ||user.tipo==="Root") {
       next();
       return;
     }else{

@@ -74,7 +74,6 @@ exports.update = (req, res) => {
   body.nombre= req.body.nombre;
   body.apellido= req.body.apellido;
   body.sexo= req.body.sexo;
-  body.entidad= req.body.entidad;
   body.cargo= req.body.cargo;
   body.telefono= req.body.telefono;
   body.tipo= req.body.tipo;
@@ -115,6 +114,7 @@ exports.update = (req, res) => {
       }
     })
     .catch(err => {
+      console.log(err);
       res.status(500).send({
         message: "Error updating User with id=" + id+ err
       });

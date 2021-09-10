@@ -78,7 +78,10 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         },
         total_tecnico: {
           type: DataTypes.STRING(20)
-         },
+        },
+        valoracion: {
+          type: DataTypes.INTEGER(5)
+        },
         fecha_vencimiento: {
             allowNull: true,
             type: DataTypes.DATE

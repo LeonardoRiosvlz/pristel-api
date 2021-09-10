@@ -3,12 +3,15 @@ const router = express.Router();
 const { authJwt } = require("../middlewares");
 const upload = require('../libs/storage');
 const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
-
+const uploads = require("../middlewares/uploads");
 
 
     const cajerosAthController = require("../controllers/cajerosAth.controller.js");
 
 
+
+    // Create a new cargo
+    router.post("/cajeros/ath/csv",[uploads.single("file"),authJwt.verifyToken], cajerosAthController.upload);
 
     // Create a new cargo
     router.post("/cajeros/ath",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], cajerosAthController.create);

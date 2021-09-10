@@ -106,6 +106,7 @@ exports.create = async (req, res) => {
         fecha_cierre: Date.now(),
         aplica_sac: req.body.aplica_sac,
         total_tecnico: req.body.total_tecnico,
+        valoracion: req.body.valoracion,
         },{
         where: { id: req.body.id, }
       })
@@ -116,6 +117,7 @@ exports.create = async (req, res) => {
         fecha_cierre: Date.now(),
         aplica_sac: req.body.aplica_sac,
         total_tecnico: req.body.total_tecnico,
+        valoracion: req.body.valoracion,
         },{
         where: { id: req.body.id, }
       })

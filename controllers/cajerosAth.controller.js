@@ -8,6 +8,68 @@ const Album = db.album;
 const User = db.user;
 const Permisos = db.permisosAnalista;
 
+
+
+const fs = require("fs");
+const csv = require("fast-csv");
+
+
+exports.upload = async (req, res) => {
+    try {
+      if (req.file == undefined) {
+        return res.status(400).send("Agregue un archivo CSV!");
+      }
+  
+      let tutorials = [];
+      let path = "./storage/"+req.file.filename;
+
+      fs.createReadStream(path)
+        .pipe(csv.parse({ headers: true , delimiter: ';' }))
+        .on("error", (error) => {
+          throw error.message;
+        })
+        .on("data", (row) => {
+          tutorials.push(row);
+        })
+        .on("end", () => {
+
+          for (let index = 0; index < tutorials.length; index++) {
+            tutorials[index].regional_id = parseInt(tutorials[index].regional_id);
+            tutorials[index].ciudad_id = parseInt(tutorials[index].ciudad_id);
+            tutorials[index].terminal= tutorials[index].terminal.toString();
+            tutorials[index].id_entidad= 1;
+            if(tutorials[index].ciudacompartido_con=="N/A"){
+              tutorials[index].comparte_site="NO";
+            }else{
+              tutorials[index].comparte_site="SI";
+            }
+          }
+          console.log(tutorials);
+      CajerosAth.bulkCreate(tutorials)
+            .then(() => {
+              res.status(200).send({
+                message:
+                  "Uploaded the file successfully: " + req.file.originalname,
+              });
+            })
+            .catch((error) => {
+              res.status(500).send({
+                message: "Fail to import data into database!",
+                error: error.message,
+              });
+            });
+        });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        message: "Could not upload the file: " + req.file.originalname,
+      });
+    }
+  };
+  
+
+
+
 // Create and Save a new Book
 exports.create = (req, res) => {
   // Validate request
@@ -30,14 +92,12 @@ exports.create = (req, res) => {
     cumpleanos: req.body.cumpleanos,
     administrado: req.body.administrado,
     tipo_site: req.body.tipo_site,
-    cierre_nocturno: req.body.cierre_nocturno,
-    apertura: req.body.apertura,
-    hora_apertura: req.body.hora_apertura,
-    hora_cierre: req.body.hora_cierre,
+    ayc: req.body.ayc,
+    marca: req.body.marca,
     mantenimiento: req.body.mantenimiento,
     aseo: req.body.aseo,
     entidad_bancaria: req.body.entidad_bancaria,
-    id_entidad: req.body.id_entidad,
+    id_entidad: 1,
     regional_id: req.body.regional_id,
     ciudades_id: req.body.ciudades_id,
   };
@@ -164,14 +224,11 @@ exports.update = (req, res) => {
     cumpleanos: req.body.cumpleanos,
     administrado: req.body.administrado,
     tipo_site: req.body.tipo_site,
-    cierre_nocturno: req.body.cierre_nocturno,
-    apertura: req.body.apertura,
-    hora_apertura: req.body.hora_apertura,
-    hora_cierre: req.body.hora_cierre,
+    ayc: req.body.ayc,
+    marca: req.body.marca,
     mantenimiento: req.body.mantenimiento,
     aseo: req.body.aseo,
     entidad_bancaria: req.body.entidad_bancaria,
-    id_entidad: req.body.id_entidad,
     regional_id: req.body.regional_id,
     ciudades_id: req.body.ciudades_id,
     },{
@@ -189,6 +246,7 @@ exports.update = (req, res) => {
       }
     })
     .catch(err => {
+      console.log(err);
       res.status(500).send({
         message: "Error al intentar editar el cajero con el id=" + id
       });

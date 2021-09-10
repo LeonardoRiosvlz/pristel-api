@@ -1,0 +1,5 @@
+tipo;codigo;tipologia;entidad_bancaria;terminal;direccion;ciudad_id;regional_id;comparte_site;cumpleanos;administrado;numero_site;compartido_con;marca;tipo_site;aseo;ayc;mantenimiento
+ATM;100;TIPO 4;Banco de Bogota;SUPERMERCADO MERCAMIO CALI I;KR 39 # 13A - 62;287;4;N/A;Septiembre;TDV DEL SUR;SITE-0046;N/A;DIEBOLD;CABINA;D;N/A;X
+ATM;101;TIPO 1;Banco de Bogota;OFICINA BOULEVAR DEL RIO I;KR 1 # 8-42;287;4;N/A;Noviembre;ATLAS;SITE-2664;N/A;DIEBOLD;SIN SITE;F.S.;D;X
+ATM;105;TIPO 4;Banco de Bogota;MUNICIPIO EL PRADO I;KR 6 # 10 - 11;57;5;N/A;Julio;TDV DEL SUR;SITE-0050;N/A;DIEBOLD;CUBICULO INDEPENDIENTE;D;N/A;X
+ATM;106;TIPO 3 B;Banco de Bogota;Z.A. PARQUE EL VIRREY I;KR 15 # 88-64 LOCAL 101 TRR ZIMMA;1;8;0106-9444;Agosto;ATLAS;SITE-2665;0106-9444;DIEBOLD;CUBICULO INDEPENDIENTE;F.S.;N/A;X

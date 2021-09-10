@@ -23,20 +23,20 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           type: DataTypes.STRING(45)
         },
         terminal: {
-            type: DataTypes.STRING(30)
+          type: DataTypes.TEXT('long')
         },
         direccion: {
             type: DataTypes.STRING(150)
         },
         tipo_site: {
-          type: DataTypes.ENUM('Cabina','Cubículo independiente','Sin site'),
+          type: DataTypes.ENUM('','CABINA','CUBICULO INDEPENDIENTE','SIN SITE'),
           unique: false
         }, 
         numero_site: {
           type: DataTypes.STRING(30)
         },
         mantenimiento: {
-          type: DataTypes.ENUM('Aplica','N/A'),
+          type: DataTypes.ENUM('X','N/A'),
           unique: false
         },
         comparte_site: {
@@ -44,7 +44,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           unique: false
         },
         compartido_con: {
-          type: DataTypes.JSON
+          type: DataTypes.STRING(150)
         },
         cumpleanos: {
             type: DataTypes.STRING(25)
@@ -53,7 +53,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           type: DataTypes.STRING(25)
         },
         aseo: {
-          type: DataTypes.ENUM('DIARIO','FIN DE SEMANA','DE LUNES A VIERNES','DE LUNES A SABADO','NO'),
+          type: DataTypes.ENUM('D','N/A ','F.S.','L-V','L-S'),
           unique: false
         },
         cierre_nocturno: {
@@ -63,8 +63,15 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         hora_cierre: {
           type: DataTypes.STRING(25)
         },
+        marca: {
+          type: DataTypes.STRING(25)
+        },
         apertura: {
           type: DataTypes.ENUM('DIARIO','FIN DE SEMANA','N/A'),
+          unique: false
+        },
+        ayc: {
+          type: DataTypes.ENUM('D','N/A'),
           unique: false
         },
         hora_apertura: {

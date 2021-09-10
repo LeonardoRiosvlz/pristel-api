@@ -1,0 +1,171 @@
+dep;departamento;ciudad;regional_id
+12;Cundinamarca;Bogot\u00e1;8
+12;Cundinamarca;BOJACA;8
+1;Antioquia;Brice\u00f1o;8
+12;Cundinamarca;Cajic\u00e1;8
+12;Cundinamarca;Ch\u00eda;8
+12;Cundinamarca;Chocont\u00e1;8
+12;Cundinamarca;Cogua;8
+12;Cundinamarca;Cota;8
+12;Cundinamarca;El Rosal;8
+12;Cundinamarca;Facatativ\u00e1;8
+12;Cundinamarca;Funza;8
+1;Antioquia;Gachancip\u00e1;8
+12;Cundinamarca;Gachet\u00e1;8
+12;Cundinamarca;Guachet\u00e1;8
+12;Cundinamarca;Guasca;8
+12;Cundinamarca;La Calera;8
+12;Cundinamarca;La Vega;8
+0;Amazonas;Leticia;8
+12;Cundinamarca;Madrid;8
+22;Putumayo;Mocoa;8
+12;Cundinamarca;Mosquera;8
+12;Cundinamarca;Nemoc\u00f3n;8
+22;Putumayo;Orito;8
+22;Putumayo;Puerto Legu\u00edzamo;8
+12;Cundinamarca;Sasaima;8
+12;Cundinamarca;Sesquil\u00e9;8
+12;Cundinamarca;Siberia;8
+22;Putumayo;Sibundoy;8
+12;Cundinamarca;Sop\u00f3;8
+12;Cundinamarca;LSubachoque;8
+12;Cundinamarca;Suesca;8
+12;Cundinamarca;Tabio;8
+12;Cundinamarca;Tocancip\u00e1;8
+12;Cundinamarca;Ubat\u00e9;8
+12;Cundinamarca;Villeta;8
+12;Cundinamarca;Zipaquir\u00e1;8
+12;Cundinamarca;Agua de Dios;5
+12;Cundinamarca;Anapoima;5
+12;Cundinamarca;Anolaima;5
+12;Cundinamarca;Arbel\u00e1ez;5
+12;Cundinamarca;C\u00e1queza;5
+28;Tolima;Carmen de Apical\u00e1;5
+28;Tolima;Chaparral;5
+28;Tolima;Chicoral;5
+12;Cundinamarca;Chipaque;5
+12;Cundinamarca;Choach\u00ed;5
+12;Cundinamarca;El Colegio;5
+25;Tolima;El Espinal;5
+12;Cundinamarca;F\u00f3meque;5
+12;Cundinamarca;Fusagasug\u00e1;5
+12;Cundinamarca;Girardot;5
+12;Cundinamarca;Granada;5
+28;Tolima;Guamo;5
+12;Cundinamarca;La Mesa;5
+28;Tolima;Melgar;5
+12;Cundinamarca;Nilo;5
+28;Tolima;Prado;5
+28;Tolima;Purificaci\u00f3n;5
+12;Cundinamarca;Ricaurte;5
+12;Cundinamarca;Sibat\u00e9;5
+12;Cundinamarca;Silvania;5
+12;Cundinamarca;Tena;5
+12;Cundinamarca;Tocaima;5
+12;Cundinamarca;Tolemaida;5
+12;Cundinamarca;Ubaque;5
+12;Cundinamarca;Une;5
+19;Cundinamarca;Villavicencio;5
+12;Cundinamarca;Viot\u00e1;5
+1;Antioquia;Abejorral;7
+1;Antioquia;Amalfi;7
+1;Antioquia;Andes;7
+1;Antioquia;Anor\u00ed;7
+6;Caldas;Anserma;7
+29;Valle del Cauca;Ansermanuevo;7
+1;Antioquia;Apartad\u00f3;7
+1;Antioquia;Armenia;7
+1;Antioquia;Barbosa;7
+1;Antioquia;Bello;7
+23;Quind\u00edo;Calarc\u00e1;7
+1;Antioquia;Caldas;7
+1;Antioquia;Carepa;7
+29;Valle del Cauca;Cartago;7
+1;Antioquia;Caucasia;7
+13;C\u00f3rdoba;Ceret\u00e9;7
+1;Antioquia;Chigorod\u00f3;7
+6;Caldas;Chinchin\u00e1;7
+13;C\u00f3rdoba;Ci\u00e9naga de Oro;7
+1;Antioquia;Cocorn\u00e1;7
+1;Antioquia;Copacabana;7
+1;Antioquia;Turbo;7
+1;Antioquia;Donmat\u00edas;7
+24;Risaralda;Dosquebradas;7
+1;Antioquia;El Carmen de Viboral;7
+1;Antioquia;El Santuario;7
+1;Antioquia;Envigado;7
+1;Antioquia;Frontino;7
+1;Antioquia;Girardota;7
+1;Antioquia;Guarne;7
+1;Antioquia;Guatap\u00e9;7
+11;Choc\u00f3;Istmina;7
+1;Antioquia;Itag\u00fc\u00ed;7
+1;Antioquia;Ituango;7
+1;Antioquia;La Ceja;7
+1;Antioquia;La Estrella;7
+1;Antioquia;La Pintada;7
+27;Sucre\u00edo;La Tebaida;7
+27;Sucre;La Uni\u00f3n;7
+24;Risaralda;La Virginia;7
+6;Caldas;Manizales;7
+1;Antioquia;Marinilla;7
+24;Risaralda;Marsella;7
+1;Antioquia;Medell\u00edn;7
+13;C\u00f3rdoba;Montel\u00edbano;7
+23;Quind\u00edo;Montenegro;7
+13;C\u00f3rdoba;Monter\u00eda;7
+24;Risaralda;Pereira;7
+13;C\u00f3rdoba;Planeta Rica;7
+24;Risaralda;Pueblo Rico;7
+1;Antioquia;Puerto Berr\u00edo;7
+23;Quind\u00edo;Quimbaya;7
+1;Antioquia;Remedios;7
+1;Antioquia;Rionegro;7
+6;Caldas;Riosucio;7
+1;Antioquia;Sabaneta;7
+13;C\u00f3rdoba;San Antero;7
+1;Antioquia;San Antonio De Prado;7
+13;C\u00f3rdoba;San Bernardo del Viento;7
+11;Choc\u00f3;Quibd\u00f3;7
+1;Antioquia;San Pedro de los Milagros;7
+13;C\u00f3rdoba;San Pelayo;7
+13;C\u00f3rdoba;Lorica;7
+1;Antioquia;Santa Fe de Antioquia;7
+24;Risaralda;Santa Rosa de Cabal;7
+1;Antioquia;Santa Rosa de Osos;7
+1;Antioquia;Segovia;7
+1;Antioquia;Tarso;7
+13;C\u00f3rdoba;Tierralta;7
+1;Antioquia;Vegach\u00ed;7
+6;Caldas;Villamar\u00eda;7
+1;Antioquia;Yarumal;7
+1;Antioquia;Yolomb\u00f3;7
+19;Meta;Acac\u00edas;9
+10;Cesar;Aguachica;9
+9;Casanare;Aguazul;9
+2;Arauca;Arauca;9
+16;Huila;Baraya;9
+26;Santander;Barichara;9
+19;Meta;Barranca de Up\u00eda;9
+26;Santander;Barrancabermeja;9
+26;Santander;Bucaramanga;9
+16;Huila;Campoalegre;9
+4;Bol\u00edvar;Cantagallo;9
+19;Meta;Castilla la Nueva;9
+5;Boyac\u00e1;Chiquinquir\u00e1;9
+21;Norte de Santander;\C\u00facuta;9
+19;Meta;Cumaral;9
+5;Boyac\u00e1;Duitama;9
+7;Caquet\u00e1;El Doncello;9
+21;Norte de Santander;El Zulia;9
+7;Caquet\u00e1;Florencia;9
+26;Santander;Floridablanca;9
+28;Tolima;Fresno;9
+5;Boyac\u00e1;Garagoa;9
+16;Huila;Garz\u00f3n;9
+16;Huila;Gigante;9
+26;Santander;Gir\u00f3n;9
+19;Meta;Granada;9
+12;Cundinamarca;Guaduas;9
+18;Magdalena;Guamal;9
+5;Boyac\u00e1;Guateque;9

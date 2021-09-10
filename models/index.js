@@ -10,7 +10,7 @@ const sequelize = new Sequelize(
     host: config.db.DB_HOST,
     dialect: config.db.dialect,
     operatorsAliases: 0,
-   // timezone: '-04:00',
+    timezone: '-05:00',
     poll: {
       max: config.db.pool.max,
       min: config.db.pool.min,

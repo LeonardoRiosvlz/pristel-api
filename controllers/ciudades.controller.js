@@ -1,7 +1,54 @@
 const db = require("../models");
 const Ciudades = db.ciudad
 const Regional = db.regional
+const fs = require("fs");
+const csv = require("fast-csv");
 
+
+exports.upload = async (req, res) => {
+    try {
+      if (req.file == undefined) {
+        return res.status(400).send("Agregue un archivo CSV!");
+      }
+  
+      let tutorials = [];
+      let path = "./storage/"+req.file.filename;
+      fs.createReadStream(path)
+        .pipe(csv.parse({ headers: true , delimiter: ';' }))
+        .on("error", (error) => {
+          throw error.message;
+        })
+        .on("data", (row) => {
+          tutorials.push(row);
+          
+        })
+        .on("end", () => {
+          for (let index = 0; index < tutorials.length; index++) {
+            tutorials[index].regional_id = parseInt(tutorials[index].regional_id);
+            console.log(tutorials[index].regional_id);
+          }
+          Ciudades.bulkCreate(tutorials)
+            .then(() => {
+              res.status(200).send({
+                message:
+                  "Uploaded the file successfully: " + req.file.originalname,
+              });
+            })
+            .catch((error) => {
+              res.status(500).send({
+                message: "Fail to import data into database!",
+                error: error.message,
+              });
+            });
+        });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        message: "Could not upload the file: " + req.file.originalname,
+      });
+    }
+  };
+  
 // Create and Save a new Book
 exports.create = async (req, res) => {
   // Validate request
