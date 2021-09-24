@@ -23,6 +23,8 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 },{ name: 'firma
 
   router.get("/user/administrador/ath",[cpUpload,authJwt.verifyToken], controller.findAdministradorAth);
 
+  router.get("/user/leglaizadores",[cpUpload,authJwt.verifyToken], controller.findLeglaizadores);
+
   router.get("/user/analistas",[cpUpload,authJwt.verifyToken], controller.findAnalista);
 
   router.put("/user/pefil",[cpUpload ,authJwt.verifyToken], controller.update);

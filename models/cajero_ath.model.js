@@ -71,7 +71,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           unique: false
         },
         ayc: {
-          type: DataTypes.ENUM('D','N/A'),
+          type: DataTypes.ENUM('D','F.S.','N/A'),
           unique: false
         },
         hora_apertura: {

@@ -9,7 +9,7 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     const abonoController = require("../controllers/abono.controller.js");
 
     // Create a new cargo
-    router.post("/abonos",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdmin], abonoController.create);
+    router.post("/abonos",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdminOrTransferencias], abonoController.create);
 
     // Retrieve all cargos
     router.get("/abonos", abonoController.findAll);
@@ -21,7 +21,7 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     router.put("/abonos",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdmin], abonoController.update);
 
     // Delete a cargo with id
-    router.post("/abonos/delete",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdmin], abonoController.delete);
+    router.post("/abonos/delete",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdminOrTransferencias], abonoController.delete);
 
     // Retrieve all cargos
     router.get("/abonos/dashboard/tecnico",[cpUpload,authJwt.verifyToken], abonoController.findAllDashboardTecnico);
@@ -31,3 +31,4 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     router.get("/abonos/dashboard/administrador",[cpUpload,authJwt.verifyToken], abonoController.findAllDashboardAdministrador);   
 
  module.exports = router;
+ 

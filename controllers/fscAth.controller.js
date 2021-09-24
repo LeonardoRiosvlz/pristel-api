@@ -6,6 +6,7 @@ const Cuenta = db.cdcath;
 const CuentaDA= db.cdaath;
 const Abonos = db.ascAth;
 const User = db.user;
+const config = require("../config/config.js");
 // Create and Save a new Book
 exports.create = (req, res) => {
   // Validate request
@@ -145,7 +146,9 @@ exports.findAllAdmin = (req, res) => {
   Formato.findAndCountAll({
     limit: 3000000,
     offset: 0,
-    where: {autorizador_id:req.userId}, // conditions
+    where: {
+      archivada:"No"
+    }, // conditions
     order: [
       ['id', 'DESC'],
     ],
@@ -171,6 +174,180 @@ exports.findAllAdmin = (req, res) => {
       });
     });
 };
+exports.filtroAdmin = async (req, res) => {
+  console.log(req.body);
+  const desde =req.body.desde;
+  const hasta =req.body.hasta;
+  const estado =req.body.estado;
+  let body=[];
+  if (req.body.desde && req.body.hasta && req.body.estado) {
+    if (req.body.estado==="Cancelado") {
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          fecha_pagado: {
+            [Op.between]: [desde, hasta]
+          },
+          status_pago:"Cancelado"
+        }, // conditions
+        order: [
+          ['created_at', 'ASC'],
+        ],
+        include: [  
+          { model: User, as: 'Tecnico_athc',
+            attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+          },
+          { model: User, as: 'Autorizador_athc',
+          attributes:['id', 'nombre', 'apellido']
+          },
+          { model: User, as: 'Solicitante_athc',
+            attributes:['id', 'nombre', 'apellido']
+          }
+    
+          ],
+      }
+    }else if (req.body.estado==="Archivada") {
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          fecha_pagado: {
+            [Op.between]: [desde, hasta]
+          },
+          archivada:"Archivada"
+        }, // conditions
+        order: [
+          ['created_at', 'ASC'],
+        ],
+        include: [  
+          { model: User, as: 'Tecnico_athc',
+            attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+          },
+          { model: User, as: 'Autorizador_athc',
+          attributes:['id', 'nombre', 'apellido']
+          },
+          { model: User, as: 'Solicitante_athc',
+            attributes:['id', 'nombre', 'apellido']
+          }
+    
+          ],
+      }
+    }else{ 
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          created_at: {
+            [Op.between]: [desde, hasta]
+          },
+          status:estado
+        }, // conditions
+        order: [
+          ['created_at', 'ASC'],
+        ],
+        include: [  
+          { model: User, as: 'Tecnico_athc',
+            attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+          },
+          { model: User, as: 'Autorizador_athc',
+          attributes:['id', 'nombre', 'apellido']
+          },
+          { model: User, as: 'Solicitante_athc',
+            attributes:['id', 'nombre', 'apellido']
+          }
+    
+          ],
+      }
+    }
+  }
+if (req.body.desde==='' && req.body.hasta==='' && req.body.estado) {
+  if (req.body.estado==="Cancelado") {
+    body={
+      limit: 3000000,
+      offset: 0,
+      where: {
+        status_pago:"Cancelado"
+      }, // conditions
+      order: [
+        ['created_at', 'ASC'],
+      ],
+      include: [  
+        { model: User, as: 'Tecnico_athc',
+          attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+        },
+        { model: User, as: 'Autorizador_athc',
+        attributes:['id', 'nombre', 'apellido']
+        },
+        { model: User, as: 'Solicitante_athc',
+          attributes:['id', 'nombre', 'apellido']
+        }
+  
+        ],
+    }
+  }else if (req.body.estado==="Archivada") {
+    body={
+      limit: 3000000,
+      offset: 0,
+      where: {
+        archivada:"Archivada"
+      }, // conditions
+      order: [
+        ['created_at', 'ASC'],
+      ],
+      include: [  
+        { model: User, as: 'Tecnico_athc',
+          attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+        },
+        { model: User, as: 'Autorizador_athc',
+        attributes:['id', 'nombre', 'apellido']
+        },
+        { model: User, as: 'Solicitante_athc',
+          attributes:['id', 'nombre', 'apellido']
+        }
+  
+        ],
+    }
+  }else{ 
+    body={
+      limit: 3000000,
+      offset: 0,
+      where: {
+        status:estado
+      }, // conditions
+      order: [
+        ['created_at', 'ASC'],
+      ],
+      include: [  
+        { model: User, as: 'Tecnico_athc',
+          attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+        },
+        { model: User, as: 'Autorizador_athc',
+        attributes:['id', 'nombre', 'apellido']
+        },
+        { model: User, as: 'Solicitante_athc',
+          attributes:['id', 'nombre', 'apellido']
+        }
+  
+        ],
+    }
+  }
+}
+  await  Formato.findAll(body)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        console.log(err);
+        res.send(500).send({
+          message: err.message || "Some error accurred while retrieving books."
+        });
+      });
+  };
+
+
+
+
 
 exports.findAllAnalista = (req, res) => {
 
@@ -202,6 +379,187 @@ exports.findAllAnalista = (req, res) => {
       });
     });
 };
+
+
+
+exports.filtroAnalista = async (req, res) => {
+  console.log(req.body);
+  const desde =req.body.desde;
+  const hasta =req.body.hasta;
+  const estado =req.body.estado;
+  let body=[];
+  if (req.body.desde && req.body.hasta && req.body.estado) {
+    if (req.body.estado==="Cancelado") {
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          fecha_pagado: {
+            [Op.between]: [desde, hasta]
+          },
+          status_pago:"Cancelado",
+          analista_id:req.userId
+        }, // conditions
+        order: [
+          ['created_at', 'ASC'],
+        ],
+        include: [  
+          { model: User, as: 'Tecnico_athc',
+            attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+          },
+          { model: User, as: 'Autorizador_athc',
+          attributes:['id', 'nombre', 'apellido']
+          },
+          { model: User, as: 'Solicitante_athc',
+            attributes:['id', 'nombre', 'apellido']
+          }
+    
+          ],
+      }
+    }else if (req.body.estado==="Archivada") {
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          fecha_pagado: {
+            [Op.between]: [desde, hasta]
+          },
+          archivada:"Archivada",
+          analista_id:req.userId
+        }, // conditions
+        order: [
+          ['created_at', 'ASC'],
+        ],
+        include: [  
+          { model: User, as: 'Tecnico_athc',
+            attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+          },
+          { model: User, as: 'Autorizador_athc',
+          attributes:['id', 'nombre', 'apellido']
+          },
+          { model: User, as: 'Solicitante_athc',
+            attributes:['id', 'nombre', 'apellido']
+          }
+    
+          ],
+      }
+    }else{ 
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          created_at: {
+            [Op.between]: [desde, hasta]
+          },
+          status:estado,
+          analista_id:req.userId
+        }, // conditions
+        order: [
+          ['created_at', 'ASC'],
+        ],
+        include: [  
+          { model: User, as: 'Tecnico_athc',
+            attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+          },
+          { model: User, as: 'Autorizador_athc',
+          attributes:['id', 'nombre', 'apellido']
+          },
+          { model: User, as: 'Solicitante_athc',
+            attributes:['id', 'nombre', 'apellido']
+          }
+    
+          ],
+      }
+    }
+  }
+if (req.body.desde==='' && req.body.hasta==='' && req.body.estado) {
+  if (req.body.estado==="Cancelado") {
+    body={
+      limit: 3000000,
+      offset: 0,
+      where: {
+        status_pago:"Cancelado",
+        analista_id:req.userId
+      }, // conditions
+      order: [
+        ['created_at', 'ASC'],
+      ],
+      include: [  
+        { model: User, as: 'Tecnico_athc',
+          attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+        },
+        { model: User, as: 'Autorizador_athc',
+        attributes:['id', 'nombre', 'apellido']
+        },
+        { model: User, as: 'Solicitante_athc',
+          attributes:['id', 'nombre', 'apellido']
+        }
+  
+        ],
+    }
+  }else if (req.body.estado==="Archivada") {
+    body={
+      limit: 3000000,
+      offset: 0,
+      where: {
+        archivada:"Archivada",
+        analista_id:req.userId
+      }, // conditions
+      order: [
+        ['created_at', 'ASC'],
+      ],
+      include: [  
+        { model: User, as: 'Tecnico_athc',
+          attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+        },
+        { model: User, as: 'Autorizador_athc',
+        attributes:['id', 'nombre', 'apellido']
+        },
+        { model: User, as: 'Solicitante_athc',
+          attributes:['id', 'nombre', 'apellido']
+        }
+  
+        ],
+    }
+  }else{ 
+    body={
+      limit: 3000000,
+      offset: 0,
+      where: {
+        status:estado,
+        analista_id:req.userId
+      }, // conditions
+      order: [
+        ['created_at', 'ASC'],
+      ],
+      include: [  
+        { model: User, as: 'Tecnico_athc',
+          attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+        },
+        { model: User, as: 'Autorizador_athc',
+        attributes:['id', 'nombre', 'apellido']
+        },
+        { model: User, as: 'Solicitante_athc',
+          attributes:['id', 'nombre', 'apellido']
+        }
+  
+        ],
+    }
+  }
+}
+  await  Formato.findAll(body)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        console.log(err);
+        res.send(500).send({
+          message: err.message || "Some error accurred while retrieving books."
+        });
+      });
+  };
+
+
 
 
 exports.findAllAjustes = (req, res) => {
@@ -262,6 +620,189 @@ exports.findAllCoordinador = (req, res) => {
       });
     });
 };
+
+
+
+exports.filtroCoordinador = async (req, res) => {
+  console.log(req.body);
+  const desde =req.body.desde;
+  const hasta =req.body.hasta;
+  const estado =req.body.estado;
+  let body=[];
+  if (req.body.desde && req.body.hasta && req.body.estado) {
+    if (req.body.estado==="Cancelado") {
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          fecha_pagado: {
+            [Op.between]: [desde, hasta]
+          },
+          status_pago:"Cancelado",
+          solicitante_id:req.userId
+        }, // conditions
+        order: [
+          ['created_at', 'ASC'],
+        ],
+        include: [  
+          { model: User, as: 'Tecnico_athc',
+            attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+          },
+          { model: User, as: 'Autorizador_athc',
+          attributes:['id', 'nombre', 'apellido']
+          },
+          { model: User, as: 'Solicitante_athc',
+            attributes:['id', 'nombre', 'apellido']
+          }
+    
+          ],
+      }
+    }else if (req.body.estado==="Archivada") {
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          fecha_pagado: {
+            [Op.between]: [desde, hasta]
+          },
+          archivada:"Archivada",
+          solicitante_id:req.userId
+        }, // conditions
+        order: [
+          ['created_at', 'ASC'],
+        ],
+        include: [  
+          { model: User, as: 'Tecnico_athc',
+            attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+          },
+          { model: User, as: 'Autorizador_athc',
+          attributes:['id', 'nombre', 'apellido']
+          },
+          { model: User, as: 'Solicitante_athc',
+            attributes:['id', 'nombre', 'apellido']
+          }
+    
+          ],
+      }
+    }else{ 
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          created_at: {
+            [Op.between]: [desde, hasta]
+          },
+          status:estado,
+          solicitante_id:req.userId
+        }, // conditions
+        order: [
+          ['created_at', 'ASC'],
+        ],
+        include: [  
+          { model: User, as: 'Tecnico_athc',
+            attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+          },
+          { model: User, as: 'Autorizador_athc',
+          attributes:['id', 'nombre', 'apellido']
+          },
+          { model: User, as: 'Solicitante_athc',
+            attributes:['id', 'nombre', 'apellido']
+          }
+    
+          ],
+      }
+    }
+  }
+if (req.body.desde==='' && req.body.hasta==='' && req.body.estado) {
+  if (req.body.estado==="Cancelado") {
+    body={
+      limit: 3000000,
+      offset: 0,
+      where: {
+        status_pago:"Cancelado",
+        solicitante_id:req.userId
+      }, // conditions
+      order: [
+        ['created_at', 'ASC'],
+      ],
+      include: [  
+        { model: User, as: 'Tecnico_athc',
+          attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+        },
+        { model: User, as: 'Autorizador_athc',
+        attributes:['id', 'nombre', 'apellido']
+        },
+        { model: User, as: 'Solicitante_athc',
+          attributes:['id', 'nombre', 'apellido']
+        }
+  
+        ],
+    }
+  }else if (req.body.estado==="Archivada") {
+    body={
+      limit: 3000000,
+      offset: 0,
+      where: {
+        archivada:"Archivada",
+        solicitante_id:req.userId
+      }, // conditions
+      order: [
+        ['created_at', 'ASC'],
+      ],
+      include: [  
+        { model: User, as: 'Tecnico_athc',
+          attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+        },
+        { model: User, as: 'Autorizador_athc',
+        attributes:['id', 'nombre', 'apellido']
+        },
+        { model: User, as: 'Solicitante_athc',
+          attributes:['id', 'nombre', 'apellido']
+        }
+  
+        ],
+    }
+  }else{ 
+    body={
+      limit: 3000000,
+      offset: 0,
+      where: {
+        status:estado,
+        solicitante_id:req.userId
+      }, // conditions
+      order: [
+        ['created_at', 'ASC'],
+      ],
+      include: [  
+        { model: User, as: 'Tecnico_athc',
+          attributes:['id','codigo', 'nombre', 'apellido', 'codigo']
+        },
+        { model: User, as: 'Autorizador_athc',
+        attributes:['id', 'nombre', 'apellido']
+        },
+        { model: User, as: 'Solicitante_athc',
+          attributes:['id', 'nombre', 'apellido']
+        }
+  
+        ],
+    }
+  }
+}
+  await  Formato.findAll(body)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        console.log(err);
+        res.send(500).send({
+          message: err.message || "Some error accurred while retrieving books."
+        });
+      });
+  };
+
+
+
+
 
 exports.findAllTecnico = (req, res) => {
 
@@ -445,13 +986,18 @@ exports.procesarFormato = (req, res) => {
 exports.pagarFormato = (req, res) => {
   console.log(req.body)
   const id = req.body.id;
-
-  Formato.update({
-    status_pago: "Cancelado",
-    observacion_pagado: req.body.observacion_pagado,
-    total: req.body.total_cuenta,
-    autorizador_id: req.body.autorizador_id
-    },{
+  const body={};
+  body.status_pago="Cancelado";
+  body.observacion_pagado=req.body.observacion_pagado;
+  body.total=req.body.total;
+  body.autorizador_id=req.body.autorizador_id;
+  body.fecha_pagado=req.body.fecha_pagado;
+  
+  if(req.files['filename']){
+    const { filename } = req.files['filename'][0]
+    body.archivo= `${config.server.SERVER+filename}`;
+  }
+  Formato.update(body,{
     where: { id: id }
   })
     .then(num => {
@@ -478,6 +1024,7 @@ exports.pagarFormato = (req, res) => {
       }
     })
     .catch(err => {
+      console.log(err);
       res.status(500).send({
         message: "Error al intentar editar el cargo con el id=" + id
       });
@@ -538,6 +1085,32 @@ exports.update = (req, res) => {
   Cargo.update({
     cargo: req.body.cargo,
     descripcion: req.body.descripcion
+    },{
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "editado satisfactoriamente."
+        });
+      } else {
+        res.send({
+          message: `No puede editar el coargo con el  el =${id}. Tal vez el cargo no existe o la peticion es vacia!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error al intentar editar el cargo con el id=" + id
+      });
+    });
+};
+// Update a Book by the id in the request
+exports.archivarFsc = (req, res) => {
+  const id = req.body.id;
+  console.log(id);
+  Formato.update({
+    archivada: "Archivada"
     },{
     where: { id: id }
   })

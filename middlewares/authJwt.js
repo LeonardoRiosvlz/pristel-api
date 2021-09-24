@@ -67,7 +67,7 @@ const isCoordinadorPrivilegiado =async (req, res, next) => {
 
 const isAdmin =async (req, res, next) => {
   await User.findByPk(req.userId).then(user => {
-    if (user.tipo==="Administrador" ||user.tipo==="Root") {
+    if (user.tipo==="Root"||user.tipo==="Administrador" ||user.tipo==="Root") {
       next();
       return;
     }else{
@@ -82,7 +82,7 @@ const isAdmin =async (req, res, next) => {
 
 const isAnalista =async (req, res, next) => {
   await User.findByPk(req.userId).then(user => {
-    if (user.tipo==="Analista") {
+    if (user.tipo==="Root"||user.tipo==="Analista") {
       next();
       return;
     }else{
@@ -117,7 +117,7 @@ const isAnalistaPrivilegiado =async (req, res, next) => {
 
 const isTecnico =async (req, res, next) => {
  await User.findByPk(req.userId).then(user => {
-    if (user.tipo==="Tecnico") {
+    if (user.tipo==="Root"||user.tipo==="Tecnico") {
       next();
       return;
     }else{
@@ -130,7 +130,7 @@ const isTecnico =async (req, res, next) => {
 };
 const isModerator =async (req, res, next) => {
   await User.findByPk(req.userId).then(user => {
-    if (user.tipo==="Coordinador") {
+    if (user.tipo==="Root"||user.tipo==="Coordinador") {
       next();
       return;
     }else{
@@ -144,7 +144,7 @@ const isModerator =async (req, res, next) => {
 
 const isModeratorOrAdmin =async (req, res, next) => {
   await User.findByPk(req.userId).then(user => {
-    if (user.tipo==="Administrador"||user.tipo==="Coordinador"||user.tipo==="Analista") {
+    if (user.tipo==="Root"||user.tipo==="Administrador"||user.tipo==="Coordinador"||user.tipo==="Analista") {
       next();
       return;
     }else{
@@ -155,6 +155,35 @@ const isModeratorOrAdmin =async (req, res, next) => {
     }
   });
 };
+
+const isModeratorOrAdminOrLegalizaciones =async (req, res, next) => {
+  await User.findByPk(req.userId).then(user => {
+    if (user.tipo==="Root"||user.tipo==="Administrador"||user.tipo==="Coordinador"||user.tipo==="Analista"||user.tipo==="Legalizaciones"||user.tipo==="Contador") {
+      next();
+      return;
+    }else{
+      res.status(403).send({
+        message: "No tienes permiso para esta accion!"
+      });
+      return;
+    }
+  });
+};
+
+const isModeratorOrAdminOrTransferencias =async (req, res, next) => {
+  await User.findByPk(req.userId).then(user => {
+    if (user.tipo==="Root"||user.tipo==="Administrador"||user.tipo==="Coordinador"||user.tipo==="Analista"||user.tipo==="Transferencias"||user.tipo==="Contador") {
+      next();
+      return;
+    }else{
+      res.status(403).send({
+        message: "No tienes permiso para esta accion!"
+      });
+      return;
+    }
+  });
+};
+
 
 const isAdminSala = (req, res, next) => {
   console.log(req.body.id_conversacion);
@@ -187,7 +216,9 @@ const authJwt = {
   isModerator: isModerator,
   isModeratorOrAdmin: isModeratorOrAdmin,
   isAdminSala: isAdminSala,
-  isCoordinadorPrivilegiado: isCoordinadorPrivilegiado
+  isCoordinadorPrivilegiado: isCoordinadorPrivilegiado,
+  isModeratorOrAdminOrTransferencias:isModeratorOrAdminOrTransferencias,
+  isModeratorOrAdminOrLegalizaciones:isModeratorOrAdminOrLegalizaciones
 };
 
 module.exports = authJwt;

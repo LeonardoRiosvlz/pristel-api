@@ -13,6 +13,11 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             type: DataTypes.ENUM('Si','No'),
             unique: false
         },
+        archivada: {
+          type: DataTypes.ENUM('No','Archivada'),
+          defaultValue: 'No',
+          unique: false
+        },
         status: {
           type: DataTypes.ENUM('Pendiente','Aprobado','Rechazado'),
           defaultValue: 'Pendiente',

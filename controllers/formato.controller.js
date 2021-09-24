@@ -102,7 +102,9 @@ exports.findAll = async (req, res) => {
  await Formato.findAndCountAll({
     limit: 3000000,
     offset: 0,
-    where: {}, // conditions
+    where: {
+      archivada:"No"
+    }, // conditions
     order: [
       ['id', 'DESC'],
     ],
@@ -135,6 +137,153 @@ exports.findAll = async (req, res) => {
       });
     });
 };
+
+
+
+exports.filtro = async (req, res) => {
+  console.log(req.body);
+  const desde =req.body.desde;
+  const hasta =req.body.hasta;
+  const estado =req.body.estado;
+  let body=[];
+  if (req.body.desde && req.body.hasta && req.body.estado==='') {
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          created_at: {
+            [Op.between]: [desde, hasta]
+          },
+        }, // conditions
+        order: [
+          ['created_at', 'ASC'],
+        ],
+        include: [  
+          { model: User, as: 'Tecnico',
+            attributes:['id', 'nombre', 'apellido', 'codigo']
+          },
+          { model: User, as: 'Autorizador',
+          attributes:['id', 'nombre', 'apellido']
+          },
+          { model: User, as: 'Solicitante',
+            attributes:['id', 'nombre', 'apellido']
+          },
+          {
+            model: Tercero,
+            attributes:['nombre_tercero']
+          },
+          {
+            model: Entidad,
+            attributes:['empresa']
+         },
+          ],
+      }
+  
+  }
+if (req.body.desde==='' && req.body.hasta==='' && req.body.estado) {
+  if (req.body.estado ==="Archivada") {
+    body={
+      limit: 3000000,
+      offset: 0,
+      where: {
+        archivada:"Archivada"
+      },
+      order: [
+        ['created_at', 'ASC'],
+      ],
+      include: [  
+        { model: User, as: 'Tecnico',
+          attributes:['id', 'nombre', 'apellido', 'codigo']
+        },
+        { model: User, as: 'Autorizador',
+        attributes:['id', 'nombre', 'apellido']
+        },
+        { model: User, as: 'Solicitante',
+          attributes:['id', 'nombre', 'apellido']
+        },
+        {
+          model: Tercero,
+          attributes:['nombre_tercero']
+        },
+        {
+          model: Entidad,
+          attributes:['empresa']
+       },
+        ],
+    }
+
+}else{
+  body={
+    limit: 3000000,
+    offset: 0,
+    where: {
+      status:estado
+    },
+    order: [
+      ['created_at', 'ASC'],
+    ],
+    include: [  
+      { model: User, as: 'Tecnico',
+        attributes:['id', 'nombre', 'apellido', 'codigo']
+      },
+      { model: User, as: 'Autorizador',
+      attributes:['id', 'nombre', 'apellido']
+      },
+      { model: User, as: 'Solicitante',
+        attributes:['id', 'nombre', 'apellido']
+      },
+      {
+        model: Tercero,
+        attributes:['nombre_tercero']
+      },
+      {
+        model: Entidad,
+        attributes:['empresa']
+     },
+      ],
+    }
+  }
+}
+  await  Formato.findAll(body)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        console.log(err);
+        res.send(500).send({
+          message: err.message || "Some error accurred while retrieving books."
+        });
+      });
+  };
+
+
+// Update a Book by the id in the request
+exports.archivar = async (req, res) => {
+  const body={};
+  body.archivada= "Archivada";
+  const id = req.body.id;
+
+await Formato.update(body,{
+  where: { id: id }
+})
+  .then(num => {
+    if (num == 1) {
+      res.send({
+        message: "editado satisfactoriamente."
+      });
+    } else {
+      res.send({
+        message: `No puede editar el coargo con el  el =${id}. Tal vez el cargo no existe o la peticion es vacia!`
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error al intentar editar el cargo con el id=" + id
+    });
+  });
+};
+
 
 
 exports.find = async (req, res) => {

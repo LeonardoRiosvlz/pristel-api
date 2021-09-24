@@ -134,6 +134,26 @@ exports.findAdministradorAth = async (req, res) => {
  };
 
 
+
+ 
+exports.findLeglaizadores = async (req, res) => {
+
+
+  await User.findAll({
+     where: {tipo:"Legalizaciones"}, // conditions
+     attributes: ['nombre', 'apellido','id', 'email',],
+   }).then(data => {
+       res.send(data);
+     })
+     .catch(err => {
+       res.send(500).send({
+         message: err.message || "Ocurrio un erro al acceder ."
+       });
+     });
+ };
+
+
+ 
 exports.findAnalista = async (req, res) => {
 
 

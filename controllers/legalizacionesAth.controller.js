@@ -1,10 +1,11 @@
 const db = require("../models");
 const config = require("../config/config");
+const { legalizacionAth } = require("../models");
 const Legalizaciones = db.legalizacionAth;
 const ProgramacionAth = db.programacion_ath;
 const Notificaciones = db.notificacion;
 const User = db.user;
-
+const Op = db.Op;
 
 // Create and Save a new Book
 exports.create = async (req, res) => {
@@ -45,6 +46,18 @@ exports.create = async (req, res) => {
         canal: "",
       };
       CrearNotificacion(datos);
+      const notiLegalizador = {
+        titulo: `Legalización realizada `,
+        descripcion: `Se realizó una legalización para el consecutivo (ATH-${req.body.id_programacion})`,
+        origen: "",
+        modulo: `/legalizaciones_ATH`,
+        icon: "ri-exchange-dollar-fill",
+        color: "avatar-title bg-success rounded-circle font-size-16",
+        uid: req.body.legalizador,
+        uidr:req.userId,
+        canal: "",
+      };
+      CrearNotificacion(notiLegalizador);
     })
     .catch(err => {
       res.status(500).send({
@@ -101,7 +114,7 @@ exports.findAll = (req, res) => {
   Legalizaciones.findAndCountAll({
     limit: 3000000,
     offset: 0,
-    where: {}, // conditions
+    where: { archivada:"No" }, // conditions
     order: [
       ['id', 'DESC'],
     ],
@@ -134,6 +147,125 @@ exports.findAll = (req, res) => {
       });
     });
 };
+
+
+
+
+exports.filtro = async (req, res) => {
+  console.log(req.body);
+  const desde =req.body.desde;
+  const hasta =req.body.hasta;
+  const estado =req.body.estado;
+  let body=[];
+  if (req.body.desde && req.body.hasta && req.body.estado==='') {
+      body={
+        limit: 3000000,
+        offset: 0,
+        where: {
+          created_at: {
+            [Op.between]: [desde, hasta]
+          },
+        }, // conditions
+        order: [
+          ['created_at', 'ASC'],
+        ],
+        include: [
+          {
+            model: ProgramacionAth,
+            attributes:['id','llamada','tipo_llamada'],
+            include: [
+              {
+                model: User, as: 'Tecnico_ath',
+                attributes:['id','nombre', 'apellido','imagen' ],
+              }, 
+              {
+                model: User, as: 'Coordinador',
+                attributes:['id','nombre', 'apellido','imagen' ],
+              }, 
+              {
+                model: User, as: 'Analista_ath',
+                attributes:['id','nombre', 'apellido','imagen' ],
+              }
+            ]
+          }],
+      }
+  
+  }
+if (req.body.desde==='' && req.body.hasta==='' && req.body.estado) {
+  if (req.body.estado ==="Archivada") {
+    body={
+      limit: 3000000,
+      offset: 0,
+      where: {
+        archivada:"Archivada"
+      },
+      order: [
+        ['created_at', 'ASC'],
+      ],
+      include: [
+        {
+          model: ProgramacionAth,
+          attributes:['id','llamada','tipo_llamada'],
+          include: [
+            {
+              model: User, as: 'Tecnico_ath',
+              attributes:['id','nombre', 'apellido','imagen' ],
+            }, 
+            {
+              model: User, as: 'Coordinador',
+              attributes:['id','nombre', 'apellido','imagen' ],
+            }, 
+            {
+              model: User, as: 'Analista_ath',
+              attributes:['id','nombre', 'apellido','imagen' ],
+            }
+          ]
+        }],
+    }
+
+}else{
+  body={
+    limit: 3000000,
+    offset: 0,
+    where: {
+      status:estado
+    },
+    order: [
+      ['created_at', 'ASC'],
+    ],
+    include: [
+      {
+        model: ProgramacionAth,
+        attributes:['id','llamada','tipo_llamada'],
+        include: [
+          {
+            model: User, as: 'Tecnico_ath',
+            attributes:['id','nombre', 'apellido','imagen' ],
+          }, 
+          {
+            model: User, as: 'Coordinador',
+            attributes:['id','nombre', 'apellido','imagen' ],
+          }, 
+          {
+            model: User, as: 'Analista_ath',
+            attributes:['id','nombre', 'apellido','imagen' ],
+          }
+        ]
+      }],
+    }
+  }
+}
+  await  Legalizaciones.findAll(body)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        console.log(err);
+        res.send(500).send({
+          message: err.message || "Some error accurred while retrieving books."
+        });
+      });
+  };
 
 
 
@@ -256,6 +388,36 @@ exports.update = async (req, res) => {
 };
 
 
+// Update a Book by the id in the request
+exports.archivar = async (req, res) => {
+  const body={};
+  body.archivada= "Archivada";
+  const id = req.body.id;
+
+await Legalizaciones.update(body,{
+  where: { id: id }
+})
+  .then(num => {
+    if (num == 1) {
+      res.send({
+        message: "editado satisfactoriamente."
+      });
+    } else {
+      res.send({
+        message: `No puede editar el coargo con el  el =${id}. Tal vez el cargo no existe o la peticion es vacia!`
+      });
+    }
+  })
+  .catch(err => {
+    res.status(500).send({
+      message: "Error al intentar editar el cargo con el id=" + id
+    });
+  });
+};
+
+
+
+
 // Delete a Book with the specified id in the request
 exports.delete = async (req, res) => {
 
@@ -280,6 +442,7 @@ exports.delete = async (req, res) => {
       });
     });
 };
+
 
 
 

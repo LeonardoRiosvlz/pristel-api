@@ -8,7 +8,15 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }])
     const Controller = require("../controllers/fscAth.controller.js");
 
     // Delete a cargo with id
-    router.get("/ath/formatodecobro/admin",[cpUpload,authJwt.verifyToken, authJwt.isAdmin ], Controller.findAllAdmin);
+    router.get("/ath/formatodecobro/admin",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdminOrTransferencias ], Controller.findAllAdmin); 
+    // Delete a cargo with id
+    router.post("/ath/formatodecobro/admin/filtro",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdminOrTransferencias ], Controller.filtroAdmin); 
+    // Delete a cargo with id
+    router.post("/ath/formatodecobro/analista/filtro",[cpUpload,authJwt.verifyToken ], Controller.filtroAnalista); 
+    // Delete a cargo with id
+    router.post("/ath/formatodecobro/coordinador/filtro",[cpUpload,authJwt.verifyToken ], Controller.filtroCoordinador); 
+    // ajustes
+    router.post("/ath/formatodecobro/archivar",[cpUpload,authJwt.verifyToken ], Controller.archivarFsc); 
     // Delete a cargo with id
     router.get("/ath/formatodecobro/coordinador",[cpUpload,authJwt.verifyToken ], Controller.findAllCoordinador); 
     // Delete a cargo with id

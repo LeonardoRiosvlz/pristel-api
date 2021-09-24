@@ -19,7 +19,7 @@ const cpUpload = upload.fields([
     router.post("/legalizaciones/ath",[cpUpload,authJwt.verifyToken], legalizacionesAthController.create);
 
     // Delete a cargo with id
-    router.post("/legalizaciones/ath/respuesta",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdmin], legalizacionesAthController.respuesta);
+    router.post("/legalizaciones/ath/respuesta",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdminOrLegalizaciones], legalizacionesAthController.respuesta);
 
      // Retrieve all cargos
      router.post("/legalizaciones/ath/find",[cpUpload,authJwt.verifyToken], legalizacionesAthController.find);
@@ -30,8 +30,10 @@ const cpUpload = upload.fields([
     // Delete a cargo with id
     router.post("/legalizaciones/ath/delete",[cpUpload,authJwt.verifyToken], legalizacionesAthController.delete);
 
+    // Delete a cargo with id
+    router.post("/legalizaciones/ath/archivar",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdminOrLegalizaciones], legalizacionesAthController.archivar);
 
-
+    router.post("/legalizaciones/ath/filtro",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdminOrLegalizaciones], legalizacionesAthController.filtro);
     // Retrieve all cargos
     router.get("/legalizaciones/ath/dashboard/analista",[cpUpload,authJwt.verifyToken], legalizacionesAthController.findAllDashboardAnalista);
     // Retrieve all cargos

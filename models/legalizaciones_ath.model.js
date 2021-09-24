@@ -14,6 +14,11 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
             defaultValue: 'Pendiente',
             unique: false
         },
+        archivada: {
+          type: DataTypes.ENUM('No','Archivada'),
+          defaultValue: 'No',
+          unique: false
+        },
         observaciones: {
             type: DataTypes.TEXT('long')
         },

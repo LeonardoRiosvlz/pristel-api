@@ -14,6 +14,11 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
           defaultValue: 'Creado',
           unique: false 
        }, 
+       archivada: {
+        type: DataTypes.ENUM('No','Archivada'),
+        defaultValue: 'No',
+        unique: false
+        },
        status_pago: {
         type: DataTypes.ENUM('','Pendiente','Cancelado'),
         defaultValue: '',
@@ -37,6 +42,9 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
         }, 
         total: {
             type: DataTypes.STRING(15)
+        },
+        archivo: {
+          type: DataTypes.STRING(255)
         },
         created_at: {
             allowNull: false,

@@ -11,7 +11,7 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }]);
 
     // Create a new cargo
     router.post("/formatos/status",[cpUpload,authJwt.verifyToken, authJwt.isAdmin], formatoController.status);
-
+ 
     // Create a new cargo
     router.post("/formatos/find",[cpUpload,authJwt.verifyToken], formatoController.find);
 
@@ -25,6 +25,7 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }]);
     router.post("/formatos/delete",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdmin], formatoController.delete);
 
 
+    router.post("/formatos/ath/filtro",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdminOrTransferencias], formatoController.filtro);
 
 
     // Create a new cargo
@@ -35,5 +36,8 @@ const cpUpload = upload.fields([{ name: 'filename', maxCount: 1 }]);
 
     // Create a new cargo
     router.post("/formatos/find/dashboard/tecnico",[cpUpload,authJwt.verifyToken], formatoController.findAllDashboardTecnico);
+
+    // Delete a cargo with id
+    router.post("/formatos/ath/archivar",[cpUpload,authJwt.verifyToken, authJwt.isModeratorOrAdminOrTransferencias], formatoController.archivar);
     
     module.exports = router;
