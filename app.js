@@ -55,7 +55,7 @@ const history = require('connect-history-api-fallback');
 app.use(history());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.set('puerto', process.env.PORT || 5000);
+app.set('puerto', process.env.PORT || 3000);
 const servidor = app.listen(app.get('puerto'), () => {
   console.log('Example app listening on port'+ app.get('puerto'));
 });
