@@ -1,4 +1,4 @@
-import express from 'express';
+const  express  = require('express');
 const router = express.Router();
 const { authJwt } = require("../middlewares");
 const { verifySignUp } = require("../middlewares");

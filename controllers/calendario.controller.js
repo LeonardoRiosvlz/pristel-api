@@ -9,7 +9,7 @@ exports.findAth = async (req, res) => {
 await  Ath.findAll({
     limit: 3000000,
     offset: 0,
-    where: {coordinador_id:req.userId}, // conditions
+    where: {tecnico_id:req.userId}, // conditions
     order: [
       ['id', 'DESC'],
     ],

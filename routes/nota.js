@@ -1,4 +1,4 @@
-import express from 'express';
+const  express  = require('express');
 const router = express.Router();
 const upload = require('../libs/storage');
 const notaCtrl = require('../controllers/nota')

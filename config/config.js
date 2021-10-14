@@ -29,6 +29,7 @@ module.exports = {
     DB_PASS: "bios2020**",
     DB_NAME: "adminpristel_base",
     dialect: "mysql",
+    timezone: "+08:00",
 
     // pool is optional, it will be used for Sequelize connection pool configuration
     pool: {
