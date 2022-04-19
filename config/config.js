@@ -5,12 +5,12 @@ module.exports = {
    // SERVER:"https://pristelapp.herokuapp.com/public/"
   SERVER:"https://176.223.143.24:3000/public/"
   },
-  /** DATABASE 
+
   db: {
-    DB_HOST: "brcsvl5ao6prwpeq0sp3-mysql.services.clever-cloud.com",
-    DB_USER: "uar1r4tflbjyzvk6",
-    DB_PASS: "OrMOiL7aWrozUEW0ZHR3",
-    DB_NAME: "brcsvl5ao6prwpeq0sp3",
+    DB_HOST: "localhost",
+    DB_USER: "root",
+    DB_PASS: "",
+    DB_NAME: "pristel",
     dialect: "mysql",
 
     // pool is optional, it will be used for Sequelize connection pool configuration
@@ -21,8 +21,8 @@ module.exports = {
       idle: 10000
     }
   }, 
- */
-  /** DATABASE */
+
+  /** DATABASE 
   db: { 
     DB_HOST: "176.223.143.24",
     DB_USER: "adminpristel_adminuser",
@@ -39,7 +39,22 @@ module.exports = {
       idle: 10000
     }
  },
+   db: {
+    DB_HOST: "brcsvl5ao6prwpeq0sp3-mysql.services.clever-cloud.com",
+    DB_USER: "uar1r4tflbjyzvk6",
+    DB_PASS: "OrMOiL7aWrozUEW0ZHR3",
+    DB_NAME: "brcsvl5ao6prwpeq0sp3",
+    dialect: "mysql",
 
+    // pool is optional, it will be used for Sequelize connection pool configuration
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  }, 
+ */
   /** AUTH KEY */
   auth: {
     secret: "our-secret-key"

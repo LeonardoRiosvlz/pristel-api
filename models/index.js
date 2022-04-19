@@ -59,6 +59,8 @@ db.cdcath = require("./cdcath.model.js")(sequelize, Sequelize, DataTypes);
 db.fscAth = require("./fscAth.model.js")(sequelize, Sequelize, DataTypes);
 db.cdaath = require("./cdaAth.model.js")(sequelize, Sequelize, DataTypes);
 db.fsaAth = require("./fsaAth.model.js")(sequelize, Sequelize, DataTypes);
+db.serviciosAth = require("./serviciosAth.model.js")(sequelize, Sequelize, DataTypes);
+db.prioridadesAth = require("./prioridadesAth.model.js")(sequelize, Sequelize, DataTypes);
 
 
 

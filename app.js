@@ -27,7 +27,7 @@ app.use('/api', require('./routes/user.routes'));
 app.use('/api', require('./routes/cargo.routes'));
 app.use('/api', require('./routes/area.routes'));
 app.use('/api', require('./routes/terceros.routes'));
-app.use('/api', require('./routes/categoria.routes'));
+app.use('/api', require('./routes/categoria.routes')); 
 app.use('/api', require('./routes/subcategoria.routes'));
 app.use('/api', require('./routes/entidades.routes'));
 app.use('/api', require('./routes/permisos.routes'));
@@ -51,15 +51,17 @@ app.use('/api', require('./routes/cajeros_ath.routes'));
 app.use('/api', require('./routes/programacion_ath.routes'));
 app.use('/api', require('./routes/cobrosAth.routes'));
 app.use('/api', require('./routes/fscAth.routes'));
+app.use('/api', require('./routes/serviciosAth.routes'));
+app.use('/api', require('./routes/prioridadesAth.routes'));
 
 // Middleware para Vue.js router modo history
 const history = require('connect-history-api-fallback');
 app.use(history());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.set('puerto', process.env.PORT || 3000);
+app.set('puerto', process.env.PORT || 4000);
 const servidor = app.listen(app.get('puerto'), () => {
-  console.log('Example app listening on port'+ app.get('puerto'));
+  console.log('App listening on port '+ app.get('puerto'));
 });
 
 const io = require('socket.io')(servidor);
