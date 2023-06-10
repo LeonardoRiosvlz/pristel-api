@@ -16,9 +16,9 @@ app.use(express.urlencoded({ extended: true }));
 // database
 const db = require("./models");
 const Role = db.role;
-db.sequelize.sync().then(() => {
- //initial(); // Just use it in development, at the first time execution!. Delete it in production
-});
+// db.sequelize.sync().then(() => {
+//  sinitial(); // Just use it in development, at the first time execution!. Delete it in production
+// });
 
 
 app.use('/public',express.static(`${__dirname}/storage/imgs`));
