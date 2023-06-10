@@ -1,6 +1,6 @@
 const config={
     appConfig:{
-        host: 'http://127.0.0.1',
+        host: 'http://89.40.14.117',
         port: '4000'
     }
 }

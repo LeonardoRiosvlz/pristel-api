@@ -3,7 +3,7 @@ module.exports = {
   PORT: process.env.PORT,
   server:{
    // SERVER:"https://pristelapp.herokuapp.com/public/"
-  SERVER:"https://176.223.143.24:3000/public/"
+  SERVER:"https://89.40.14.117:4000/public/"
   },
   /** DATABASE 
   db: {
