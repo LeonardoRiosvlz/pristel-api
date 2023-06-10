@@ -24,10 +24,10 @@ module.exports = {
  */
   /** DATABASE */
   db: { 
-    DB_HOST: "176.223.143.24",
-    DB_USER: "adminpristel_adminuser",
-    DB_PASS: "bios2020**",
-    DB_NAME: "adminpristel_base",
+    DB_HOST: "http://89.40.14.117:3306",
+    DB_USER: "root",
+    DB_PASS: "root123",
+    DB_NAME: "pristel",
     dialect: "mysql",
     timezone: "+08:00",
 

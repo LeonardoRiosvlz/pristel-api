@@ -9,14 +9,14 @@ const User = db.user;
 exports.signup = (req, res) => {
 
   const body={};
-  if(req.files['filename']){
-    const { filename } = req.files['filename'][0]
-    body.imagen= `${config.server.SERVER+filename}`
-  }
-  if(req.files['firma']){
-    const { filename } = req.files['firma'][0]
-    body.firma= `${config.server.SERVER+filename}`;
-  }
+  // if(req.files['filename']){
+  //   const { filename } = req.files['filename'][0]
+  //   body.imagen= `${config.server.SERVER+filename}`
+  // }
+  // if(req.files['firma']){
+  //   const { filename } = req.files['firma'][0]
+  //   body.firma= `${config.server.SERVER+filename}`;
+  // }
   body.nombre= req.body.nombre;
   body.apellido= req.body.apellido;
   body.sexo= req.body.sexo;
@@ -149,7 +149,7 @@ exports.signin = (req, res) => {
         });
       }
 
-      let token = jwt.sign({ id: user.id,rol: user.tipo, tipo_tecnico: user.tipo_tecnico, email: user.email,nombre: user.nombre,apellido: user.apellido,imagen: user.imagen}, config.auth.secret, {
+      let token = jwt.sign({ id: user.id??'',rol: user.tipo??'', tipo_tecnico: user.tipo_tecnico??'', email: user.email??'',nombre: user.nombre??'',apellido: user.apellido??'',imagen: user.imagen??''}, config.auth.secret, {
         expiresIn: '365d' // 24 hours
       });
       res.status(200).send({
