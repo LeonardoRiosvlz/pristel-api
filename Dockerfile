@@ -2,7 +2,7 @@ FROM node:16
 
 
 COPY package*.json tsconfig*.json ./
-RUN yarn install
+RUN npm install
 COPY . .
 
 ARG NODE_ENV=production
