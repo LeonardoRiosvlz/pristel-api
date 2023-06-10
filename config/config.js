@@ -24,7 +24,7 @@ module.exports = {
  */
   /** DATABASE */
   db: { 
-    DB_HOST: "http://89.40.14.117:3306",
+    DB_HOST: "89.40.14.117",
     DB_USER: "root",
     DB_PASS: "root123",
     DB_NAME: "pristel",
